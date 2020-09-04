@@ -42,6 +42,8 @@ Page({
         },
       })
     }
+
+    this.updateMotto()
   },
   getUserInfo(e: any) {
     console.log(e)
@@ -50,5 +52,26 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true,
     })
+  },
+  updateMotto() {
+    // 在10秒之内持续更新Motto
+    let shouldStop = false
+    setTimeout(() => {
+      shouldStop = true
+    }, 10000);
+
+    let count = 0
+    const update = () => {
+      count++
+      if (!shouldStop) {
+        this.setData({
+          motto: `Update count: ${count}`,
+        }, () => {
+          update()
+        })
+      }
+    }
+
+    update()
   },
 })
