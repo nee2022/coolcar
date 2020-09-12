@@ -14,12 +14,11 @@ Page({
       url: '../logs/logs',
     })
   },
-  onLoad() {
-    app.globalData.userInfo.then(userInfo => {
-      this.setData({
-        userInfo,
-        hasUserInfo: true,
-      })
+  async onLoad() {
+    const userInfo = await app.globalData.userInfo
+    this.setData({
+      userInfo,
+      hasUserInfo: true,
     })
 
     // this.updateMotto()
