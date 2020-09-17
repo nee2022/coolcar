@@ -13,5 +13,5 @@
 
 .vscode
 
-wx/miniprogram/**/*.js
+**/wx/miniprogram/**/*.js
 node_modules
