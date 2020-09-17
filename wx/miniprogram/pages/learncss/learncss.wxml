@@ -1,0 +1,7 @@
+<text wx:if="{{showPath}}">miniprogram/pages/learncss/learncss.wxml</text>
+<block wx:else>
+    <text>learn css</text>
+</block>
+<view wx:for="{{values}}" wx:for-item="val" wx:key="id" >
+    employee is {{val.name}}
+</view>
