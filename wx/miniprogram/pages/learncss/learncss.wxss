@@ -3,8 +3,10 @@ page {
     height: 100%;
 }
 
-.item {
-    font-size: xx-large;
+.item.cu-avatar.xl {
+    width: unset;
+    padding-left: 20rpx;
+    padding-right: 20rpx;
 }
 
 .list {
