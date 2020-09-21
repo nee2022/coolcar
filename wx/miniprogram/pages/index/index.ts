@@ -1,4 +1,6 @@
 Page({
+  isPageShowing: false,
+
   data: {
     setting: {
       skew: 0,
@@ -17,8 +19,8 @@ Page({
       enableTraffic: false,
     },
     location: {
-      latitude: 31,
-      longitude: 120,
+      latitude: 23.099994,
+      longitude: 113.32452,
     },
     scale: 10,
     markers: [
@@ -40,6 +42,7 @@ Page({
       },
     ]
   },
+
   onMyLocationTap() {
     wx.getLocation({
       type: 'gcj02',
@@ -58,5 +61,43 @@ Page({
         })
       }
     })
+  },
+
+  onShow() {
+    this.isPageShowing = true;
+  },
+  
+  onHide() {
+    this.isPageShowing = false;
+  },
+
+  moveCars() {
+    const map = wx.createMapContext("map")
+    const dest = {
+      latitude: 23.099994,
+      longitude: 113.324520,
+    }
+
+    const moveCar = () => {
+      dest.latitude += 0.1
+      dest.longitude += 0.1
+      map.translateMarker({
+        destination: {
+          latitude: dest.latitude,
+          longitude: dest.longitude,
+        },
+        markerId: 0,
+        autoRotate: false,
+        rotate: 0,
+        duration: 5000,
+        animationEnd: () => {
+          if (this.isPageShowing) {
+            moveCar()
+          }
+        }
+      })
+    }
+
+    moveCar()
   }
 })
