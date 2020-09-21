@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/learncss/learncss"
+    "pages/learncss/learncss",
+    "pages/register/register"
   ],
   "permission": {
     "scope.userLocation": {

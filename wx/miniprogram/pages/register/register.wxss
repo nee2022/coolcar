@@ -1,0 +1,28 @@
+.container {
+    padding-top: 65rpx;
+}
+
+.lic-tmpl {
+    width: 600rpx;
+    height: 450rpx;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lic-tmpl-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.2;
+}
+
+.instruction {
+    position: absolute;
+    bottom: -74rpx;
+}
+
+.cuIcon-camerafill {
+    font-size: 172rpx;
+}

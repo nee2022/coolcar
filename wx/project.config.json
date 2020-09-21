@@ -72,6 +72,12 @@
 					"pathName": "pages/learncss/learncss",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/register/register",
+					"pathName": "pages/register/register",
+					"scene": null
 				}
 			]
 		}

@@ -1,0 +1,7 @@
+<view class="container">
+    <view class="lic-tmpl" wx:if="{{!hasLicImg}}" bindtap="onUploadLic">
+        <image class="lic-tmpl-img" src="/resources/lic.png" />
+        <view class="cuIcon-camerafill"></view>
+        <view class="instruction">请上传驾驶证照片</view>
+    </view>
+</view>
