@@ -1,7 +1,3 @@
-.container {
-    padding-top: 65rpx;
-}
-
 .lic-tmpl {
     width: 600rpx;
     height: 450rpx;
@@ -11,10 +7,13 @@
     align-items: center;
 }
 
-.lic-tmpl-img {
-    position: absolute;
+.stretch {
     width: 100%;
     height: 100%;
+}
+
+.lic-tmpl-img {
+    position: absolute;
     opacity: 0.2;
 }
 
@@ -25,4 +24,12 @@
 
 .cuIcon-camerafill {
     font-size: 172rpx;
+}
+
+.cu-form-group .title {
+    min-width: calc(4em + 30rpx);
+}
+  
+.lic-form {
+    width: 600rpx;
 }

@@ -1,7 +1,41 @@
-<view class="container">
-    <view class="lic-tmpl" wx:if="{{!hasLicImg}}" bindtap="onUploadLic">
-        <image class="lic-tmpl-img" src="/resources/lic.png" />
+<view class="container padding-top-xl">
+    <view class="lic-tmpl" wx:if="{{!licImgURL}}" bindtap="onUploadLic">
+        <image class="lic-tmpl-img stretch" src="/resources/lic.png" />
         <view class="cuIcon-camerafill"></view>
         <view class="instruction">请上传驾驶证照片</view>
     </view>
+    <block wx:else>
+        <view class="lic-tmpl">
+            <image class="stretch" src="{{licImgURL}}" />
+        </view>
+        <view class="lic-form margin-top-xl">
+            <view class="cu-form-group">
+                <view class="title">驾驶证号</view>
+                <input placeholder="驾驶证号" value="{{licNo}}"></input>
+            </view>
+            <view class="cu-form-group">
+                <view class="title">姓名</view>
+                <input placeholder="姓名" value="{{name}}"></input>
+            </view>
+            <view class="cu-form-group">
+                <view class="title">性别</view>
+                <picker bindchange="onGenderChange" value="{{genderIndex}}" range="{{genders}}">
+                    <view class="picker">
+                        {{genders[genderIndex]}}
+                    </view>
+                </picker>
+            </view>
+            <view class="cu-form-group">
+                <view class="title">出生日期</view>
+                <picker mode="date" value="{{birthDate}}" bindchange="onBirthDateChange">
+                    <view class="picker">
+                        {{birthDate}}
+                    </view>
+                </picker>
+            </view>        
+        </view>
+        <button class="cu-btn bg-red lg margin-top-xl">
+            递交审查
+        </button>
+    </block>
 </view>
