@@ -17,6 +17,14 @@
     opacity: 0.2;
 }
 
+.check {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100rpx;
+    height: 100rpx;
+}
+
 .instruction {
     position: absolute;
     bottom: -74rpx;

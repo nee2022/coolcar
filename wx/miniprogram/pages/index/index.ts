@@ -2,6 +2,7 @@ Page({
   isPageShowing: false,
 
   data: {
+    avatarURL: '',
     setting: {
       skew: 0,
       rotate: 0,
@@ -41,6 +42,13 @@ Page({
         height: 50
       },
     ]
+  },
+
+  async onLoad() {
+    const userInfo = await getApp<IAppOption>().globalData.userInfo
+    this.setData({
+      avatarURL: userInfo.avatarUrl,
+    })
   },
 
   onMyLocationTap() {

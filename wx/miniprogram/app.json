@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/learncss/learncss",
-    "pages/register/register"
+    "pages/register/register",
+    "pages/lock/lock"
   ],
   "permission": {
     "scope.userLocation": {
