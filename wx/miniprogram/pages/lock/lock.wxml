@@ -18,5 +18,5 @@
         </view>
         <view class="margin-top">实时展示我的头像</view>
     </view>
-    <button style="width:80%" class="bg-grey lg">立即开锁</button>
+    <button style="width:80%" class="bg-grey lg" bindtap="onUnlockTap">立即开锁</button>
 </view>

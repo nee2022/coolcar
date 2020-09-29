@@ -84,6 +84,13 @@
 					"id": -1,
 					"name": "pages/lock/lock",
 					"pathName": "pages/lock/lock",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/driving/driving",
+					"pathName": "pages/driving/driving",
 					"scene": null
 				}
 			]

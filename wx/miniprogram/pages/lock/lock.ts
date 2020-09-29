@@ -28,5 +28,41 @@ Page({
     onShareLocation(e: any) {
         const shareLocation:boolean = e.detail.value
         wx.setStorageSync(shareLocationKey, shareLocation)
-    }
+    },
+
+    onUnlockTap() {
+        wx.getLocation({
+            type: 'gcj02',
+            success: loc => {
+                console.log('starting a trip', {
+                    location: {
+                        latitude: loc.latitude,
+                        longitude: loc.longitude,
+                    },
+                    // TODO: 需要双向绑定
+                    avatarURL: this.data.shareLocation 
+                        ? this.data.avatarURL : '', 
+                })
+
+                wx.showLoading({
+                    title: '开锁中',
+                    mask: true,
+                })
+                setTimeout(() => {
+                    wx.redirectTo({
+                        url: '/pages/driving/driving',
+                        complete: () => {
+                            wx.hideLoading()
+                        }
+                    })
+                }, 2000);
+            },
+            fail: () => {
+                wx.showToast({
+                    icon: 'none',
+                    title: '请前往设置页授权位置信息',
+                })
+            }
+        })
+    },
 })

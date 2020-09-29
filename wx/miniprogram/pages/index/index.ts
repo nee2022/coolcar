@@ -71,7 +71,7 @@ Page({
     })
   },
 
-  onScanClicked() {
+  onScanTap() {
     wx.scanCode({
       success: () => {
         wx.navigateTo({
