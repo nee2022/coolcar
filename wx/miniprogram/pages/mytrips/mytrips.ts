@@ -18,12 +18,30 @@ Page({
                 promotionID: 4,
             },
         ],
+        avatarURL: '',
     },
-    
+
+    async onLoad() {
+        const userInfo = await getApp<IAppOption>().globalData.userInfo
+        this.setData({
+            avatarURL: userInfo.avatarUrl,
+        })
+    },
+
     onPromotionItemTap(e: any) {
         const promotionID:number = e.currentTarget.dataset.promotionId
         if (promotionID) {
             console.log('claiming promotion', promotionID)
+        }
+    },
+
+    onGetUserInfo(e: any) {
+        const userInfo: WechatMiniprogram.UserInfo = e.detail.userInfo
+        if (userInfo) {
+            getApp<IAppOption>().resolveUserInfo(userInfo)
+            this.setData({
+                avatarURL: userInfo.avatarUrl,
+            })
         }
     },
 })
