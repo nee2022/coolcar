@@ -44,4 +44,10 @@ Page({
             })
         }
     },
+
+    onRegisterTap() {
+        wx.navigateTo({
+            url: '/pages/register/register',
+        })
+    },
 })
