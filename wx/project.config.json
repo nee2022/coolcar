@@ -91,6 +91,13 @@
 					"id": -1,
 					"name": "pages/driving/driving",
 					"pathName": "pages/driving/driving",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/mytrips/mytrips",
+					"pathName": "pages/mytrips/mytrips",
 					"scene": null
 				}
 			]

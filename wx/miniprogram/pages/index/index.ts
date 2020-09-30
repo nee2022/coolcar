@@ -90,6 +90,12 @@ Page({
     this.isPageShowing = false;
   },
 
+  onMyTripsTap() {
+    wx.navigateTo({
+      url: '/pages/mytrips/mytrips',
+    })
+  },
+
   moveCars() {
     const map = wx.createMapContext("map")
     const dest = {

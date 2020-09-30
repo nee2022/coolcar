@@ -1,0 +1,7 @@
+<swiper indicator-dots circular>
+    <swiper-item wx:for="{{promotionItems}}" wx:key="promotionID" 
+        bindtap="onPromotionItemTap"
+        data-promotion-id="{{item.promotionID}}">
+        <image class="swiper-image" src="{{item.img}}" />
+    </swiper-item>
+</swiper>
