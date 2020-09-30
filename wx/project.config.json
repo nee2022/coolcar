@@ -81,10 +81,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 2,
 					"name": "pages/lock/lock",
 					"pathName": "pages/lock/lock",
-					"query": "",
+					"query": "car_id=demo_car",
 					"scene": null
 				},
 				{
@@ -98,6 +98,7 @@
 					"id": -1,
 					"name": "pages/mytrips/mytrips",
 					"pathName": "pages/mytrips/mytrips",
+					"query": "",
 					"scene": null
 				}
 			]

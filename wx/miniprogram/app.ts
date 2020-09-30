@@ -1,4 +1,4 @@
-import { getSetting, getUserInfo } from "./utils/util"
+import { getSetting, getUserInfo } from "./utils/wxapi"
 
 let resolveUserInfo: (value?: WechatMiniprogram.UserInfo | PromiseLike<WechatMiniprogram.UserInfo> | undefined) => void
 let rejectUserInfo: (reason?: any) => void
