@@ -176,7 +176,6 @@ Page({
     },
 
     onMainScroll(e: any) {
-        console.log(e)
         const top: number = e.currentTarget?.offsetTop + e.detail?.scrollTop
         if (top === undefined) {
             return

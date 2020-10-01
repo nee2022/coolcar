@@ -43,7 +43,7 @@ Page({
         width: 50,
         height: 50
       },
-    ]
+    ],
   },
 
   async onLoad() {
@@ -75,7 +75,8 @@ Page({
 
   onScanTap() {
     wx.scanCode({
-      success: () => {
+      success: async () => {
+        await this.selectComponent('#licModal').showModal()
         // TODO: get car id from scan result
         const carID='car123'
         const redirectURL = routing.lock({
@@ -133,5 +134,5 @@ Page({
     }
 
     moveCar()
-  }
+  },
 })

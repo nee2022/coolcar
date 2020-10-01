@@ -10,7 +10,7 @@
       </view>
     </view>
     <button style="width:100%" 
-        class="cu-btn bg-red margin-tb-sm lg">结束行程</button>
+        class="cu-btn bg-red margin-tb-sm lg" bindtap="onEndTripTap">结束行程</button>
   </view>
 <map
     id="map"

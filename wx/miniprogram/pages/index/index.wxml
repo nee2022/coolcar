@@ -21,3 +21,5 @@
     <cover-view>扫码租车</cover-view>
   </cover-view>
 </map>
+<modal id="licModal"
+  title="身份认证" contents="需要身份认证才能租车"></modal>
