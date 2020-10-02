@@ -1,12 +1,21 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/learncss/learncss",
+    "pages/register/register",
+    "pages/lock/lock",
+    "pages/driving/driving",
+    "pages/mytrips/mytrips"
   ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于驾驶位置展示"
+    }
+  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "Weixin",
+    "navigationBarTitleText": "租辆酷车教学",
     "navigationBarTextStyle": "black"
   },
   "style": "v2",

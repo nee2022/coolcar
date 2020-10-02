@@ -1,0 +1,12 @@
+<view class="container">
+    <text user-select wx:if="{{showPath}}">miniprogram/pages/learncss/learncss.wxml</text>
+    <block wx:else>
+        <text>learn css</text>
+    </block>
+    <view class="list">
+        <view class="item cu-avatar xl radius {{val.id%2?'blue':'red'}}" wx:for="{{values}}" wx:for-item="val" wx:key="id" >
+            employee is {{val.name}}
+            <view class="cu-tag badge">99+</view>
+        </view>
+    </view>
+</view>

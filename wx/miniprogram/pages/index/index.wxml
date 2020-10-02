@@ -1,13 +1,25 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
-</view>
+<map
+  id="map"
+  latitude="{{location.latitude}}"
+  longitude="{{location.longitude}}"
+  scale="{{scale}}"
+  setting="{{setting}}"
+  enable-overlooking="{{isOverLooking}}"
+  enable-3D="{{is3D}}"
+  markers="{{markers}}" 
+>
+  <cover-view class="icon-container">
+    <cover-image class="round" 
+      src="{{avatarURL?avatarURL:'/resources/account.png'}}"
+      bindtap="onMyTripsTap"></cover-image>
+    <cover-image 
+      src="/resources/my_location.png"
+      bindtap="onMyLocationTap"
+    ></cover-image>
+  </cover-view>
+  <cover-view class="btn-container bg-grey round" bindtap="onScanTap">
+    <cover-view>扫码租车</cover-view>
+  </cover-view>
+</map>
+<modal id="licModal"
+  title="身份认证" contents="需要身份认证才能租车"></modal>

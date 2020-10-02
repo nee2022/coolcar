@@ -42,5 +42,66 @@
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"appid": "wxb029f5e27e2b0ffc",
-	"condition": {}
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"current": -1,
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "pages/learncss/learncss",
+					"pathName": "pages/learncss/learncss",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/register/register",
+					"pathName": "pages/register/register",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "pages/lock/lock",
+					"pathName": "pages/lock/lock",
+					"query": "car_id=demo_car",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/driving/driving",
+					"pathName": "pages/driving/driving",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/mytrips/mytrips",
+					"pathName": "pages/mytrips/mytrips",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
 }
