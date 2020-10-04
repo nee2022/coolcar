@@ -25,3 +25,16 @@ message Trip {
     int64 fee_cent = 4;
     TripStatus status = 8;
 }
+
+message GetTripRequest {
+    string id = 1;
+}
+
+message GetTripResponse {
+    string id = 1;
+    Trip trip = 2;
+}
+
+service TripService {
+    rpc GetTrip (GetTripRequest) returns (GetTripResponse);
+}

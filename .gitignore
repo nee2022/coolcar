@@ -13,6 +13,7 @@
 *.out
 
 .vscode
+__debug_bin
 
 **/wx/miniprogram/**/*.js
 node_modules
