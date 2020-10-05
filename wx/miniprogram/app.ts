@@ -1,3 +1,4 @@
+import { IAppOption } from "./appoption"
 import { getSetting, getUserInfo } from "./utils/wxapi"
 
 let resolveUserInfo: (value?: WechatMiniprogram.UserInfo | PromiseLike<WechatMiniprogram.UserInfo> | undefined) => void
@@ -15,9 +16,7 @@ App<IAppOption>({
     wx.request({
       url: 'http://localhost:8080/trip/trip123',
       method: 'GET',
-      success: res => {
-        const getTripResp = res.data
-      },
+      success: console.log,
       fail: console.error,
     })
 

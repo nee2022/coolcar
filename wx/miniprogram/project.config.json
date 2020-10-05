@@ -3,7 +3,6 @@
 	"packOptions": {
 		"ignore": []
 	},
-	"miniprogramRoot": "miniprogram/",
 	"compileType": "miniprogram",
 	"libVersion": "2.8.2",
 	"projectname": "coolcar",
