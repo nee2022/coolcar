@@ -12,6 +12,15 @@ App<IAppOption>({
     })
   },
   async onLaunch() {
+    wx.request({
+      url: 'http://localhost:8080/trip/trip123',
+      method: 'GET',
+      success: res => {
+        const getTripResp = res.data
+      },
+      fail: console.error,
+    })
+
     // 登录
     wx.login({
       success: res => {

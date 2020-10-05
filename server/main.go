@@ -30,7 +30,12 @@ func startGRPCGateway() {
 	c, cancel := context.WithCancel(c)
 	defer cancel()
 
-	mux := runtime.NewServeMux()
+	mux := runtime.NewServeMux(runtime.WithMarshalerOption(
+		runtime.MIMEWildcard, &runtime.JSONPb{
+			EnumsAsInts: true,
+			OrigName:    true,
+		},
+	))
 	err := trippb.RegisterTripServiceHandlerFromEndpoint(
 		c,
 		mux,
