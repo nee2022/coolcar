@@ -3,7 +3,6 @@
 	"packOptions": {
 		"ignore": []
 	},
-	"miniprogramRoot": "miniprogram/",
 	"compileType": "miniprogram",
 	"libVersion": "2.8.2",
 	"projectname": "coolcar",
@@ -13,7 +12,7 @@
 		"beforeUpload": "npm run tsc"
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"enhance": true,
 		"postcss": true,
@@ -21,7 +20,7 @@
 		"minified": true,
 		"newFeature": false,
 		"coverView": true,
-		"nodeModules": false,
+		"nodeModules": true,
 		"autoAudits": false,
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false,

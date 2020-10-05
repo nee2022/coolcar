@@ -1,3 +1,4 @@
+import { IAppOption } from "../../appoption"
 import { routing } from "../../utils/routing"
 
 Page({
