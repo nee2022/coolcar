@@ -3,6 +3,7 @@ package auth
 import (
 	"context"
 	authpb "coolcar/auth/api/gen/v1"
+	"coolcar/auth/dao"
 
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
@@ -12,6 +13,7 @@ import (
 // Service implements auth service.
 type Service struct {
 	OpenIDResolver OpenIDResolver
+	Mongo          *dao.Mongo
 	Logger         *zap.Logger
 }
 
@@ -29,8 +31,14 @@ func (s *Service) Login(c context.Context, req *authpb.LoginRequest) (*authpb.Lo
 			"cannot resolve openid: %v", err)
 	}
 
+	accountID, err := s.Mongo.ResolveAccountID(c, openID)
+	if err != nil {
+		s.Logger.Error("cannot resolve account id", zap.Error(err))
+		return nil, status.Errorf(codes.Internal, "")
+	}
+
 	return &authpb.LoginResponse{
-		AccessToken: "token for open id: " + openID,
+		AccessToken: "token for account id: " + accountID,
 		ExpiresIn:   7200,
 	}, nil
 }
