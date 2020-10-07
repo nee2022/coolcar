@@ -20,3 +20,4 @@ __debug_bin
 
 node_modules
 miniprogram_npm
+private.key
