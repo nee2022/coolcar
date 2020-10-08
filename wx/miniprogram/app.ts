@@ -1,6 +1,7 @@
 import camelcaseKeys = require("camelcase-keys")
 import { IAppOption } from "./appoption"
 import { auth } from "./service/proto_gen/auth/auth_pb"
+import { rental } from "./service/proto_gen/rental/rental_pb"
 import { getSetting, getUserInfo } from "./utils/wxapi"
 
 let resolveUserInfo: (value?: WechatMiniprogram.UserInfo | PromiseLike<WechatMiniprogram.UserInfo> | undefined) => void
@@ -31,6 +32,16 @@ App<IAppOption>({
                 camelcaseKeys(res.data as object),
               )
             console.log(loginResp)
+            wx.request({
+              url: 'http://localhost:8080/v1/trip',
+              method: 'POST',
+              data: {
+                start: 'abc',
+              } as rental.v1.ICreateTripRequest,
+              header: {
+                authorization: 'Bearer ' + loginResp.accessToken,
+              },
+            })
           },
           fail: console.error,
         })
