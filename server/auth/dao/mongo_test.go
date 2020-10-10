@@ -2,22 +2,22 @@ package dao
 
 import (
 	"context"
+	"coolcar/shared/id"
 	mgo "coolcar/shared/mongo"
+	mgutil "coolcar/shared/mongo"
+	"coolcar/shared/mongo/objid"
 	mongotesting "coolcar/shared/mongo/testing"
 	"os"
 	"testing"
 
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 var mongoURI string
 
 func TestResolveAccountID(t *testing.T) {
 	c := context.Background()
-	mc, err := mongo.Connect(c, options.Client().ApplyURI(mongoURI))
+	mc, err := mongotesting.NewClient(c)
 	if err != nil {
 		t.Fatalf("cannot connect mongodb: %v", err)
 	}
@@ -25,20 +25,19 @@ func TestResolveAccountID(t *testing.T) {
 	m := NewMongo(mc.Database("coolcar"))
 	_, err = m.col.InsertMany(c, []interface{}{
 		bson.M{
-			mgo.IDField: mustObjID("5f7c245ab0361e00ffb9fd6f"),
-			openIDField: "openid_1",
+			mgo.IDFieldName: objid.MustFromID(id.AccountID("5f7c245ab0361e00ffb9fd6f")),
+			openIDField:     "openid_1",
 		},
 		bson.M{
-			mgo.IDField: mustObjID("5f7c245ab0361e00ffb9fd70"),
-			openIDField: "openid_2",
+			mgo.IDFieldName: objid.MustFromID(id.AccountID("5f7c245ab0361e00ffb9fd70")),
+			openIDField:     "openid_2",
 		},
 	})
 	if err != nil {
 		t.Fatalf("cannot insert initial values: %v", err)
 	}
-	m.newObjID = func() primitive.ObjectID {
-		return mustObjID("5f7c245ab0361e00ffb9fd71")
-	}
+
+	mgutil.NewObjIDWithValue(id.AccountID("5f7c245ab0361e00ffb9fd71"))
 
 	cases := []struct {
 		name   string
@@ -69,22 +68,13 @@ func TestResolveAccountID(t *testing.T) {
 			if err != nil {
 				t.Errorf("faild resolve account id for %q: %v", cc.openID, err)
 			}
-			if id != cc.want {
+			if id.String() != cc.want {
 				t.Errorf("resolve account id: want: %q; got: %q", cc.want, id)
 			}
 		})
 	}
 }
 
-func mustObjID(hex string) primitive.ObjectID {
-	objID, err := primitive.ObjectIDFromHex(hex)
-	if err != nil {
-		panic(err)
-	}
-	return objID
-}
-
 func TestMain(m *testing.M) {
-	os.Exit(mongotesting.RunWithMongoInDocker(
-		m, &mongoURI))
+	os.Exit(mongotesting.RunWithMongoInDocker(m))
 }
