@@ -32,6 +32,7 @@ message Trip {
     LocationStatus current = 4;
     LocationStatus end = 5;
     TripStatus status = 6;
+    string identity_id = 7;
 }
 
 message CreateTripRequest {
