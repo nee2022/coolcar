@@ -20,6 +20,10 @@ type Service struct {
 
 // CreateTrip creates a trip.
 func (s *Service) CreateTrip(c context.Context, req *rentalpb.CreateTripRequest) (*rentalpb.TripEntity, error) {
+	// 验证驾驶者身份
+	// 车辆开锁
+	// 创建行程，写入数据库
+
 	return nil, status.Error(codes.Unimplemented, "")
 }
 
