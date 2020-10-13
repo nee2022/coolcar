@@ -1,4 +1,5 @@
 import { IAppOption } from "../../appoption"
+import { rental } from "../../service/proto_gen/rental/rental_pb"
 import { TripService } from "../../service/trip"
 import { routing } from "../../utils/routing"
 
@@ -55,12 +56,21 @@ Page({
                     console.error('no carID specified')
                     return
                 }
-                const trip =  await TripService.CreateTrip({
-                    start: loc,
-                    carId: this.carID
-                })
-                if (!trip.id) {
-                    console.error('no tripID in response', trip)
+                let trip: rental.v1.ITripEntity
+                try {
+                    trip =  await TripService.createTrip({
+                        start: loc,
+                        carId: this.carID
+                    })
+                    if (!trip.id) {
+                        console.error('no tripID in response', trip)
+                        return
+                    }
+                } catch(err) {
+                    wx.showToast({
+                        title: '创建行程失败',
+                        icon: 'none',
+                    })
                     return
                 }
 

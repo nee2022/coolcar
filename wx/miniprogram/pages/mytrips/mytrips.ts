@@ -70,7 +70,7 @@ Page({
     },
 
     async onLoad() {
-        const res = await TripService.GetTrips(rental.v1.TripStatus.FINISHED)
+        await TripService.getTrips(rental.v1.TripStatus.FINISHED)
         this.populateTrips()
         const userInfo = await getApp<IAppOption>().globalData.userInfo
         this.setData({
