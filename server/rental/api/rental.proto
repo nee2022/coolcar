@@ -12,6 +12,7 @@ message LocationStatus {
     int32 fee_cent = 2;
     double km_driven = 3;
     string poi_name = 4;
+    int64 timestamp_sec = 5;
 }
 
 enum TripStatus {

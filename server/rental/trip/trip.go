@@ -6,6 +6,8 @@ import (
 	"coolcar/rental/trip/dao"
 	"coolcar/shared/auth"
 	"coolcar/shared/id"
+	"math/rand"
+	"time"
 
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
@@ -45,6 +47,10 @@ func (s *Service) CreateTrip(c context.Context, req *rentalpb.CreateTripRequest)
 		return nil, err
 	}
 
+	if req.CarId == "" || req.Start == nil {
+		return nil, status.Error(codes.InvalidArgument, "")
+	}
+
 	// 验证驾驶者身份
 	iID, err := s.ProfileManager.Verify(c, aid)
 	if err != nil {
@@ -58,17 +64,10 @@ func (s *Service) CreateTrip(c context.Context, req *rentalpb.CreateTripRequest)
 		return nil, status.Error(codes.FailedPrecondition, err.Error())
 	}
 
-	// 获取POI
-	poi, err := s.POIManager.Resolve(c, req.Start)
-	if err != nil {
-		s.Logger.Info("cannot resolve poi", zap.Stringer("location", req.Start), zap.Error(err))
-	}
-
-	// 创建行程: 写入数据库，开始计费
-	ls := &rentalpb.LocationStatus{
-		Location: req.Start,
-		PoiName:  poi,
-	}
+	ls := s.calcCurrentStatus(c, &rentalpb.LocationStatus{
+		Location:     req.Start,
+		TimestampSec: nowFunc(),
+	}, req.Start)
 	tr, err := s.Mongo.CreateTrip(c, &rentalpb.Trip{
 		AccountId:  aid.String(),
 		CarId:      carID.String(),
@@ -135,21 +134,59 @@ func (s *Service) GetTrips(c context.Context, req *rentalpb.GetTripsRequest) (*r
 func (s *Service) UpdateTrip(c context.Context, req *rentalpb.UpdateTripRequest) (*rentalpb.Trip, error) {
 	aid, err := auth.AccountIDFromContext(c)
 	if err != nil {
-		return nil, status.Error(codes.Unauthenticated, "")
+		return nil, err
 	}
+
 	tid := id.TripID(req.Id)
 	tr, err := s.Mongo.GetTrip(c, tid, aid)
-	if req.Current != nil {
-		tr.Trip.Current = s.calcCurrentStatus(tr.Trip, req.Current)
+	if err != nil {
+		return nil, status.Error(codes.NotFound, "")
 	}
+
+	if tr.Trip.Current == nil {
+		s.Logger.Error("trip without current set", zap.String("id", tid.String()))
+		return nil, status.Error(codes.Internal, "")
+	}
+
+	cur := tr.Trip.Current.Location
+	if req.Current != nil {
+		cur = req.Current
+	}
+
+	tr.Trip.Current = s.calcCurrentStatus(c, tr.Trip.Current, cur)
+
 	if req.EndTrip {
 		tr.Trip.End = tr.Trip.Current
 		tr.Trip.Status = rentalpb.TripStatus_FINISHED
 	}
-	s.Mongo.UpdateTrip(c, tid, aid, tr.UpdatedAt, tr.Trip)
-	return nil, status.Error(codes.Unimplemented, "")
+	err = s.Mongo.UpdateTrip(c, tid, aid, tr.UpdatedAt, tr.Trip)
+	if err != nil {
+		return nil, status.Error(codes.Aborted, "")
+	}
+	return tr.Trip, nil
 }
 
-func (s *Service) calcCurrentStatus(trip *rentalpb.Trip, cur *rentalpb.Location) *rentalpb.LocationStatus {
-	return nil
+var nowFunc = func() int64 {
+	return time.Now().Unix()
+}
+
+const (
+	centsPerSec = 0.7
+	kmPerSec    = 0.02
+)
+
+func (s *Service) calcCurrentStatus(c context.Context, last *rentalpb.LocationStatus, cur *rentalpb.Location) *rentalpb.LocationStatus {
+	now := nowFunc()
+	elapsedSec := float64(now - last.TimestampSec)
+	poi, err := s.POIManager.Resolve(c, cur)
+	if err != nil {
+		s.Logger.Info("cannot resolve poi", zap.Stringer("location", cur), zap.Error(err))
+	}
+	return &rentalpb.LocationStatus{
+		Location:     cur,
+		FeeCent:      last.FeeCent + int32(centsPerSec*elapsedSec*2*rand.Float64()),
+		KmDriven:     last.KmDriven + kmPerSec*elapsedSec*2*rand.Float64(),
+		TimestampSec: now,
+		PoiName:      poi,
+	}
 }

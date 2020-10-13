@@ -66,6 +66,9 @@ export namespace rental {
 
             /** LocationStatus poiName */
             poiName?: (string|null);
+
+            /** LocationStatus timestampSec */
+            timestampSec?: (number|null);
         }
 
         /** Represents a LocationStatus. */
@@ -88,6 +91,9 @@ export namespace rental {
 
             /** LocationStatus poiName. */
             public poiName: string;
+
+            /** LocationStatus timestampSec. */
+            public timestampSec: number;
 
             /**
              * Creates a LocationStatus message from a plain object. Also converts values to their respective internal types.
