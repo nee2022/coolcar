@@ -36,11 +36,14 @@
         scroll-into-view="{{mainScroll}}"
         bindscroll="onMainScroll" >
         <view wx:for="{{mainItems}}" wx:key="id" class="bg-white margin-bottom margin-lr padding-bottom trip main-item"
-            id="{{item.id}}" data-nav-id="{{item.navId}}" data-nav-scroll-id="{{item.navScrollId}}">
+            id="{{item.id}}" data-nav-id="{{item.navId}}" data-nav-scroll-id="{{item.navScrollId}}"
+            data-trip-id="{{item.data.id}}" data-trip-in-progress="{{item.data.inProgress}}" bindtap="onMianItemTap">
             <view class='cu-bar solid-bottom padding-right'>
                 <view class='action'>
-                <text class='cuIcon-title text-green'></text> {{item.data.id}} </view>
-                <view>{{item.data.status}}</view>
+                <text class='cuIcon-title text-green'></text> {{item.data.shortId}} </view>
+                <view class="{{item.data.inProgress?'text-blue in-progress text-lg text-bold':''}}">{{item.data.status}}
+                  <text wx:if="{{item.data.inProgress}}" class="cuIcon-right"/>
+                </view>
             </view>
             <view class="trip-detail padding-right">
                 <view class="detail-l">
@@ -48,20 +51,20 @@
                         <view class="field padding-lr">起</view>
                         <view class="value text-black text-bold">{{item.data.start}}</view>                
                     </view>
-                    <view class="detail-row">
+                    <view wx:if="{{!item.data.inProgress}}" class="detail-row">
                         <view class="field padding-lr">终</view>
                         <view class="value text-black text-bold">{{item.data.end}}</view>                
                     </view>
-                    <view class="detail-row">
+                    <view wx:if="{{!item.data.inProgress}}" class="detail-row">
                         <view class="field padding-lr">距</view>
                         <view class="value text-black text-bold">{{item.data.distance}}</view>                
                     </view>
-                    <view class="detail-row">
+                    <view wx:if="{{!item.data.inProgress}}" class="detail-row">
                         <view class="field padding-lr">时</view>
                         <view class="value text-black text-bold">{{item.data.duration}}</view>                
                     </view>
                 </view>
-                <view class="detail-r">
+                <view wx:if="{{!item.data.inProgress}}" class="detail-r">
                     <view class="fee text-xxl text-price text-bold">{{item.data.fee}}</view>
                 </view>
             </view>

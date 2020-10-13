@@ -1,22 +1,12 @@
 import { TripService } from "../../service/trip"
+import { formatDuration, formatFee } from "../../utils/format"
 import { routing } from "../../utils/routing"
 
 const updateIntervalSec = 5
 
-function formatDuration(sec: number) {
-    const padString = (n: number) => 
-        n < 10 ? '0'+n.toFixed(0) : n.toFixed(0)
-
-    const h = Math.floor(sec/3600)
-    sec -= 3600 * h
-    const m = Math.floor(sec / 60)
-    sec -= 60 * m
-    const s = Math.floor(sec)
-    return `${padString(h)}:${padString(m)}:${padString(s)}`
-}
-
-function formatFee(cents: number) {
-    return (cents / 100).toFixed(2)
+function durationStr(sec: number) {
+    const dur = formatDuration(sec)
+    return `${dur.hh}:${dur.mm}:${dur.ss}`
 }
 
 Page({
@@ -66,13 +56,13 @@ Page({
         let secSinceLastUpdate = 0
         let lastUpdateDurationSec = trip.current!.timestampSec! - trip.start!.timestampSec!
         this.setData({
-            elapsed: formatDuration(lastUpdateDurationSec),
+            elapsed: durationStr(lastUpdateDurationSec),
             fee: formatFee(trip.current!.feeCent!)
         })
 
         this.timer = setInterval(() => {
             secSinceLastUpdate++
-            if (secSinceLastUpdate % 5 === 0) {
+            if (secSinceLastUpdate % updateIntervalSec === 0) {
                 TripService.updateTripPos(tripID, {
                     latitude: this.data.location.latitude,
                     longitude: this.data.location.longitude,
@@ -85,7 +75,7 @@ Page({
                 }).catch(console.error)
             }
             this.setData({
-                elapsed: formatDuration(lastUpdateDurationSec + secSinceLastUpdate),
+                elapsed: durationStr(lastUpdateDurationSec + secSinceLastUpdate),
             })
         }, 1000)
     },

@@ -63,3 +63,7 @@ swiper {
     bottom: 0;
     margin: auto;
 }
+
+.in-progress {
+    font-style: italic;
+}
