@@ -1,7 +1,7 @@
 import { TripService } from "../../service/trip"
 import { routing } from "../../utils/routing"
 
-const centPerSec = 0.7
+const updateIntervalSec = 5
 
 function formatDuration(sec: number) {
     const padString = (n: number) => 
@@ -37,7 +37,7 @@ Page({
         const o: routing.DrivingOpts = opt
         this.tripID = o.trip_id
         this.setupLocationUpdator()
-        this.setupTimer()
+        this.setupTimer(o.trip_id)
     },
 
     onUnload() {
@@ -52,7 +52,6 @@ Page({
             fail: console.error,
         })
         wx.onLocationChange(loc => {
-            console.log('location: ', loc)
             this.setData({
                 location: {
                     latitude: loc.latitude,
@@ -62,15 +61,31 @@ Page({
         })
     },
 
-    setupTimer() {
-        let elapsedSec = 0
-        let cents = 0
+    async setupTimer(tripID: string) {
+        const trip = await TripService.updateTripPos(tripID)
+        let secSinceLastUpdate = 0
+        let lastUpdateDurationSec = trip.current!.timestampSec! - trip.start!.timestampSec!
+        this.setData({
+            elapsed: formatDuration(lastUpdateDurationSec),
+            fee: formatFee(trip.current!.feeCent!)
+        })
+
         this.timer = setInterval(() => {
-            elapsedSec++
-            cents += centPerSec
+            secSinceLastUpdate++
+            if (secSinceLastUpdate % 5 === 0) {
+                TripService.updateTripPos(tripID, {
+                    latitude: this.data.location.latitude,
+                    longitude: this.data.location.longitude,
+                }).then(trip => {
+                    lastUpdateDurationSec = trip.current!.timestampSec! - trip.start!.timestampSec!
+                    secSinceLastUpdate = 0
+                    this.setData({
+                        fee: formatFee(trip.current!.feeCent!),
+                    })
+                }).catch(console.error)
+            }
             this.setData({
-                elapsed: formatDuration(elapsedSec),
-                fee: formatFee(cents),
+                elapsed: formatDuration(lastUpdateDurationSec + secSinceLastUpdate),
             })
         }, 1000)
     },

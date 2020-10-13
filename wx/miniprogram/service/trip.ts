@@ -31,7 +31,7 @@ export namespace TripService {
         })
     }
 
-    export function updateTripPos(id: string, loc: rental.v1.ILocation) {
+    export function updateTripPos(id: string, loc?: rental.v1.ILocation) {
         return updateTrip({
             id,
             current: loc,
