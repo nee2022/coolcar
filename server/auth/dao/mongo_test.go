@@ -3,7 +3,6 @@ package dao
 import (
 	"context"
 	"coolcar/shared/id"
-	mgo "coolcar/shared/mongo"
 	mgutil "coolcar/shared/mongo"
 	"coolcar/shared/mongo/objid"
 	mongotesting "coolcar/shared/mongo/testing"
@@ -25,12 +24,12 @@ func TestResolveAccountID(t *testing.T) {
 	m := NewMongo(mc.Database("coolcar"))
 	_, err = m.col.InsertMany(c, []interface{}{
 		bson.M{
-			mgo.IDFieldName: objid.MustFromID(id.AccountID("5f7c245ab0361e00ffb9fd6f")),
-			openIDField:     "openid_1",
+			mgutil.IDFieldName: objid.MustFromID(id.AccountID("5f7c245ab0361e00ffb9fd6f")),
+			openIDField:        "openid_1",
 		},
 		bson.M{
-			mgo.IDFieldName: objid.MustFromID(id.AccountID("5f7c245ab0361e00ffb9fd70")),
-			openIDField:     "openid_2",
+			mgutil.IDFieldName: objid.MustFromID(id.AccountID("5f7c245ab0361e00ffb9fd70")),
+			openIDField:        "openid_2",
 		},
 	})
 	if err != nil {
