@@ -1,9 +1,13 @@
 import { IAppOption } from "../../appoption"
+import { rental } from "../../service/proto_gen/rental/rental_pb"
+import { TripService } from "../../service/trip"
 import { routing } from "../../utils/routing"
 
 const shareLocationKey = "share_location"
 
 Page({
+    carID: '',
+
     data: {
         shareLocation: false,
         avatarURL: '',
@@ -11,7 +15,7 @@ Page({
 
     async onLoad(opt: Record<'car_id', string>) {
         const o: routing.LockOpts = opt
-        console.log('unlocking car', o.car_id)
+        this.carID = o.car_id
         const userInfo = await getApp<IAppOption>().globalData.userInfo
         this.setData({
             avatarURL: userInfo.avatarUrl,
@@ -38,7 +42,7 @@ Page({
     onUnlockTap() {
         wx.getLocation({
             type: 'gcj02',
-            success: loc => {
+            success: async loc => {
                 console.log('starting a trip', {
                     location: {
                         latitude: loc.latitude,
@@ -48,7 +52,27 @@ Page({
                     avatarURL: this.data.shareLocation 
                         ? this.data.avatarURL : '', 
                 })
-                const tripID = 'trip456'
+                if (!this.carID) {
+                    console.error('no carID specified')
+                    return
+                }
+                let trip: rental.v1.ITripEntity
+                try {
+                    trip =  await TripService.createTrip({
+                        start: loc,
+                        carId: this.carID
+                    })
+                    if (!trip.id) {
+                        console.error('no tripID in response', trip)
+                        return
+                    }
+                } catch(err) {
+                    wx.showToast({
+                        title: '创建行程失败',
+                        icon: 'none',
+                    })
+                    return
+                }
 
                 wx.showLoading({
                     title: '开锁中',
@@ -57,7 +81,7 @@ Page({
                 setTimeout(() => {
                     wx.redirectTo({
                         url: routing.drving({
-                            trip_id: tripID,
+                            trip_id: trip.id!,
                         }),
                         complete: () => {
                             wx.hideLoading()
