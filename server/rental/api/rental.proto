@@ -68,7 +68,6 @@ service TripService {
 }
 
 // Profile Service
-
 enum Gender {
     G_NOT_SPECIFIED = 0;
     MALE = 1;
@@ -94,9 +93,10 @@ message Identity {
 }
 
 message GetProfileRequest {}
-message UpdateProfileResponse {}
+message ClearProfileRequest {}
 
 service ProfileService {
     rpc GetProfile (GetProfileRequest) returns (Profile);
-    rpc UpdateProfile (Profile) returns (UpdateProfileResponse);
+    rpc SubmitProfile (Identity) returns (Profile);
+    rpc ClearProfile (ClearProfileRequest) returns (Profile);
 }

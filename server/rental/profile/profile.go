@@ -3,7 +3,10 @@ package profile
 import (
 	"context"
 	rentalpb "coolcar/rental/api/gen/v1"
+	"coolcar/rental/profile/dao"
+	"coolcar/shared/auth"
 
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -11,15 +14,58 @@ import (
 
 // Service defines a profile service.
 type Service struct {
+	Mongo  *dao.Mongo
 	Logger *zap.Logger
 }
 
 // GetProfile gets profile for the current account.
 func (s *Service) GetProfile(c context.Context, req *rentalpb.GetProfileRequest) (*rentalpb.Profile, error) {
-	return nil, status.Error(codes.Unimplemented, "")
+	aid, err := auth.AccountIDFromContext(c)
+	if err != nil {
+		return nil, err
+	}
+	p, err := s.Mongo.GetProfile(c, aid)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return &rentalpb.Profile{}, nil
+		}
+		s.Logger.Error("cannot get profile", zap.Error(err))
+		return nil, status.Error(codes.Internal, "")
+	}
+	return p, nil
 }
 
-// UpdateProfile updates profile for the current account.
-func (s *Service) UpdateProfile(c context.Context, p *rentalpb.Profile) (*rentalpb.UpdateProfileResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "")
+// SubmitProfile submits a profile.
+func (s *Service) SubmitProfile(c context.Context, i *rentalpb.Identity) (*rentalpb.Profile, error) {
+	aid, err := auth.AccountIDFromContext(c)
+	if err != nil {
+		return nil, err
+	}
+
+	p := &rentalpb.Profile{
+		Identity:       i,
+		IdentityStatus: rentalpb.IdentityStatus_PENDING,
+	}
+	err = s.Mongo.UpdateProfile(c, aid, p)
+	if err != nil {
+		s.Logger.Error("cannot update profile", zap.Error(err))
+		return nil, status.Error(codes.Internal, "")
+	}
+	return p, nil
+}
+
+// ClearProfile clears profile for an account.
+func (s *Service) ClearProfile(c context.Context, req *rentalpb.ClearProfileRequest) (*rentalpb.Profile, error) {
+	aid, err := auth.AccountIDFromContext(c)
+	if err != nil {
+		return nil, err
+	}
+
+	p := &rentalpb.Profile{}
+	err = s.Mongo.UpdateProfile(c, aid, p)
+	if err != nil {
+		s.Logger.Error("cannot update profile", zap.Error(err))
+		return nil, status.Error(codes.Internal, "")
+	}
+	return p, nil
 }

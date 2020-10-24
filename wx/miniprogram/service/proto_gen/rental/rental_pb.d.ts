@@ -725,36 +725,36 @@ export namespace rental {
             public toJSON(): { [k: string]: any };
         }
 
-        /** Properties of an UpdateProfileResponse. */
-        interface IUpdateProfileResponse {
+        /** Properties of a ClearProfileRequest. */
+        interface IClearProfileRequest {
         }
 
-        /** Represents an UpdateProfileResponse. */
-        class UpdateProfileResponse implements IUpdateProfileResponse {
+        /** Represents a ClearProfileRequest. */
+        class ClearProfileRequest implements IClearProfileRequest {
 
             /**
-             * Constructs a new UpdateProfileResponse.
+             * Constructs a new ClearProfileRequest.
              * @param [properties] Properties to set
              */
-            constructor(properties?: rental.v1.IUpdateProfileResponse);
+            constructor(properties?: rental.v1.IClearProfileRequest);
 
             /**
-             * Creates an UpdateProfileResponse message from a plain object. Also converts values to their respective internal types.
+             * Creates a ClearProfileRequest message from a plain object. Also converts values to their respective internal types.
              * @param object Plain object
-             * @returns UpdateProfileResponse
+             * @returns ClearProfileRequest
              */
-            public static fromObject(object: { [k: string]: any }): rental.v1.UpdateProfileResponse;
+            public static fromObject(object: { [k: string]: any }): rental.v1.ClearProfileRequest;
 
             /**
-             * Creates a plain object from an UpdateProfileResponse message. Also converts values to other types if specified.
-             * @param message UpdateProfileResponse
+             * Creates a plain object from a ClearProfileRequest message. Also converts values to other types if specified.
+             * @param message ClearProfileRequest
              * @param [options] Conversion options
              * @returns Plain object
              */
-            public static toObject(message: rental.v1.UpdateProfileResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+            public static toObject(message: rental.v1.ClearProfileRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
             /**
-             * Converts this UpdateProfileResponse to JSON.
+             * Converts this ClearProfileRequest to JSON.
              * @returns JSON object
              */
             public toJSON(): { [k: string]: any };
@@ -786,18 +786,32 @@ export namespace rental {
             public getProfile(request: rental.v1.IGetProfileRequest): Promise<rental.v1.Profile>;
 
             /**
-             * Calls UpdateProfile.
-             * @param request Profile message or plain object
-             * @param callback Node-style callback called with the error, if any, and UpdateProfileResponse
+             * Calls SubmitProfile.
+             * @param request Identity message or plain object
+             * @param callback Node-style callback called with the error, if any, and Profile
              */
-            public updateProfile(request: rental.v1.IProfile, callback: rental.v1.ProfileService.UpdateProfileCallback): void;
+            public submitProfile(request: rental.v1.IIdentity, callback: rental.v1.ProfileService.SubmitProfileCallback): void;
 
             /**
-             * Calls UpdateProfile.
-             * @param request Profile message or plain object
+             * Calls SubmitProfile.
+             * @param request Identity message or plain object
              * @returns Promise
              */
-            public updateProfile(request: rental.v1.IProfile): Promise<rental.v1.UpdateProfileResponse>;
+            public submitProfile(request: rental.v1.IIdentity): Promise<rental.v1.Profile>;
+
+            /**
+             * Calls ClearProfile.
+             * @param request ClearProfileRequest message or plain object
+             * @param callback Node-style callback called with the error, if any, and Profile
+             */
+            public clearProfile(request: rental.v1.IClearProfileRequest, callback: rental.v1.ProfileService.ClearProfileCallback): void;
+
+            /**
+             * Calls ClearProfile.
+             * @param request ClearProfileRequest message or plain object
+             * @returns Promise
+             */
+            public clearProfile(request: rental.v1.IClearProfileRequest): Promise<rental.v1.Profile>;
         }
 
         namespace ProfileService {
@@ -810,11 +824,18 @@ export namespace rental {
             type GetProfileCallback = (error: (Error|null), response?: rental.v1.Profile) => void;
 
             /**
-             * Callback as used by {@link rental.v1.ProfileService#updateProfile}.
+             * Callback as used by {@link rental.v1.ProfileService#submitProfile}.
              * @param error Error, if any
-             * @param [response] UpdateProfileResponse
+             * @param [response] Profile
              */
-            type UpdateProfileCallback = (error: (Error|null), response?: rental.v1.UpdateProfileResponse) => void;
+            type SubmitProfileCallback = (error: (Error|null), response?: rental.v1.Profile) => void;
+
+            /**
+             * Callback as used by {@link rental.v1.ProfileService#clearProfile}.
+             * @param error Error, if any
+             * @param [response] Profile
+             */
+            type ClearProfileCallback = (error: (Error|null), response?: rental.v1.Profile) => void;
         }
     }
 }

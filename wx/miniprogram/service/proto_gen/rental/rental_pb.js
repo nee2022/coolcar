@@ -1588,23 +1588,23 @@ export const rental = $root.rental = (() => {
             return GetProfileRequest;
         })();
 
-        v1.UpdateProfileResponse = (function() {
+        v1.ClearProfileRequest = (function() {
 
             /**
-             * Properties of an UpdateProfileResponse.
+             * Properties of a ClearProfileRequest.
              * @memberof rental.v1
-             * @interface IUpdateProfileResponse
+             * @interface IClearProfileRequest
              */
 
             /**
-             * Constructs a new UpdateProfileResponse.
+             * Constructs a new ClearProfileRequest.
              * @memberof rental.v1
-             * @classdesc Represents an UpdateProfileResponse.
-             * @implements IUpdateProfileResponse
+             * @classdesc Represents a ClearProfileRequest.
+             * @implements IClearProfileRequest
              * @constructor
-             * @param {rental.v1.IUpdateProfileResponse=} [properties] Properties to set
+             * @param {rental.v1.IClearProfileRequest=} [properties] Properties to set
              */
-            function UpdateProfileResponse(properties) {
+            function ClearProfileRequest(properties) {
                 if (properties)
                     for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
@@ -1612,44 +1612,44 @@ export const rental = $root.rental = (() => {
             }
 
             /**
-             * Creates an UpdateProfileResponse message from a plain object. Also converts values to their respective internal types.
+             * Creates a ClearProfileRequest message from a plain object. Also converts values to their respective internal types.
              * @function fromObject
-             * @memberof rental.v1.UpdateProfileResponse
+             * @memberof rental.v1.ClearProfileRequest
              * @static
              * @param {Object.<string,*>} object Plain object
-             * @returns {rental.v1.UpdateProfileResponse} UpdateProfileResponse
+             * @returns {rental.v1.ClearProfileRequest} ClearProfileRequest
              */
-            UpdateProfileResponse.fromObject = function fromObject(object) {
-                if (object instanceof $root.rental.v1.UpdateProfileResponse)
+            ClearProfileRequest.fromObject = function fromObject(object) {
+                if (object instanceof $root.rental.v1.ClearProfileRequest)
                     return object;
-                return new $root.rental.v1.UpdateProfileResponse();
+                return new $root.rental.v1.ClearProfileRequest();
             };
 
             /**
-             * Creates a plain object from an UpdateProfileResponse message. Also converts values to other types if specified.
+             * Creates a plain object from a ClearProfileRequest message. Also converts values to other types if specified.
              * @function toObject
-             * @memberof rental.v1.UpdateProfileResponse
+             * @memberof rental.v1.ClearProfileRequest
              * @static
-             * @param {rental.v1.UpdateProfileResponse} message UpdateProfileResponse
+             * @param {rental.v1.ClearProfileRequest} message ClearProfileRequest
              * @param {$protobuf.IConversionOptions} [options] Conversion options
              * @returns {Object.<string,*>} Plain object
              */
-            UpdateProfileResponse.toObject = function toObject() {
+            ClearProfileRequest.toObject = function toObject() {
                 return {};
             };
 
             /**
-             * Converts this UpdateProfileResponse to JSON.
+             * Converts this ClearProfileRequest to JSON.
              * @function toJSON
-             * @memberof rental.v1.UpdateProfileResponse
+             * @memberof rental.v1.ClearProfileRequest
              * @instance
              * @returns {Object.<string,*>} JSON object
              */
-            UpdateProfileResponse.prototype.toJSON = function toJSON() {
+            ClearProfileRequest.prototype.toJSON = function toJSON() {
                 return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
             };
 
-            return UpdateProfileResponse;
+            return ClearProfileRequest;
         })();
 
         v1.ProfileService = (function() {
@@ -1704,35 +1704,68 @@ export const rental = $root.rental = (() => {
              */
 
             /**
-             * Callback as used by {@link rental.v1.ProfileService#updateProfile}.
+             * Callback as used by {@link rental.v1.ProfileService#submitProfile}.
              * @memberof rental.v1.ProfileService
-             * @typedef UpdateProfileCallback
+             * @typedef SubmitProfileCallback
              * @type {function}
              * @param {Error|null} error Error, if any
-             * @param {rental.v1.UpdateProfileResponse} [response] UpdateProfileResponse
+             * @param {rental.v1.Profile} [response] Profile
              */
 
             /**
-             * Calls UpdateProfile.
-             * @function updateProfile
+             * Calls SubmitProfile.
+             * @function submitProfile
              * @memberof rental.v1.ProfileService
              * @instance
-             * @param {rental.v1.IProfile} request Profile message or plain object
-             * @param {rental.v1.ProfileService.UpdateProfileCallback} callback Node-style callback called with the error, if any, and UpdateProfileResponse
+             * @param {rental.v1.IIdentity} request Identity message or plain object
+             * @param {rental.v1.ProfileService.SubmitProfileCallback} callback Node-style callback called with the error, if any, and Profile
              * @returns {undefined}
              * @variation 1
              */
-            Object.defineProperty(ProfileService.prototype.updateProfile = function updateProfile(request, callback) {
-                return this.rpcCall(updateProfile, $root.rental.v1.Profile, $root.rental.v1.UpdateProfileResponse, request, callback);
-            }, "name", { value: "UpdateProfile" });
+            Object.defineProperty(ProfileService.prototype.submitProfile = function submitProfile(request, callback) {
+                return this.rpcCall(submitProfile, $root.rental.v1.Identity, $root.rental.v1.Profile, request, callback);
+            }, "name", { value: "SubmitProfile" });
 
             /**
-             * Calls UpdateProfile.
-             * @function updateProfile
+             * Calls SubmitProfile.
+             * @function submitProfile
              * @memberof rental.v1.ProfileService
              * @instance
-             * @param {rental.v1.IProfile} request Profile message or plain object
-             * @returns {Promise<rental.v1.UpdateProfileResponse>} Promise
+             * @param {rental.v1.IIdentity} request Identity message or plain object
+             * @returns {Promise<rental.v1.Profile>} Promise
+             * @variation 2
+             */
+
+            /**
+             * Callback as used by {@link rental.v1.ProfileService#clearProfile}.
+             * @memberof rental.v1.ProfileService
+             * @typedef ClearProfileCallback
+             * @type {function}
+             * @param {Error|null} error Error, if any
+             * @param {rental.v1.Profile} [response] Profile
+             */
+
+            /**
+             * Calls ClearProfile.
+             * @function clearProfile
+             * @memberof rental.v1.ProfileService
+             * @instance
+             * @param {rental.v1.IClearProfileRequest} request ClearProfileRequest message or plain object
+             * @param {rental.v1.ProfileService.ClearProfileCallback} callback Node-style callback called with the error, if any, and Profile
+             * @returns {undefined}
+             * @variation 1
+             */
+            Object.defineProperty(ProfileService.prototype.clearProfile = function clearProfile(request, callback) {
+                return this.rpcCall(clearProfile, $root.rental.v1.ClearProfileRequest, $root.rental.v1.Profile, request, callback);
+            }, "name", { value: "ClearProfile" });
+
+            /**
+             * Calls ClearProfile.
+             * @function clearProfile
+             * @memberof rental.v1.ProfileService
+             * @instance
+             * @param {rental.v1.IClearProfileRequest} request ClearProfileRequest message or plain object
+             * @returns {Promise<rental.v1.Profile>} Promise
              * @variation 2
              */
 
