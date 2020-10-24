@@ -19,7 +19,7 @@ Page({
         licNo: '',
         name: '',
         genderIndex: 0,
-        genders: ['未知', '男', '女', '其他'],
+        genders: ['未知', '男', '女'],
         birthDate: '1990-01-01',
         licImgURL: '',
         state: rental.v1.IdentityStatus[rental.v1.IdentityStatus.UNSUBMITTED],

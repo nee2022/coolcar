@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.8.2",
+	"libVersion": "2.9.3",
 	"projectname": "coolcar",
 	"scripts": {
 		"beforeCompile": "npm run tsc",
