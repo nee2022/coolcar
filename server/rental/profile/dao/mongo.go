@@ -13,8 +13,9 @@ import (
 )
 
 const (
-	accountIDField = "accountid"
-	profileField   = "profile"
+	accountIDField      = "accountid"
+	profileField        = "profile"
+	identityStatusField = profileField + ".identitystatus"
 )
 
 // Mongo defines a mongo dao.
@@ -50,8 +51,11 @@ func (m *Mongo) GetProfile(c context.Context, aid id.AccountID) (*rentalpb.Profi
 }
 
 // UpdateProfile updates profile for an account.
-func (m *Mongo) UpdateProfile(c context.Context, aid id.AccountID, p *rentalpb.Profile) error {
-	_, err := m.col.UpdateOne(c, byAccountID(aid), mgutil.Set(bson.M{
+func (m *Mongo) UpdateProfile(c context.Context, aid id.AccountID, prevState rentalpb.IdentityStatus, p *rentalpb.Profile) error {
+	_, err := m.col.UpdateOne(c, bson.M{
+		accountIDField:      aid.String(),
+		identityStatusField: prevState,
+	}, mgutil.Set(bson.M{
 		accountIDField: aid.String(),
 		profileField:   p,
 	}), options.Update().SetUpsert(true))

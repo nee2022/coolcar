@@ -46,7 +46,7 @@ func (s *Service) SubmitProfile(c context.Context, i *rentalpb.Identity) (*renta
 		Identity:       i,
 		IdentityStatus: rentalpb.IdentityStatus_PENDING,
 	}
-	err = s.Mongo.UpdateProfile(c, aid, p)
+	err = s.Mongo.UpdateProfile(c, aid, rentalpb.IdentityStatus_UNSUBMITTED, p)
 	if err != nil {
 		s.Logger.Error("cannot update profile", zap.Error(err))
 		return nil, status.Error(codes.Internal, "")
@@ -62,7 +62,7 @@ func (s *Service) ClearProfile(c context.Context, req *rentalpb.ClearProfileRequ
 	}
 
 	p := &rentalpb.Profile{}
-	err = s.Mongo.UpdateProfile(c, aid, p)
+	err = s.Mongo.UpdateProfile(c, aid, rentalpb.IdentityStatus_VERIFIED, p)
 	if err != nil {
 		s.Logger.Error("cannot update profile", zap.Error(err))
 		return nil, status.Error(codes.Internal, "")
