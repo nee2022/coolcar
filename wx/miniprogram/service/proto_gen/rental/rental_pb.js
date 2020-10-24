@@ -1227,6 +1227,518 @@ export const rental = $root.rental = (() => {
             return TripService;
         })();
 
+        /**
+         * Gender enum.
+         * @name rental.v1.Gender
+         * @enum {number}
+         * @property {number} G_NOT_SPECIFIED=0 G_NOT_SPECIFIED value
+         * @property {number} MALE=1 MALE value
+         * @property {number} FEMALE=2 FEMALE value
+         */
+        v1.Gender = (function() {
+            const valuesById = {}, values = Object.create(valuesById);
+            values[valuesById[0] = "G_NOT_SPECIFIED"] = 0;
+            values[valuesById[1] = "MALE"] = 1;
+            values[valuesById[2] = "FEMALE"] = 2;
+            return values;
+        })();
+
+        /**
+         * IdentityStatus enum.
+         * @name rental.v1.IdentityStatus
+         * @enum {number}
+         * @property {number} UNSUBMITTED=0 UNSUBMITTED value
+         * @property {number} PENDING=1 PENDING value
+         * @property {number} VERIFIED=2 VERIFIED value
+         */
+        v1.IdentityStatus = (function() {
+            const valuesById = {}, values = Object.create(valuesById);
+            values[valuesById[0] = "UNSUBMITTED"] = 0;
+            values[valuesById[1] = "PENDING"] = 1;
+            values[valuesById[2] = "VERIFIED"] = 2;
+            return values;
+        })();
+
+        v1.Profile = (function() {
+
+            /**
+             * Properties of a Profile.
+             * @memberof rental.v1
+             * @interface IProfile
+             * @property {rental.v1.IIdentity|null} [identity] Profile identity
+             * @property {rental.v1.IdentityStatus|null} [identityStatus] Profile identityStatus
+             */
+
+            /**
+             * Constructs a new Profile.
+             * @memberof rental.v1
+             * @classdesc Represents a Profile.
+             * @implements IProfile
+             * @constructor
+             * @param {rental.v1.IProfile=} [properties] Properties to set
+             */
+            function Profile(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * Profile identity.
+             * @member {rental.v1.IIdentity|null|undefined} identity
+             * @memberof rental.v1.Profile
+             * @instance
+             */
+            Profile.prototype.identity = null;
+
+            /**
+             * Profile identityStatus.
+             * @member {rental.v1.IdentityStatus} identityStatus
+             * @memberof rental.v1.Profile
+             * @instance
+             */
+            Profile.prototype.identityStatus = 0;
+
+            /**
+             * Creates a Profile message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof rental.v1.Profile
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {rental.v1.Profile} Profile
+             */
+            Profile.fromObject = function fromObject(object) {
+                if (object instanceof $root.rental.v1.Profile)
+                    return object;
+                let message = new $root.rental.v1.Profile();
+                if (object.identity != null) {
+                    if (typeof object.identity !== "object")
+                        throw TypeError(".rental.v1.Profile.identity: object expected");
+                    message.identity = $root.rental.v1.Identity.fromObject(object.identity);
+                }
+                switch (object.identityStatus) {
+                case "UNSUBMITTED":
+                case 0:
+                    message.identityStatus = 0;
+                    break;
+                case "PENDING":
+                case 1:
+                    message.identityStatus = 1;
+                    break;
+                case "VERIFIED":
+                case 2:
+                    message.identityStatus = 2;
+                    break;
+                }
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a Profile message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof rental.v1.Profile
+             * @static
+             * @param {rental.v1.Profile} message Profile
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            Profile.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                let object = {};
+                if (options.defaults) {
+                    object.identity = null;
+                    object.identityStatus = options.enums === String ? "UNSUBMITTED" : 0;
+                }
+                if (message.identity != null && message.hasOwnProperty("identity"))
+                    object.identity = $root.rental.v1.Identity.toObject(message.identity, options);
+                if (message.identityStatus != null && message.hasOwnProperty("identityStatus"))
+                    object.identityStatus = options.enums === String ? $root.rental.v1.IdentityStatus[message.identityStatus] : message.identityStatus;
+                return object;
+            };
+
+            /**
+             * Converts this Profile to JSON.
+             * @function toJSON
+             * @memberof rental.v1.Profile
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            Profile.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return Profile;
+        })();
+
+        v1.Identity = (function() {
+
+            /**
+             * Properties of an Identity.
+             * @memberof rental.v1
+             * @interface IIdentity
+             * @property {string|null} [licNumber] Identity licNumber
+             * @property {string|null} [name] Identity name
+             * @property {rental.v1.Gender|null} [gender] Identity gender
+             * @property {number|null} [birthDateMillis] Identity birthDateMillis
+             */
+
+            /**
+             * Constructs a new Identity.
+             * @memberof rental.v1
+             * @classdesc Represents an Identity.
+             * @implements IIdentity
+             * @constructor
+             * @param {rental.v1.IIdentity=} [properties] Properties to set
+             */
+            function Identity(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * Identity licNumber.
+             * @member {string} licNumber
+             * @memberof rental.v1.Identity
+             * @instance
+             */
+            Identity.prototype.licNumber = "";
+
+            /**
+             * Identity name.
+             * @member {string} name
+             * @memberof rental.v1.Identity
+             * @instance
+             */
+            Identity.prototype.name = "";
+
+            /**
+             * Identity gender.
+             * @member {rental.v1.Gender} gender
+             * @memberof rental.v1.Identity
+             * @instance
+             */
+            Identity.prototype.gender = 0;
+
+            /**
+             * Identity birthDateMillis.
+             * @member {number} birthDateMillis
+             * @memberof rental.v1.Identity
+             * @instance
+             */
+            Identity.prototype.birthDateMillis = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+            /**
+             * Creates an Identity message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof rental.v1.Identity
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {rental.v1.Identity} Identity
+             */
+            Identity.fromObject = function fromObject(object) {
+                if (object instanceof $root.rental.v1.Identity)
+                    return object;
+                let message = new $root.rental.v1.Identity();
+                if (object.licNumber != null)
+                    message.licNumber = String(object.licNumber);
+                if (object.name != null)
+                    message.name = String(object.name);
+                switch (object.gender) {
+                case "G_NOT_SPECIFIED":
+                case 0:
+                    message.gender = 0;
+                    break;
+                case "MALE":
+                case 1:
+                    message.gender = 1;
+                    break;
+                case "FEMALE":
+                case 2:
+                    message.gender = 2;
+                    break;
+                }
+                if (object.birthDateMillis != null)
+                    if ($util.Long)
+                        (message.birthDateMillis = $util.Long.fromValue(object.birthDateMillis)).unsigned = false;
+                    else if (typeof object.birthDateMillis === "string")
+                        message.birthDateMillis = parseInt(object.birthDateMillis, 10);
+                    else if (typeof object.birthDateMillis === "number")
+                        message.birthDateMillis = object.birthDateMillis;
+                    else if (typeof object.birthDateMillis === "object")
+                        message.birthDateMillis = new $util.LongBits(object.birthDateMillis.low >>> 0, object.birthDateMillis.high >>> 0).toNumber();
+                return message;
+            };
+
+            /**
+             * Creates a plain object from an Identity message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof rental.v1.Identity
+             * @static
+             * @param {rental.v1.Identity} message Identity
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            Identity.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                let object = {};
+                if (options.defaults) {
+                    object.licNumber = "";
+                    object.name = "";
+                    object.gender = options.enums === String ? "G_NOT_SPECIFIED" : 0;
+                    if ($util.Long) {
+                        let long = new $util.Long(0, 0, false);
+                        object.birthDateMillis = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                    } else
+                        object.birthDateMillis = options.longs === String ? "0" : 0;
+                }
+                if (message.licNumber != null && message.hasOwnProperty("licNumber"))
+                    object.licNumber = message.licNumber;
+                if (message.name != null && message.hasOwnProperty("name"))
+                    object.name = message.name;
+                if (message.gender != null && message.hasOwnProperty("gender"))
+                    object.gender = options.enums === String ? $root.rental.v1.Gender[message.gender] : message.gender;
+                if (message.birthDateMillis != null && message.hasOwnProperty("birthDateMillis"))
+                    if (typeof message.birthDateMillis === "number")
+                        object.birthDateMillis = options.longs === String ? String(message.birthDateMillis) : message.birthDateMillis;
+                    else
+                        object.birthDateMillis = options.longs === String ? $util.Long.prototype.toString.call(message.birthDateMillis) : options.longs === Number ? new $util.LongBits(message.birthDateMillis.low >>> 0, message.birthDateMillis.high >>> 0).toNumber() : message.birthDateMillis;
+                return object;
+            };
+
+            /**
+             * Converts this Identity to JSON.
+             * @function toJSON
+             * @memberof rental.v1.Identity
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            Identity.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return Identity;
+        })();
+
+        v1.GetProfileRequest = (function() {
+
+            /**
+             * Properties of a GetProfileRequest.
+             * @memberof rental.v1
+             * @interface IGetProfileRequest
+             */
+
+            /**
+             * Constructs a new GetProfileRequest.
+             * @memberof rental.v1
+             * @classdesc Represents a GetProfileRequest.
+             * @implements IGetProfileRequest
+             * @constructor
+             * @param {rental.v1.IGetProfileRequest=} [properties] Properties to set
+             */
+            function GetProfileRequest(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * Creates a GetProfileRequest message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof rental.v1.GetProfileRequest
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {rental.v1.GetProfileRequest} GetProfileRequest
+             */
+            GetProfileRequest.fromObject = function fromObject(object) {
+                if (object instanceof $root.rental.v1.GetProfileRequest)
+                    return object;
+                return new $root.rental.v1.GetProfileRequest();
+            };
+
+            /**
+             * Creates a plain object from a GetProfileRequest message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof rental.v1.GetProfileRequest
+             * @static
+             * @param {rental.v1.GetProfileRequest} message GetProfileRequest
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            GetProfileRequest.toObject = function toObject() {
+                return {};
+            };
+
+            /**
+             * Converts this GetProfileRequest to JSON.
+             * @function toJSON
+             * @memberof rental.v1.GetProfileRequest
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            GetProfileRequest.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return GetProfileRequest;
+        })();
+
+        v1.UpdateProfileResponse = (function() {
+
+            /**
+             * Properties of an UpdateProfileResponse.
+             * @memberof rental.v1
+             * @interface IUpdateProfileResponse
+             */
+
+            /**
+             * Constructs a new UpdateProfileResponse.
+             * @memberof rental.v1
+             * @classdesc Represents an UpdateProfileResponse.
+             * @implements IUpdateProfileResponse
+             * @constructor
+             * @param {rental.v1.IUpdateProfileResponse=} [properties] Properties to set
+             */
+            function UpdateProfileResponse(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * Creates an UpdateProfileResponse message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof rental.v1.UpdateProfileResponse
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {rental.v1.UpdateProfileResponse} UpdateProfileResponse
+             */
+            UpdateProfileResponse.fromObject = function fromObject(object) {
+                if (object instanceof $root.rental.v1.UpdateProfileResponse)
+                    return object;
+                return new $root.rental.v1.UpdateProfileResponse();
+            };
+
+            /**
+             * Creates a plain object from an UpdateProfileResponse message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof rental.v1.UpdateProfileResponse
+             * @static
+             * @param {rental.v1.UpdateProfileResponse} message UpdateProfileResponse
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            UpdateProfileResponse.toObject = function toObject() {
+                return {};
+            };
+
+            /**
+             * Converts this UpdateProfileResponse to JSON.
+             * @function toJSON
+             * @memberof rental.v1.UpdateProfileResponse
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            UpdateProfileResponse.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return UpdateProfileResponse;
+        })();
+
+        v1.ProfileService = (function() {
+
+            /**
+             * Constructs a new ProfileService service.
+             * @memberof rental.v1
+             * @classdesc Represents a ProfileService
+             * @extends $protobuf.rpc.Service
+             * @constructor
+             * @param {$protobuf.RPCImpl} rpcImpl RPC implementation
+             * @param {boolean} [requestDelimited=false] Whether requests are length-delimited
+             * @param {boolean} [responseDelimited=false] Whether responses are length-delimited
+             */
+            function ProfileService(rpcImpl, requestDelimited, responseDelimited) {
+                $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
+            }
+
+            (ProfileService.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = ProfileService;
+
+            /**
+             * Callback as used by {@link rental.v1.ProfileService#getProfile}.
+             * @memberof rental.v1.ProfileService
+             * @typedef GetProfileCallback
+             * @type {function}
+             * @param {Error|null} error Error, if any
+             * @param {rental.v1.Profile} [response] Profile
+             */
+
+            /**
+             * Calls GetProfile.
+             * @function getProfile
+             * @memberof rental.v1.ProfileService
+             * @instance
+             * @param {rental.v1.IGetProfileRequest} request GetProfileRequest message or plain object
+             * @param {rental.v1.ProfileService.GetProfileCallback} callback Node-style callback called with the error, if any, and Profile
+             * @returns {undefined}
+             * @variation 1
+             */
+            Object.defineProperty(ProfileService.prototype.getProfile = function getProfile(request, callback) {
+                return this.rpcCall(getProfile, $root.rental.v1.GetProfileRequest, $root.rental.v1.Profile, request, callback);
+            }, "name", { value: "GetProfile" });
+
+            /**
+             * Calls GetProfile.
+             * @function getProfile
+             * @memberof rental.v1.ProfileService
+             * @instance
+             * @param {rental.v1.IGetProfileRequest} request GetProfileRequest message or plain object
+             * @returns {Promise<rental.v1.Profile>} Promise
+             * @variation 2
+             */
+
+            /**
+             * Callback as used by {@link rental.v1.ProfileService#updateProfile}.
+             * @memberof rental.v1.ProfileService
+             * @typedef UpdateProfileCallback
+             * @type {function}
+             * @param {Error|null} error Error, if any
+             * @param {rental.v1.UpdateProfileResponse} [response] UpdateProfileResponse
+             */
+
+            /**
+             * Calls UpdateProfile.
+             * @function updateProfile
+             * @memberof rental.v1.ProfileService
+             * @instance
+             * @param {rental.v1.IProfile} request Profile message or plain object
+             * @param {rental.v1.ProfileService.UpdateProfileCallback} callback Node-style callback called with the error, if any, and UpdateProfileResponse
+             * @returns {undefined}
+             * @variation 1
+             */
+            Object.defineProperty(ProfileService.prototype.updateProfile = function updateProfile(request, callback) {
+                return this.rpcCall(updateProfile, $root.rental.v1.Profile, $root.rental.v1.UpdateProfileResponse, request, callback);
+            }, "name", { value: "UpdateProfile" });
+
+            /**
+             * Calls UpdateProfile.
+             * @function updateProfile
+             * @memberof rental.v1.ProfileService
+             * @instance
+             * @param {rental.v1.IProfile} request Profile message or plain object
+             * @returns {Promise<rental.v1.UpdateProfileResponse>} Promise
+             * @variation 2
+             */
+
+            return ProfileService;
+        })();
+
         return v1;
     })();
 

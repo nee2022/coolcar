@@ -2,6 +2,7 @@ syntax = "proto3";
 package rental.v1;
 option go_package="coolcar/rental/api/gen/v1;rentalpb";
 
+// Trip Service
 message Location {
     double latitude = 1;
     double longitude = 2;
@@ -64,4 +65,38 @@ service TripService {
     rpc GetTrip (GetTripRequest) returns (Trip);
     rpc GetTrips (GetTripsRequest) returns (GetTripsResponse);
     rpc UpdateTrip (UpdateTripRequest) returns (Trip);
+}
+
+// Profile Service
+
+enum Gender {
+    G_NOT_SPECIFIED = 0;
+    MALE = 1;
+    FEMALE = 2;
+}
+
+enum IdentityStatus {
+    UNSUBMITTED = 0;
+    PENDING = 1;
+    VERIFIED = 2;
+}
+
+message Profile {
+    Identity identity = 1;
+    IdentityStatus identity_status = 2;
+}
+
+message Identity {
+    string lic_number = 1;
+    string name = 2;
+    Gender gender = 3;
+    int64 birth_date_millis = 4;
+}
+
+message GetProfileRequest {}
+message UpdateProfileResponse {}
+
+service ProfileService {
+    rpc GetProfile (GetProfileRequest) returns (Profile);
+    rpc UpdateProfile (Profile) returns (UpdateProfileResponse);
 }

@@ -13,3 +13,8 @@ http:
     - selector: rental.v1.TripService.UpdateTrip
       put: /v1/trip/{id}
       body: "*"
+    - selector: rental.v1.ProfileService.GetProfile
+      get: /v1/profile
+    - selector: rental.v1.ProfileService.UpdateProfile
+      put: /v1/profile
+      body: "*"

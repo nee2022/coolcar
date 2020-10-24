@@ -569,5 +569,252 @@ export namespace rental {
              */
             type UpdateTripCallback = (error: (Error|null), response?: rental.v1.Trip) => void;
         }
+
+        /** Gender enum. */
+        enum Gender {
+            G_NOT_SPECIFIED = 0,
+            MALE = 1,
+            FEMALE = 2
+        }
+
+        /** IdentityStatus enum. */
+        enum IdentityStatus {
+            UNSUBMITTED = 0,
+            PENDING = 1,
+            VERIFIED = 2
+        }
+
+        /** Properties of a Profile. */
+        interface IProfile {
+
+            /** Profile identity */
+            identity?: (rental.v1.IIdentity|null);
+
+            /** Profile identityStatus */
+            identityStatus?: (rental.v1.IdentityStatus|null);
+        }
+
+        /** Represents a Profile. */
+        class Profile implements IProfile {
+
+            /**
+             * Constructs a new Profile.
+             * @param [properties] Properties to set
+             */
+            constructor(properties?: rental.v1.IProfile);
+
+            /** Profile identity. */
+            public identity?: (rental.v1.IIdentity|null);
+
+            /** Profile identityStatus. */
+            public identityStatus: rental.v1.IdentityStatus;
+
+            /**
+             * Creates a Profile message from a plain object. Also converts values to their respective internal types.
+             * @param object Plain object
+             * @returns Profile
+             */
+            public static fromObject(object: { [k: string]: any }): rental.v1.Profile;
+
+            /**
+             * Creates a plain object from a Profile message. Also converts values to other types if specified.
+             * @param message Profile
+             * @param [options] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(message: rental.v1.Profile, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this Profile to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+        }
+
+        /** Properties of an Identity. */
+        interface IIdentity {
+
+            /** Identity licNumber */
+            licNumber?: (string|null);
+
+            /** Identity name */
+            name?: (string|null);
+
+            /** Identity gender */
+            gender?: (rental.v1.Gender|null);
+
+            /** Identity birthDateMillis */
+            birthDateMillis?: (number|null);
+        }
+
+        /** Represents an Identity. */
+        class Identity implements IIdentity {
+
+            /**
+             * Constructs a new Identity.
+             * @param [properties] Properties to set
+             */
+            constructor(properties?: rental.v1.IIdentity);
+
+            /** Identity licNumber. */
+            public licNumber: string;
+
+            /** Identity name. */
+            public name: string;
+
+            /** Identity gender. */
+            public gender: rental.v1.Gender;
+
+            /** Identity birthDateMillis. */
+            public birthDateMillis: number;
+
+            /**
+             * Creates an Identity message from a plain object. Also converts values to their respective internal types.
+             * @param object Plain object
+             * @returns Identity
+             */
+            public static fromObject(object: { [k: string]: any }): rental.v1.Identity;
+
+            /**
+             * Creates a plain object from an Identity message. Also converts values to other types if specified.
+             * @param message Identity
+             * @param [options] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(message: rental.v1.Identity, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this Identity to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+        }
+
+        /** Properties of a GetProfileRequest. */
+        interface IGetProfileRequest {
+        }
+
+        /** Represents a GetProfileRequest. */
+        class GetProfileRequest implements IGetProfileRequest {
+
+            /**
+             * Constructs a new GetProfileRequest.
+             * @param [properties] Properties to set
+             */
+            constructor(properties?: rental.v1.IGetProfileRequest);
+
+            /**
+             * Creates a GetProfileRequest message from a plain object. Also converts values to their respective internal types.
+             * @param object Plain object
+             * @returns GetProfileRequest
+             */
+            public static fromObject(object: { [k: string]: any }): rental.v1.GetProfileRequest;
+
+            /**
+             * Creates a plain object from a GetProfileRequest message. Also converts values to other types if specified.
+             * @param message GetProfileRequest
+             * @param [options] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(message: rental.v1.GetProfileRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this GetProfileRequest to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+        }
+
+        /** Properties of an UpdateProfileResponse. */
+        interface IUpdateProfileResponse {
+        }
+
+        /** Represents an UpdateProfileResponse. */
+        class UpdateProfileResponse implements IUpdateProfileResponse {
+
+            /**
+             * Constructs a new UpdateProfileResponse.
+             * @param [properties] Properties to set
+             */
+            constructor(properties?: rental.v1.IUpdateProfileResponse);
+
+            /**
+             * Creates an UpdateProfileResponse message from a plain object. Also converts values to their respective internal types.
+             * @param object Plain object
+             * @returns UpdateProfileResponse
+             */
+            public static fromObject(object: { [k: string]: any }): rental.v1.UpdateProfileResponse;
+
+            /**
+             * Creates a plain object from an UpdateProfileResponse message. Also converts values to other types if specified.
+             * @param message UpdateProfileResponse
+             * @param [options] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(message: rental.v1.UpdateProfileResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this UpdateProfileResponse to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+        }
+
+        /** Represents a ProfileService */
+        class ProfileService extends $protobuf.rpc.Service {
+
+            /**
+             * Constructs a new ProfileService service.
+             * @param rpcImpl RPC implementation
+             * @param [requestDelimited=false] Whether requests are length-delimited
+             * @param [responseDelimited=false] Whether responses are length-delimited
+             */
+            constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+            /**
+             * Calls GetProfile.
+             * @param request GetProfileRequest message or plain object
+             * @param callback Node-style callback called with the error, if any, and Profile
+             */
+            public getProfile(request: rental.v1.IGetProfileRequest, callback: rental.v1.ProfileService.GetProfileCallback): void;
+
+            /**
+             * Calls GetProfile.
+             * @param request GetProfileRequest message or plain object
+             * @returns Promise
+             */
+            public getProfile(request: rental.v1.IGetProfileRequest): Promise<rental.v1.Profile>;
+
+            /**
+             * Calls UpdateProfile.
+             * @param request Profile message or plain object
+             * @param callback Node-style callback called with the error, if any, and UpdateProfileResponse
+             */
+            public updateProfile(request: rental.v1.IProfile, callback: rental.v1.ProfileService.UpdateProfileCallback): void;
+
+            /**
+             * Calls UpdateProfile.
+             * @param request Profile message or plain object
+             * @returns Promise
+             */
+            public updateProfile(request: rental.v1.IProfile): Promise<rental.v1.UpdateProfileResponse>;
+        }
+
+        namespace ProfileService {
+
+            /**
+             * Callback as used by {@link rental.v1.ProfileService#getProfile}.
+             * @param error Error, if any
+             * @param [response] Profile
+             */
+            type GetProfileCallback = (error: (Error|null), response?: rental.v1.Profile) => void;
+
+            /**
+             * Callback as used by {@link rental.v1.ProfileService#updateProfile}.
+             * @param error Error, if any
+             * @param [response] UpdateProfileResponse
+             */
+            type UpdateProfileCallback = (error: (Error|null), response?: rental.v1.UpdateProfileResponse) => void;
+        }
     }
 }
