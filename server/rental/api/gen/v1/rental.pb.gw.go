@@ -383,6 +383,24 @@ func local_request_ProfileService_CompleteProfilePhoto_0(ctx context.Context, ma
 
 }
 
+func request_ProfileService_ClearProfilePhoto_0(ctx context.Context, marshaler runtime.Marshaler, client ProfileServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ClearProfilePhotoRequest
+	var metadata runtime.ServerMetadata
+
+	msg, err := client.ClearProfilePhoto(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ProfileService_ClearProfilePhoto_0(ctx context.Context, marshaler runtime.Marshaler, server ProfileServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ClearProfilePhotoRequest
+	var metadata runtime.ServerMetadata
+
+	msg, err := server.ClearProfilePhoto(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
 // RegisterTripServiceHandlerServer registers the http handlers for service TripService to "mux".
 // UnaryRPC     :call TripServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
@@ -625,6 +643,29 @@ func RegisterProfileServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		}
 
 		forward_ProfileService_CompleteProfilePhoto_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_ProfileService_ClearProfilePhoto_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ProfileService_ClearProfilePhoto_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProfileService_ClearProfilePhoto_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -930,6 +971,26 @@ func RegisterProfileServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 
 	})
 
+	mux.Handle("DELETE", pattern_ProfileService_ClearProfilePhoto_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ProfileService_ClearProfilePhoto_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProfileService_ClearProfilePhoto_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
 	return nil
 }
 
@@ -945,6 +1006,8 @@ var (
 	pattern_ProfileService_CreateProfilePhoto_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "profile", "photo"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_ProfileService_CompleteProfilePhoto_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "profile", "photo", "complete"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_ProfileService_ClearProfilePhoto_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "profile", "photo"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
@@ -959,4 +1022,6 @@ var (
 	forward_ProfileService_CreateProfilePhoto_0 = runtime.ForwardResponseMessage
 
 	forward_ProfileService_CompleteProfilePhoto_0 = runtime.ForwardResponseMessage
+
+	forward_ProfileService_ClearProfilePhoto_0 = runtime.ForwardResponseMessage
 )

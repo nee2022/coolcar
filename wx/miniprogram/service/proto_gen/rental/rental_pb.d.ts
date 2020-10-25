@@ -947,6 +947,76 @@ export namespace rental {
             public toJSON(): { [k: string]: any };
         }
 
+        /** Properties of a ClearProfilePhotoRequest. */
+        interface IClearProfilePhotoRequest {
+        }
+
+        /** Represents a ClearProfilePhotoRequest. */
+        class ClearProfilePhotoRequest implements IClearProfilePhotoRequest {
+
+            /**
+             * Constructs a new ClearProfilePhotoRequest.
+             * @param [properties] Properties to set
+             */
+            constructor(properties?: rental.v1.IClearProfilePhotoRequest);
+
+            /**
+             * Creates a ClearProfilePhotoRequest message from a plain object. Also converts values to their respective internal types.
+             * @param object Plain object
+             * @returns ClearProfilePhotoRequest
+             */
+            public static fromObject(object: { [k: string]: any }): rental.v1.ClearProfilePhotoRequest;
+
+            /**
+             * Creates a plain object from a ClearProfilePhotoRequest message. Also converts values to other types if specified.
+             * @param message ClearProfilePhotoRequest
+             * @param [options] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(message: rental.v1.ClearProfilePhotoRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this ClearProfilePhotoRequest to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+        }
+
+        /** Properties of a ClearProfilePhotoResponse. */
+        interface IClearProfilePhotoResponse {
+        }
+
+        /** Represents a ClearProfilePhotoResponse. */
+        class ClearProfilePhotoResponse implements IClearProfilePhotoResponse {
+
+            /**
+             * Constructs a new ClearProfilePhotoResponse.
+             * @param [properties] Properties to set
+             */
+            constructor(properties?: rental.v1.IClearProfilePhotoResponse);
+
+            /**
+             * Creates a ClearProfilePhotoResponse message from a plain object. Also converts values to their respective internal types.
+             * @param object Plain object
+             * @returns ClearProfilePhotoResponse
+             */
+            public static fromObject(object: { [k: string]: any }): rental.v1.ClearProfilePhotoResponse;
+
+            /**
+             * Creates a plain object from a ClearProfilePhotoResponse message. Also converts values to other types if specified.
+             * @param message ClearProfilePhotoResponse
+             * @param [options] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(message: rental.v1.ClearProfilePhotoResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this ClearProfilePhotoResponse to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+        }
+
         /** Represents a ProfileService */
         class ProfileService extends $protobuf.rpc.Service {
 
@@ -1041,6 +1111,20 @@ export namespace rental {
              * @returns Promise
              */
             public completeProfilePhoto(request: rental.v1.ICompleteProfilePhotoRequest): Promise<rental.v1.Identity>;
+
+            /**
+             * Calls ClearProfilePhoto.
+             * @param request ClearProfilePhotoRequest message or plain object
+             * @param callback Node-style callback called with the error, if any, and ClearProfilePhotoResponse
+             */
+            public clearProfilePhoto(request: rental.v1.IClearProfilePhotoRequest, callback: rental.v1.ProfileService.ClearProfilePhotoCallback): void;
+
+            /**
+             * Calls ClearProfilePhoto.
+             * @param request ClearProfilePhotoRequest message or plain object
+             * @returns Promise
+             */
+            public clearProfilePhoto(request: rental.v1.IClearProfilePhotoRequest): Promise<rental.v1.ClearProfilePhotoResponse>;
         }
 
         namespace ProfileService {
@@ -1086,6 +1170,13 @@ export namespace rental {
              * @param [response] Identity
              */
             type CompleteProfilePhotoCallback = (error: (Error|null), response?: rental.v1.Identity) => void;
+
+            /**
+             * Callback as used by {@link rental.v1.ProfileService#clearProfilePhoto}.
+             * @param error Error, if any
+             * @param [response] ClearProfilePhotoResponse
+             */
+            type ClearProfilePhotoCallback = (error: (Error|null), response?: rental.v1.ClearProfilePhotoResponse) => void;
         }
     }
 }

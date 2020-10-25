@@ -28,3 +28,5 @@ http:
     - selector: rental.v1.ProfileService.CompleteProfilePhoto
       post: /v1/profile/photo/complete
       body: "*"
+    - selector: rental.v1.ProfileService.ClearProfilePhoto
+      delete: /v1/profile/photo

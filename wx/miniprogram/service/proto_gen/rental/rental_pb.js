@@ -2010,6 +2010,134 @@ export const rental = $root.rental = (() => {
             return CompleteProfilePhotoRequest;
         })();
 
+        v1.ClearProfilePhotoRequest = (function() {
+
+            /**
+             * Properties of a ClearProfilePhotoRequest.
+             * @memberof rental.v1
+             * @interface IClearProfilePhotoRequest
+             */
+
+            /**
+             * Constructs a new ClearProfilePhotoRequest.
+             * @memberof rental.v1
+             * @classdesc Represents a ClearProfilePhotoRequest.
+             * @implements IClearProfilePhotoRequest
+             * @constructor
+             * @param {rental.v1.IClearProfilePhotoRequest=} [properties] Properties to set
+             */
+            function ClearProfilePhotoRequest(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * Creates a ClearProfilePhotoRequest message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof rental.v1.ClearProfilePhotoRequest
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {rental.v1.ClearProfilePhotoRequest} ClearProfilePhotoRequest
+             */
+            ClearProfilePhotoRequest.fromObject = function fromObject(object) {
+                if (object instanceof $root.rental.v1.ClearProfilePhotoRequest)
+                    return object;
+                return new $root.rental.v1.ClearProfilePhotoRequest();
+            };
+
+            /**
+             * Creates a plain object from a ClearProfilePhotoRequest message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof rental.v1.ClearProfilePhotoRequest
+             * @static
+             * @param {rental.v1.ClearProfilePhotoRequest} message ClearProfilePhotoRequest
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            ClearProfilePhotoRequest.toObject = function toObject() {
+                return {};
+            };
+
+            /**
+             * Converts this ClearProfilePhotoRequest to JSON.
+             * @function toJSON
+             * @memberof rental.v1.ClearProfilePhotoRequest
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            ClearProfilePhotoRequest.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return ClearProfilePhotoRequest;
+        })();
+
+        v1.ClearProfilePhotoResponse = (function() {
+
+            /**
+             * Properties of a ClearProfilePhotoResponse.
+             * @memberof rental.v1
+             * @interface IClearProfilePhotoResponse
+             */
+
+            /**
+             * Constructs a new ClearProfilePhotoResponse.
+             * @memberof rental.v1
+             * @classdesc Represents a ClearProfilePhotoResponse.
+             * @implements IClearProfilePhotoResponse
+             * @constructor
+             * @param {rental.v1.IClearProfilePhotoResponse=} [properties] Properties to set
+             */
+            function ClearProfilePhotoResponse(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * Creates a ClearProfilePhotoResponse message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof rental.v1.ClearProfilePhotoResponse
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {rental.v1.ClearProfilePhotoResponse} ClearProfilePhotoResponse
+             */
+            ClearProfilePhotoResponse.fromObject = function fromObject(object) {
+                if (object instanceof $root.rental.v1.ClearProfilePhotoResponse)
+                    return object;
+                return new $root.rental.v1.ClearProfilePhotoResponse();
+            };
+
+            /**
+             * Creates a plain object from a ClearProfilePhotoResponse message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof rental.v1.ClearProfilePhotoResponse
+             * @static
+             * @param {rental.v1.ClearProfilePhotoResponse} message ClearProfilePhotoResponse
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            ClearProfilePhotoResponse.toObject = function toObject() {
+                return {};
+            };
+
+            /**
+             * Converts this ClearProfilePhotoResponse to JSON.
+             * @function toJSON
+             * @memberof rental.v1.ClearProfilePhotoResponse
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            ClearProfilePhotoResponse.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return ClearProfilePhotoResponse;
+        })();
+
         v1.ProfileService = (function() {
 
             /**
@@ -2223,6 +2351,39 @@ export const rental = $root.rental = (() => {
              * @instance
              * @param {rental.v1.ICompleteProfilePhotoRequest} request CompleteProfilePhotoRequest message or plain object
              * @returns {Promise<rental.v1.Identity>} Promise
+             * @variation 2
+             */
+
+            /**
+             * Callback as used by {@link rental.v1.ProfileService#clearProfilePhoto}.
+             * @memberof rental.v1.ProfileService
+             * @typedef ClearProfilePhotoCallback
+             * @type {function}
+             * @param {Error|null} error Error, if any
+             * @param {rental.v1.ClearProfilePhotoResponse} [response] ClearProfilePhotoResponse
+             */
+
+            /**
+             * Calls ClearProfilePhoto.
+             * @function clearProfilePhoto
+             * @memberof rental.v1.ProfileService
+             * @instance
+             * @param {rental.v1.IClearProfilePhotoRequest} request ClearProfilePhotoRequest message or plain object
+             * @param {rental.v1.ProfileService.ClearProfilePhotoCallback} callback Node-style callback called with the error, if any, and ClearProfilePhotoResponse
+             * @returns {undefined}
+             * @variation 1
+             */
+            Object.defineProperty(ProfileService.prototype.clearProfilePhoto = function clearProfilePhoto(request, callback) {
+                return this.rpcCall(clearProfilePhoto, $root.rental.v1.ClearProfilePhotoRequest, $root.rental.v1.ClearProfilePhotoResponse, request, callback);
+            }, "name", { value: "ClearProfilePhoto" });
+
+            /**
+             * Calls ClearProfilePhoto.
+             * @function clearProfilePhoto
+             * @memberof rental.v1.ProfileService
+             * @instance
+             * @param {rental.v1.IClearProfilePhotoRequest} request ClearProfilePhotoRequest message or plain object
+             * @returns {Promise<rental.v1.ClearProfilePhotoResponse>} Promise
              * @variation 2
              */
 
