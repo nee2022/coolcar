@@ -25,9 +25,9 @@ func NewMongo(db *mongo.Database) *Mongo {
 
 // BlobRecord defines a blob record.
 type BlobRecord struct {
-	mgutil.IDField
-	AccountID string `bson:"accountid"`
-	Path      string `bson:"path"`
+	mgutil.IDField `bson:"inline"`
+	AccountID      string `bson:"accountid"`
+	Path           string `bson:"path"`
 }
 
 // CreateBlob creates a blob record.
