@@ -1652,6 +1652,364 @@ export const rental = $root.rental = (() => {
             return ClearProfileRequest;
         })();
 
+        v1.GetProfilePhotoRequest = (function() {
+
+            /**
+             * Properties of a GetProfilePhotoRequest.
+             * @memberof rental.v1
+             * @interface IGetProfilePhotoRequest
+             */
+
+            /**
+             * Constructs a new GetProfilePhotoRequest.
+             * @memberof rental.v1
+             * @classdesc Represents a GetProfilePhotoRequest.
+             * @implements IGetProfilePhotoRequest
+             * @constructor
+             * @param {rental.v1.IGetProfilePhotoRequest=} [properties] Properties to set
+             */
+            function GetProfilePhotoRequest(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * Creates a GetProfilePhotoRequest message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof rental.v1.GetProfilePhotoRequest
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {rental.v1.GetProfilePhotoRequest} GetProfilePhotoRequest
+             */
+            GetProfilePhotoRequest.fromObject = function fromObject(object) {
+                if (object instanceof $root.rental.v1.GetProfilePhotoRequest)
+                    return object;
+                return new $root.rental.v1.GetProfilePhotoRequest();
+            };
+
+            /**
+             * Creates a plain object from a GetProfilePhotoRequest message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof rental.v1.GetProfilePhotoRequest
+             * @static
+             * @param {rental.v1.GetProfilePhotoRequest} message GetProfilePhotoRequest
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            GetProfilePhotoRequest.toObject = function toObject() {
+                return {};
+            };
+
+            /**
+             * Converts this GetProfilePhotoRequest to JSON.
+             * @function toJSON
+             * @memberof rental.v1.GetProfilePhotoRequest
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            GetProfilePhotoRequest.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return GetProfilePhotoRequest;
+        })();
+
+        v1.GetProfilePhotoResponse = (function() {
+
+            /**
+             * Properties of a GetProfilePhotoResponse.
+             * @memberof rental.v1
+             * @interface IGetProfilePhotoResponse
+             * @property {string|null} [url] GetProfilePhotoResponse url
+             */
+
+            /**
+             * Constructs a new GetProfilePhotoResponse.
+             * @memberof rental.v1
+             * @classdesc Represents a GetProfilePhotoResponse.
+             * @implements IGetProfilePhotoResponse
+             * @constructor
+             * @param {rental.v1.IGetProfilePhotoResponse=} [properties] Properties to set
+             */
+            function GetProfilePhotoResponse(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * GetProfilePhotoResponse url.
+             * @member {string} url
+             * @memberof rental.v1.GetProfilePhotoResponse
+             * @instance
+             */
+            GetProfilePhotoResponse.prototype.url = "";
+
+            /**
+             * Creates a GetProfilePhotoResponse message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof rental.v1.GetProfilePhotoResponse
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {rental.v1.GetProfilePhotoResponse} GetProfilePhotoResponse
+             */
+            GetProfilePhotoResponse.fromObject = function fromObject(object) {
+                if (object instanceof $root.rental.v1.GetProfilePhotoResponse)
+                    return object;
+                let message = new $root.rental.v1.GetProfilePhotoResponse();
+                if (object.url != null)
+                    message.url = String(object.url);
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a GetProfilePhotoResponse message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof rental.v1.GetProfilePhotoResponse
+             * @static
+             * @param {rental.v1.GetProfilePhotoResponse} message GetProfilePhotoResponse
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            GetProfilePhotoResponse.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                let object = {};
+                if (options.defaults)
+                    object.url = "";
+                if (message.url != null && message.hasOwnProperty("url"))
+                    object.url = message.url;
+                return object;
+            };
+
+            /**
+             * Converts this GetProfilePhotoResponse to JSON.
+             * @function toJSON
+             * @memberof rental.v1.GetProfilePhotoResponse
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            GetProfilePhotoResponse.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return GetProfilePhotoResponse;
+        })();
+
+        v1.CreateProfilePhotoRequest = (function() {
+
+            /**
+             * Properties of a CreateProfilePhotoRequest.
+             * @memberof rental.v1
+             * @interface ICreateProfilePhotoRequest
+             */
+
+            /**
+             * Constructs a new CreateProfilePhotoRequest.
+             * @memberof rental.v1
+             * @classdesc Represents a CreateProfilePhotoRequest.
+             * @implements ICreateProfilePhotoRequest
+             * @constructor
+             * @param {rental.v1.ICreateProfilePhotoRequest=} [properties] Properties to set
+             */
+            function CreateProfilePhotoRequest(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * Creates a CreateProfilePhotoRequest message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof rental.v1.CreateProfilePhotoRequest
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {rental.v1.CreateProfilePhotoRequest} CreateProfilePhotoRequest
+             */
+            CreateProfilePhotoRequest.fromObject = function fromObject(object) {
+                if (object instanceof $root.rental.v1.CreateProfilePhotoRequest)
+                    return object;
+                return new $root.rental.v1.CreateProfilePhotoRequest();
+            };
+
+            /**
+             * Creates a plain object from a CreateProfilePhotoRequest message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof rental.v1.CreateProfilePhotoRequest
+             * @static
+             * @param {rental.v1.CreateProfilePhotoRequest} message CreateProfilePhotoRequest
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            CreateProfilePhotoRequest.toObject = function toObject() {
+                return {};
+            };
+
+            /**
+             * Converts this CreateProfilePhotoRequest to JSON.
+             * @function toJSON
+             * @memberof rental.v1.CreateProfilePhotoRequest
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            CreateProfilePhotoRequest.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return CreateProfilePhotoRequest;
+        })();
+
+        v1.CreateProfilePhotoResponse = (function() {
+
+            /**
+             * Properties of a CreateProfilePhotoResponse.
+             * @memberof rental.v1
+             * @interface ICreateProfilePhotoResponse
+             * @property {string|null} [uploadUrl] CreateProfilePhotoResponse uploadUrl
+             */
+
+            /**
+             * Constructs a new CreateProfilePhotoResponse.
+             * @memberof rental.v1
+             * @classdesc Represents a CreateProfilePhotoResponse.
+             * @implements ICreateProfilePhotoResponse
+             * @constructor
+             * @param {rental.v1.ICreateProfilePhotoResponse=} [properties] Properties to set
+             */
+            function CreateProfilePhotoResponse(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * CreateProfilePhotoResponse uploadUrl.
+             * @member {string} uploadUrl
+             * @memberof rental.v1.CreateProfilePhotoResponse
+             * @instance
+             */
+            CreateProfilePhotoResponse.prototype.uploadUrl = "";
+
+            /**
+             * Creates a CreateProfilePhotoResponse message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof rental.v1.CreateProfilePhotoResponse
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {rental.v1.CreateProfilePhotoResponse} CreateProfilePhotoResponse
+             */
+            CreateProfilePhotoResponse.fromObject = function fromObject(object) {
+                if (object instanceof $root.rental.v1.CreateProfilePhotoResponse)
+                    return object;
+                let message = new $root.rental.v1.CreateProfilePhotoResponse();
+                if (object.uploadUrl != null)
+                    message.uploadUrl = String(object.uploadUrl);
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a CreateProfilePhotoResponse message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof rental.v1.CreateProfilePhotoResponse
+             * @static
+             * @param {rental.v1.CreateProfilePhotoResponse} message CreateProfilePhotoResponse
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            CreateProfilePhotoResponse.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                let object = {};
+                if (options.defaults)
+                    object.uploadUrl = "";
+                if (message.uploadUrl != null && message.hasOwnProperty("uploadUrl"))
+                    object.uploadUrl = message.uploadUrl;
+                return object;
+            };
+
+            /**
+             * Converts this CreateProfilePhotoResponse to JSON.
+             * @function toJSON
+             * @memberof rental.v1.CreateProfilePhotoResponse
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            CreateProfilePhotoResponse.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return CreateProfilePhotoResponse;
+        })();
+
+        v1.CompleteProfilePhotoRequest = (function() {
+
+            /**
+             * Properties of a CompleteProfilePhotoRequest.
+             * @memberof rental.v1
+             * @interface ICompleteProfilePhotoRequest
+             */
+
+            /**
+             * Constructs a new CompleteProfilePhotoRequest.
+             * @memberof rental.v1
+             * @classdesc Represents a CompleteProfilePhotoRequest.
+             * @implements ICompleteProfilePhotoRequest
+             * @constructor
+             * @param {rental.v1.ICompleteProfilePhotoRequest=} [properties] Properties to set
+             */
+            function CompleteProfilePhotoRequest(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * Creates a CompleteProfilePhotoRequest message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof rental.v1.CompleteProfilePhotoRequest
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {rental.v1.CompleteProfilePhotoRequest} CompleteProfilePhotoRequest
+             */
+            CompleteProfilePhotoRequest.fromObject = function fromObject(object) {
+                if (object instanceof $root.rental.v1.CompleteProfilePhotoRequest)
+                    return object;
+                return new $root.rental.v1.CompleteProfilePhotoRequest();
+            };
+
+            /**
+             * Creates a plain object from a CompleteProfilePhotoRequest message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof rental.v1.CompleteProfilePhotoRequest
+             * @static
+             * @param {rental.v1.CompleteProfilePhotoRequest} message CompleteProfilePhotoRequest
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            CompleteProfilePhotoRequest.toObject = function toObject() {
+                return {};
+            };
+
+            /**
+             * Converts this CompleteProfilePhotoRequest to JSON.
+             * @function toJSON
+             * @memberof rental.v1.CompleteProfilePhotoRequest
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            CompleteProfilePhotoRequest.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return CompleteProfilePhotoRequest;
+        })();
+
         v1.ProfileService = (function() {
 
             /**
@@ -1766,6 +2124,105 @@ export const rental = $root.rental = (() => {
              * @instance
              * @param {rental.v1.IClearProfileRequest} request ClearProfileRequest message or plain object
              * @returns {Promise<rental.v1.Profile>} Promise
+             * @variation 2
+             */
+
+            /**
+             * Callback as used by {@link rental.v1.ProfileService#getProfilePhoto}.
+             * @memberof rental.v1.ProfileService
+             * @typedef GetProfilePhotoCallback
+             * @type {function}
+             * @param {Error|null} error Error, if any
+             * @param {rental.v1.GetProfilePhotoResponse} [response] GetProfilePhotoResponse
+             */
+
+            /**
+             * Calls GetProfilePhoto.
+             * @function getProfilePhoto
+             * @memberof rental.v1.ProfileService
+             * @instance
+             * @param {rental.v1.IGetProfilePhotoRequest} request GetProfilePhotoRequest message or plain object
+             * @param {rental.v1.ProfileService.GetProfilePhotoCallback} callback Node-style callback called with the error, if any, and GetProfilePhotoResponse
+             * @returns {undefined}
+             * @variation 1
+             */
+            Object.defineProperty(ProfileService.prototype.getProfilePhoto = function getProfilePhoto(request, callback) {
+                return this.rpcCall(getProfilePhoto, $root.rental.v1.GetProfilePhotoRequest, $root.rental.v1.GetProfilePhotoResponse, request, callback);
+            }, "name", { value: "GetProfilePhoto" });
+
+            /**
+             * Calls GetProfilePhoto.
+             * @function getProfilePhoto
+             * @memberof rental.v1.ProfileService
+             * @instance
+             * @param {rental.v1.IGetProfilePhotoRequest} request GetProfilePhotoRequest message or plain object
+             * @returns {Promise<rental.v1.GetProfilePhotoResponse>} Promise
+             * @variation 2
+             */
+
+            /**
+             * Callback as used by {@link rental.v1.ProfileService#createProfilePhoto}.
+             * @memberof rental.v1.ProfileService
+             * @typedef CreateProfilePhotoCallback
+             * @type {function}
+             * @param {Error|null} error Error, if any
+             * @param {rental.v1.CreateProfilePhotoResponse} [response] CreateProfilePhotoResponse
+             */
+
+            /**
+             * Calls CreateProfilePhoto.
+             * @function createProfilePhoto
+             * @memberof rental.v1.ProfileService
+             * @instance
+             * @param {rental.v1.ICreateProfilePhotoRequest} request CreateProfilePhotoRequest message or plain object
+             * @param {rental.v1.ProfileService.CreateProfilePhotoCallback} callback Node-style callback called with the error, if any, and CreateProfilePhotoResponse
+             * @returns {undefined}
+             * @variation 1
+             */
+            Object.defineProperty(ProfileService.prototype.createProfilePhoto = function createProfilePhoto(request, callback) {
+                return this.rpcCall(createProfilePhoto, $root.rental.v1.CreateProfilePhotoRequest, $root.rental.v1.CreateProfilePhotoResponse, request, callback);
+            }, "name", { value: "CreateProfilePhoto" });
+
+            /**
+             * Calls CreateProfilePhoto.
+             * @function createProfilePhoto
+             * @memberof rental.v1.ProfileService
+             * @instance
+             * @param {rental.v1.ICreateProfilePhotoRequest} request CreateProfilePhotoRequest message or plain object
+             * @returns {Promise<rental.v1.CreateProfilePhotoResponse>} Promise
+             * @variation 2
+             */
+
+            /**
+             * Callback as used by {@link rental.v1.ProfileService#completeProfilePhoto}.
+             * @memberof rental.v1.ProfileService
+             * @typedef CompleteProfilePhotoCallback
+             * @type {function}
+             * @param {Error|null} error Error, if any
+             * @param {rental.v1.Identity} [response] Identity
+             */
+
+            /**
+             * Calls CompleteProfilePhoto.
+             * @function completeProfilePhoto
+             * @memberof rental.v1.ProfileService
+             * @instance
+             * @param {rental.v1.ICompleteProfilePhotoRequest} request CompleteProfilePhotoRequest message or plain object
+             * @param {rental.v1.ProfileService.CompleteProfilePhotoCallback} callback Node-style callback called with the error, if any, and Identity
+             * @returns {undefined}
+             * @variation 1
+             */
+            Object.defineProperty(ProfileService.prototype.completeProfilePhoto = function completeProfilePhoto(request, callback) {
+                return this.rpcCall(completeProfilePhoto, $root.rental.v1.CompleteProfilePhotoRequest, $root.rental.v1.Identity, request, callback);
+            }, "name", { value: "CompleteProfilePhoto" });
+
+            /**
+             * Calls CompleteProfilePhoto.
+             * @function completeProfilePhoto
+             * @memberof rental.v1.ProfileService
+             * @instance
+             * @param {rental.v1.ICompleteProfilePhotoRequest} request CompleteProfilePhotoRequest message or plain object
+             * @returns {Promise<rental.v1.Identity>} Promise
              * @variation 2
              */
 

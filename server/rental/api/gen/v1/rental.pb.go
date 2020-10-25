@@ -923,6 +923,214 @@ func (*ClearProfileRequest) Descriptor() ([]byte, []int) {
 	return file_rental_proto_rawDescGZIP(), []int{12}
 }
 
+type GetProfilePhotoRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *GetProfilePhotoRequest) Reset() {
+	*x = GetProfilePhotoRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rental_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetProfilePhotoRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetProfilePhotoRequest) ProtoMessage() {}
+
+func (x *GetProfilePhotoRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_rental_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetProfilePhotoRequest.ProtoReflect.Descriptor instead.
+func (*GetProfilePhotoRequest) Descriptor() ([]byte, []int) {
+	return file_rental_proto_rawDescGZIP(), []int{13}
+}
+
+type GetProfilePhotoResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Url string `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
+}
+
+func (x *GetProfilePhotoResponse) Reset() {
+	*x = GetProfilePhotoResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rental_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetProfilePhotoResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetProfilePhotoResponse) ProtoMessage() {}
+
+func (x *GetProfilePhotoResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_rental_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetProfilePhotoResponse.ProtoReflect.Descriptor instead.
+func (*GetProfilePhotoResponse) Descriptor() ([]byte, []int) {
+	return file_rental_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *GetProfilePhotoResponse) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+type CreateProfilePhotoRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *CreateProfilePhotoRequest) Reset() {
+	*x = CreateProfilePhotoRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rental_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateProfilePhotoRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateProfilePhotoRequest) ProtoMessage() {}
+
+func (x *CreateProfilePhotoRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_rental_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateProfilePhotoRequest.ProtoReflect.Descriptor instead.
+func (*CreateProfilePhotoRequest) Descriptor() ([]byte, []int) {
+	return file_rental_proto_rawDescGZIP(), []int{15}
+}
+
+type CreateProfilePhotoResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UploadUrl string `protobuf:"bytes,1,opt,name=upload_url,json=uploadUrl,proto3" json:"upload_url,omitempty"`
+}
+
+func (x *CreateProfilePhotoResponse) Reset() {
+	*x = CreateProfilePhotoResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rental_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateProfilePhotoResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateProfilePhotoResponse) ProtoMessage() {}
+
+func (x *CreateProfilePhotoResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_rental_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateProfilePhotoResponse.ProtoReflect.Descriptor instead.
+func (*CreateProfilePhotoResponse) Descriptor() ([]byte, []int) {
+	return file_rental_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *CreateProfilePhotoResponse) GetUploadUrl() string {
+	if x != nil {
+		return x.UploadUrl
+	}
+	return ""
+}
+
+type CompleteProfilePhotoRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *CompleteProfilePhotoRequest) Reset() {
+	*x = CompleteProfilePhotoRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rental_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CompleteProfilePhotoRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CompleteProfilePhotoRequest) ProtoMessage() {}
+
+func (x *CompleteProfilePhotoRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_rental_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CompleteProfilePhotoRequest.ProtoReflect.Descriptor instead.
+func (*CompleteProfilePhotoRequest) Descriptor() ([]byte, []int) {
+	return file_rental_proto_rawDescGZIP(), []int{17}
+}
+
 var File_rental_proto protoreflect.FileDescriptor
 
 var file_rental_proto_rawDesc = []byte{
@@ -1008,7 +1216,19 @@ var file_rental_proto_rawDesc = []byte{
 	0x03, 0x52, 0x0f, 0x62, 0x69, 0x72, 0x74, 0x68, 0x44, 0x61, 0x74, 0x65, 0x4d, 0x69, 0x6c, 0x6c,
 	0x69, 0x73, 0x22, 0x13, 0x0a, 0x11, 0x47, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65,
 	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x15, 0x0a, 0x13, 0x43, 0x6c, 0x65, 0x61, 0x72,
-	0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2a, 0x41,
+	0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x18,
+	0x0a, 0x16, 0x47, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x50, 0x68, 0x6f, 0x74,
+	0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x2b, 0x0a, 0x17, 0x47, 0x65, 0x74, 0x50,
+	0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x50, 0x68, 0x6f, 0x74, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x75, 0x72, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x03, 0x75, 0x72, 0x6c, 0x22, 0x1b, 0x0a, 0x19, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x50,
+	0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x50, 0x68, 0x6f, 0x74, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x22, 0x3b, 0x0a, 0x1a, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x50, 0x72, 0x6f, 0x66,
+	0x69, 0x6c, 0x65, 0x50, 0x68, 0x6f, 0x74, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x12, 0x1d, 0x0a, 0x0a, 0x75, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x75, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x55, 0x72, 0x6c, 0x22,
+	0x1d, 0x0a, 0x1b, 0x43, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x50, 0x72, 0x6f, 0x66, 0x69,
+	0x6c, 0x65, 0x50, 0x68, 0x6f, 0x74, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2a, 0x41,
 	0x0a, 0x0a, 0x54, 0x72, 0x69, 0x70, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x14, 0x0a, 0x10,
 	0x54, 0x53, 0x5f, 0x4e, 0x4f, 0x54, 0x5f, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44,
 	0x10, 0x00, 0x12, 0x0f, 0x0a, 0x0b, 0x49, 0x4e, 0x5f, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45, 0x53,
@@ -1037,7 +1257,7 @@ var file_rental_proto_rawDesc = []byte{
 	0x70, 0x12, 0x1c, 0x2e, 0x72, 0x65, 0x6e, 0x74, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x70,
 	0x64, 0x61, 0x74, 0x65, 0x54, 0x72, 0x69, 0x70, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
 	0x0f, 0x2e, 0x72, 0x65, 0x6e, 0x74, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x54, 0x72, 0x69, 0x70,
-	0x32, 0xce, 0x01, 0x0a, 0x0e, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x53, 0x65, 0x72, 0x76,
+	0x32, 0xe0, 0x03, 0x0a, 0x0e, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x53, 0x65, 0x72, 0x76,
 	0x69, 0x63, 0x65, 0x12, 0x3e, 0x0a, 0x0a, 0x47, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c,
 	0x65, 0x12, 0x1c, 0x2e, 0x72, 0x65, 0x6e, 0x74, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65,
 	0x74, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
@@ -1050,9 +1270,27 @@ var file_rental_proto_rawDesc = []byte{
 	0x72, 0x65, 0x6e, 0x74, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x6c, 0x65, 0x61, 0x72, 0x50,
 	0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x12, 0x2e,
 	0x72, 0x65, 0x6e, 0x74, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c,
-	0x65, 0x42, 0x24, 0x5a, 0x22, 0x63, 0x6f, 0x6f, 0x6c, 0x63, 0x61, 0x72, 0x2f, 0x72, 0x65, 0x6e,
-	0x74, 0x61, 0x6c, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x67, 0x65, 0x6e, 0x2f, 0x76, 0x31, 0x3b, 0x72,
-	0x65, 0x6e, 0x74, 0x61, 0x6c, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x12, 0x58, 0x0a, 0x0f, 0x47, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x50,
+	0x68, 0x6f, 0x74, 0x6f, 0x12, 0x21, 0x2e, 0x72, 0x65, 0x6e, 0x74, 0x61, 0x6c, 0x2e, 0x76, 0x31,
+	0x2e, 0x47, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x50, 0x68, 0x6f, 0x74, 0x6f,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x22, 0x2e, 0x72, 0x65, 0x6e, 0x74, 0x61, 0x6c,
+	0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x50, 0x68,
+	0x6f, 0x74, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x61, 0x0a, 0x12, 0x43,
+	0x72, 0x65, 0x61, 0x74, 0x65, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x50, 0x68, 0x6f, 0x74,
+	0x6f, 0x12, 0x24, 0x2e, 0x72, 0x65, 0x6e, 0x74, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x50, 0x68, 0x6f, 0x74, 0x6f,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x25, 0x2e, 0x72, 0x65, 0x6e, 0x74, 0x61, 0x6c,
+	0x2e, 0x76, 0x31, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c,
+	0x65, 0x50, 0x68, 0x6f, 0x74, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x53,
+	0x0a, 0x14, 0x43, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c,
+	0x65, 0x50, 0x68, 0x6f, 0x74, 0x6f, 0x12, 0x26, 0x2e, 0x72, 0x65, 0x6e, 0x74, 0x61, 0x6c, 0x2e,
+	0x76, 0x31, 0x2e, 0x43, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x50, 0x72, 0x6f, 0x66, 0x69,
+	0x6c, 0x65, 0x50, 0x68, 0x6f, 0x74, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x13,
+	0x2e, 0x72, 0x65, 0x6e, 0x74, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x64, 0x65, 0x6e, 0x74,
+	0x69, 0x74, 0x79, 0x42, 0x24, 0x5a, 0x22, 0x63, 0x6f, 0x6f, 0x6c, 0x63, 0x61, 0x72, 0x2f, 0x72,
+	0x65, 0x6e, 0x74, 0x61, 0x6c, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x67, 0x65, 0x6e, 0x2f, 0x76, 0x31,
+	0x3b, 0x72, 0x65, 0x6e, 0x74, 0x61, 0x6c, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
 }
 
 var (
@@ -1068,24 +1306,29 @@ func file_rental_proto_rawDescGZIP() []byte {
 }
 
 var file_rental_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_rental_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_rental_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_rental_proto_goTypes = []interface{}{
-	(TripStatus)(0),             // 0: rental.v1.TripStatus
-	(Gender)(0),                 // 1: rental.v1.Gender
-	(IdentityStatus)(0),         // 2: rental.v1.IdentityStatus
-	(*Location)(nil),            // 3: rental.v1.Location
-	(*LocationStatus)(nil),      // 4: rental.v1.LocationStatus
-	(*TripEntity)(nil),          // 5: rental.v1.TripEntity
-	(*Trip)(nil),                // 6: rental.v1.Trip
-	(*CreateTripRequest)(nil),   // 7: rental.v1.CreateTripRequest
-	(*GetTripRequest)(nil),      // 8: rental.v1.GetTripRequest
-	(*GetTripsRequest)(nil),     // 9: rental.v1.GetTripsRequest
-	(*GetTripsResponse)(nil),    // 10: rental.v1.GetTripsResponse
-	(*UpdateTripRequest)(nil),   // 11: rental.v1.UpdateTripRequest
-	(*Profile)(nil),             // 12: rental.v1.Profile
-	(*Identity)(nil),            // 13: rental.v1.Identity
-	(*GetProfileRequest)(nil),   // 14: rental.v1.GetProfileRequest
-	(*ClearProfileRequest)(nil), // 15: rental.v1.ClearProfileRequest
+	(TripStatus)(0),                     // 0: rental.v1.TripStatus
+	(Gender)(0),                         // 1: rental.v1.Gender
+	(IdentityStatus)(0),                 // 2: rental.v1.IdentityStatus
+	(*Location)(nil),                    // 3: rental.v1.Location
+	(*LocationStatus)(nil),              // 4: rental.v1.LocationStatus
+	(*TripEntity)(nil),                  // 5: rental.v1.TripEntity
+	(*Trip)(nil),                        // 6: rental.v1.Trip
+	(*CreateTripRequest)(nil),           // 7: rental.v1.CreateTripRequest
+	(*GetTripRequest)(nil),              // 8: rental.v1.GetTripRequest
+	(*GetTripsRequest)(nil),             // 9: rental.v1.GetTripsRequest
+	(*GetTripsResponse)(nil),            // 10: rental.v1.GetTripsResponse
+	(*UpdateTripRequest)(nil),           // 11: rental.v1.UpdateTripRequest
+	(*Profile)(nil),                     // 12: rental.v1.Profile
+	(*Identity)(nil),                    // 13: rental.v1.Identity
+	(*GetProfileRequest)(nil),           // 14: rental.v1.GetProfileRequest
+	(*ClearProfileRequest)(nil),         // 15: rental.v1.ClearProfileRequest
+	(*GetProfilePhotoRequest)(nil),      // 16: rental.v1.GetProfilePhotoRequest
+	(*GetProfilePhotoResponse)(nil),     // 17: rental.v1.GetProfilePhotoResponse
+	(*CreateProfilePhotoRequest)(nil),   // 18: rental.v1.CreateProfilePhotoRequest
+	(*CreateProfilePhotoResponse)(nil),  // 19: rental.v1.CreateProfilePhotoResponse
+	(*CompleteProfilePhotoRequest)(nil), // 20: rental.v1.CompleteProfilePhotoRequest
 }
 var file_rental_proto_depIdxs = []int32{
 	3,  // 0: rental.v1.LocationStatus.location:type_name -> rental.v1.Location
@@ -1108,15 +1351,21 @@ var file_rental_proto_depIdxs = []int32{
 	14, // 17: rental.v1.ProfileService.GetProfile:input_type -> rental.v1.GetProfileRequest
 	13, // 18: rental.v1.ProfileService.SubmitProfile:input_type -> rental.v1.Identity
 	15, // 19: rental.v1.ProfileService.ClearProfile:input_type -> rental.v1.ClearProfileRequest
-	5,  // 20: rental.v1.TripService.CreateTrip:output_type -> rental.v1.TripEntity
-	6,  // 21: rental.v1.TripService.GetTrip:output_type -> rental.v1.Trip
-	10, // 22: rental.v1.TripService.GetTrips:output_type -> rental.v1.GetTripsResponse
-	6,  // 23: rental.v1.TripService.UpdateTrip:output_type -> rental.v1.Trip
-	12, // 24: rental.v1.ProfileService.GetProfile:output_type -> rental.v1.Profile
-	12, // 25: rental.v1.ProfileService.SubmitProfile:output_type -> rental.v1.Profile
-	12, // 26: rental.v1.ProfileService.ClearProfile:output_type -> rental.v1.Profile
-	20, // [20:27] is the sub-list for method output_type
-	13, // [13:20] is the sub-list for method input_type
+	16, // 20: rental.v1.ProfileService.GetProfilePhoto:input_type -> rental.v1.GetProfilePhotoRequest
+	18, // 21: rental.v1.ProfileService.CreateProfilePhoto:input_type -> rental.v1.CreateProfilePhotoRequest
+	20, // 22: rental.v1.ProfileService.CompleteProfilePhoto:input_type -> rental.v1.CompleteProfilePhotoRequest
+	5,  // 23: rental.v1.TripService.CreateTrip:output_type -> rental.v1.TripEntity
+	6,  // 24: rental.v1.TripService.GetTrip:output_type -> rental.v1.Trip
+	10, // 25: rental.v1.TripService.GetTrips:output_type -> rental.v1.GetTripsResponse
+	6,  // 26: rental.v1.TripService.UpdateTrip:output_type -> rental.v1.Trip
+	12, // 27: rental.v1.ProfileService.GetProfile:output_type -> rental.v1.Profile
+	12, // 28: rental.v1.ProfileService.SubmitProfile:output_type -> rental.v1.Profile
+	12, // 29: rental.v1.ProfileService.ClearProfile:output_type -> rental.v1.Profile
+	17, // 30: rental.v1.ProfileService.GetProfilePhoto:output_type -> rental.v1.GetProfilePhotoResponse
+	19, // 31: rental.v1.ProfileService.CreateProfilePhoto:output_type -> rental.v1.CreateProfilePhotoResponse
+	13, // 32: rental.v1.ProfileService.CompleteProfilePhoto:output_type -> rental.v1.Identity
+	23, // [23:33] is the sub-list for method output_type
+	13, // [13:23] is the sub-list for method input_type
 	13, // [13:13] is the sub-list for extension type_name
 	13, // [13:13] is the sub-list for extension extendee
 	0,  // [0:13] is the sub-list for field type_name
@@ -1284,6 +1533,66 @@ func file_rental_proto_init() {
 				return nil
 			}
 		}
+		file_rental_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetProfilePhotoRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rental_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetProfilePhotoResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rental_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CreateProfilePhotoRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rental_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CreateProfilePhotoResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rental_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CompleteProfilePhotoRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1291,7 +1600,7 @@ func file_rental_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_rental_proto_rawDesc,
 			NumEnums:      3,
-			NumMessages:   13,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   2,
 		},
@@ -1501,6 +1810,9 @@ type ProfileServiceClient interface {
 	GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*Profile, error)
 	SubmitProfile(ctx context.Context, in *Identity, opts ...grpc.CallOption) (*Profile, error)
 	ClearProfile(ctx context.Context, in *ClearProfileRequest, opts ...grpc.CallOption) (*Profile, error)
+	GetProfilePhoto(ctx context.Context, in *GetProfilePhotoRequest, opts ...grpc.CallOption) (*GetProfilePhotoResponse, error)
+	CreateProfilePhoto(ctx context.Context, in *CreateProfilePhotoRequest, opts ...grpc.CallOption) (*CreateProfilePhotoResponse, error)
+	CompleteProfilePhoto(ctx context.Context, in *CompleteProfilePhotoRequest, opts ...grpc.CallOption) (*Identity, error)
 }
 
 type profileServiceClient struct {
@@ -1538,11 +1850,41 @@ func (c *profileServiceClient) ClearProfile(ctx context.Context, in *ClearProfil
 	return out, nil
 }
 
+func (c *profileServiceClient) GetProfilePhoto(ctx context.Context, in *GetProfilePhotoRequest, opts ...grpc.CallOption) (*GetProfilePhotoResponse, error) {
+	out := new(GetProfilePhotoResponse)
+	err := c.cc.Invoke(ctx, "/rental.v1.ProfileService/GetProfilePhoto", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *profileServiceClient) CreateProfilePhoto(ctx context.Context, in *CreateProfilePhotoRequest, opts ...grpc.CallOption) (*CreateProfilePhotoResponse, error) {
+	out := new(CreateProfilePhotoResponse)
+	err := c.cc.Invoke(ctx, "/rental.v1.ProfileService/CreateProfilePhoto", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *profileServiceClient) CompleteProfilePhoto(ctx context.Context, in *CompleteProfilePhotoRequest, opts ...grpc.CallOption) (*Identity, error) {
+	out := new(Identity)
+	err := c.cc.Invoke(ctx, "/rental.v1.ProfileService/CompleteProfilePhoto", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProfileServiceServer is the server API for ProfileService service.
 type ProfileServiceServer interface {
 	GetProfile(context.Context, *GetProfileRequest) (*Profile, error)
 	SubmitProfile(context.Context, *Identity) (*Profile, error)
 	ClearProfile(context.Context, *ClearProfileRequest) (*Profile, error)
+	GetProfilePhoto(context.Context, *GetProfilePhotoRequest) (*GetProfilePhotoResponse, error)
+	CreateProfilePhoto(context.Context, *CreateProfilePhotoRequest) (*CreateProfilePhotoResponse, error)
+	CompleteProfilePhoto(context.Context, *CompleteProfilePhotoRequest) (*Identity, error)
 }
 
 // UnimplementedProfileServiceServer can be embedded to have forward compatible implementations.
@@ -1557,6 +1899,15 @@ func (*UnimplementedProfileServiceServer) SubmitProfile(context.Context, *Identi
 }
 func (*UnimplementedProfileServiceServer) ClearProfile(context.Context, *ClearProfileRequest) (*Profile, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ClearProfile not implemented")
+}
+func (*UnimplementedProfileServiceServer) GetProfilePhoto(context.Context, *GetProfilePhotoRequest) (*GetProfilePhotoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProfilePhoto not implemented")
+}
+func (*UnimplementedProfileServiceServer) CreateProfilePhoto(context.Context, *CreateProfilePhotoRequest) (*CreateProfilePhotoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateProfilePhoto not implemented")
+}
+func (*UnimplementedProfileServiceServer) CompleteProfilePhoto(context.Context, *CompleteProfilePhotoRequest) (*Identity, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CompleteProfilePhoto not implemented")
 }
 
 func RegisterProfileServiceServer(s *grpc.Server, srv ProfileServiceServer) {
@@ -1617,6 +1968,60 @@ func _ProfileService_ClearProfile_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ProfileService_GetProfilePhoto_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProfilePhotoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProfileServiceServer).GetProfilePhoto(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rental.v1.ProfileService/GetProfilePhoto",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProfileServiceServer).GetProfilePhoto(ctx, req.(*GetProfilePhotoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProfileService_CreateProfilePhoto_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateProfilePhotoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProfileServiceServer).CreateProfilePhoto(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rental.v1.ProfileService/CreateProfilePhoto",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProfileServiceServer).CreateProfilePhoto(ctx, req.(*CreateProfilePhotoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProfileService_CompleteProfilePhoto_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CompleteProfilePhotoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProfileServiceServer).CompleteProfilePhoto(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rental.v1.ProfileService/CompleteProfilePhoto",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProfileServiceServer).CompleteProfilePhoto(ctx, req.(*CompleteProfilePhotoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ProfileService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "rental.v1.ProfileService",
 	HandlerType: (*ProfileServiceServer)(nil),
@@ -1632,6 +2037,18 @@ var _ProfileService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ClearProfile",
 			Handler:    _ProfileService_ClearProfile_Handler,
+		},
+		{
+			MethodName: "GetProfilePhoto",
+			Handler:    _ProfileService_GetProfilePhoto_Handler,
+		},
+		{
+			MethodName: "CreateProfilePhoto",
+			Handler:    _ProfileService_CreateProfilePhoto_Handler,
+		},
+		{
+			MethodName: "CompleteProfilePhoto",
+			Handler:    _ProfileService_CompleteProfilePhoto_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

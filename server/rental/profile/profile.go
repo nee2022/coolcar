@@ -2,9 +2,11 @@ package profile
 
 import (
 	"context"
+	blobpb "coolcar/blob/api/gen/v1"
 	rentalpb "coolcar/rental/api/gen/v1"
 	"coolcar/rental/profile/dao"
 	"coolcar/shared/auth"
+	"coolcar/shared/id"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -15,8 +17,11 @@ import (
 
 // Service defines a profile service.
 type Service struct {
-	Mongo  *dao.Mongo
-	Logger *zap.Logger
+	BlobClient        blobpb.BlobServiceClient
+	PhotoUploadExpire time.Duration
+	PhotoGetExpire    time.Duration
+	Mongo             *dao.Mongo
+	Logger            *zap.Logger
 }
 
 // GetProfile gets profile for the current account.
@@ -25,15 +30,15 @@ func (s *Service) GetProfile(c context.Context, req *rentalpb.GetProfileRequest)
 	if err != nil {
 		return nil, err
 	}
-	p, err := s.Mongo.GetProfile(c, aid)
+	pr, err := s.Mongo.GetProfile(c, aid)
 	if err != nil {
-		if err == mongo.ErrNoDocuments {
+		code := s.logAndConvertGetProfileErr(err)
+		if code == codes.NotFound {
 			return &rentalpb.Profile{}, nil
 		}
-		s.Logger.Error("cannot get profile", zap.Error(err))
-		return nil, status.Error(codes.Internal, "")
+		return nil, status.Error(code, "")
 	}
-	return p, nil
+	return pr.Profile, nil
 }
 
 // SubmitProfile submits a profile.
@@ -80,4 +85,101 @@ func (s *Service) ClearProfile(c context.Context, req *rentalpb.ClearProfileRequ
 		return nil, status.Error(codes.Internal, "")
 	}
 	return p, nil
+}
+
+// GetProfilePhoto gets profile photo.
+func (s *Service) GetProfilePhoto(c context.Context, req *rentalpb.GetProfilePhotoRequest) (*rentalpb.GetProfilePhotoResponse, error) {
+	aid, err := auth.AccountIDFromContext(c)
+	if err != nil {
+		return nil, err
+	}
+
+	pr, err := s.Mongo.GetProfile(c, aid)
+	if err != nil {
+		return nil, status.Error(s.logAndConvertGetProfileErr(err), "")
+	}
+
+	if pr.PhotoBlobID == "" {
+		return nil, status.Error(codes.NotFound, "")
+	}
+
+	br, err := s.BlobClient.GetBlobURL(c, &blobpb.GetBlobURLRequest{
+		Id:         pr.PhotoBlobID,
+		TimeoutSec: int32(s.PhotoGetExpire.Seconds()),
+	})
+	if err != nil {
+		s.Logger.Error("cannot get blob url", zap.Error(err))
+		return nil, status.Error(codes.Internal, "")
+	}
+
+	return &rentalpb.GetProfilePhotoResponse{
+		Url: br.Url,
+	}, nil
+}
+
+// CreateProfilePhoto creates profile photo.
+func (s *Service) CreateProfilePhoto(c context.Context, req *rentalpb.CreateProfilePhotoRequest) (*rentalpb.CreateProfilePhotoResponse, error) {
+	aid, err := auth.AccountIDFromContext(c)
+	if err != nil {
+		return nil, err
+	}
+
+	br, err := s.BlobClient.CreateBlob(c, &blobpb.CreateBlobRequest{
+		AccountId:           aid.String(),
+		UploadUrlTimeoutSec: int32(s.PhotoUploadExpire.Seconds()),
+	})
+	if err != nil {
+		s.Logger.Error("cannot create blob", zap.Error(err))
+		return nil, status.Error(codes.Aborted, "")
+	}
+
+	err = s.Mongo.UpdateProfilePhoto(c, aid, id.BlobID(br.Id))
+	if err != nil {
+		s.Logger.Error("cannot update profile photo", zap.Error(err))
+		return nil, status.Error(codes.Aborted, "")
+	}
+
+	return &rentalpb.CreateProfilePhotoResponse{
+		UploadUrl: br.UploadUrl,
+	}, nil
+}
+
+// CompleteProfilePhoto completes profile photo, returns AI recognition results.
+func (s *Service) CompleteProfilePhoto(c context.Context, req *rentalpb.CompleteProfilePhotoRequest) (*rentalpb.Identity, error) {
+	aid, err := auth.AccountIDFromContext(c)
+	if err != nil {
+		return nil, err
+	}
+
+	pr, err := s.Mongo.GetProfile(c, aid)
+	if err != nil {
+		return nil, status.Error(s.logAndConvertGetProfileErr(err), "")
+	}
+
+	if pr.PhotoBlobID == "" {
+		return nil, status.Error(codes.NotFound, "")
+	}
+
+	br, err := s.BlobClient.GetBlob(c, &blobpb.GetBlobRequest{
+		Id: pr.PhotoBlobID,
+	})
+	if err != nil {
+		s.Logger.Error("cannot get blob", zap.Error(err))
+	}
+
+	s.Logger.Info("got profile photo", zap.Int("size", len(br.Data)))
+	return &rentalpb.Identity{
+		LicNumber:       "322152452",
+		Name:            "李四",
+		Gender:          rentalpb.Gender_FEMALE,
+		BirthDateMillis: 631152000000,
+	}, nil
+}
+
+func (s *Service) logAndConvertGetProfileErr(err error) codes.Code {
+	if err == mongo.ErrNoDocuments {
+		return codes.NotFound
+	}
+	s.Logger.Error("cannot get profile", zap.Error(err))
+	return codes.Internal
 }
