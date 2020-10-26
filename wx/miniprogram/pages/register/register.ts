@@ -1,5 +1,6 @@
 import { ProfileService } from "../../service/profile"
 import { rental } from "../../service/proto_gen/rental/rental_pb"
+import { Coolcar } from "../../service/request"
 import { padString } from "../../utils/format"
 import { routing } from "../../utils/routing"
 
@@ -26,12 +27,18 @@ Page({
     },
 
     renderProfile(p: rental.v1.IProfile) {
+        this.renderIdentity(p.identity!)
         this.setData({
-            licNo: p.identity?.licNumber||'',
-            name: p.identity?.name||'',
-            genderIndex: p.identity?.gender||0,
-            birthDate: formatDate(p.identity?.birthDateMillis||0),
             state: rental.v1.IdentityStatus[p.identityStatus||0],
+        })
+    },
+
+    renderIdentity(i?: rental.v1.IIdentity) {
+        this.setData({
+            licNo: i?.licNumber||'',
+            name: i?.name||'',
+            genderIndex: i?.gender||0,
+            birthDate: formatDate(i?.birthDateMillis||0),
         })
     },
 
@@ -41,24 +48,32 @@ Page({
             this.redirectURL = decodeURIComponent(o.redirect)
         }
         ProfileService.getProfile().then(p => this.renderProfile(p))
+        ProfileService.getProfilePhoto().then(p => {
+            this.setData({
+                licImgURL: p.url||'',
+            })
+        })
     },
 
     onUploadLic() {
         wx.chooseImage({
-            success: res => {
-                if (res.tempFilePaths.length > 0) {
-                    this.setData({
-                        licImgURL: res.tempFilePaths[0]
-                    })
-                    const data = wx.getFileSystemManager().readFileSync(res.tempFilePaths[0])
-                    wx.request({
-                        method: 'PUT',
-                        url: 'https://coolcar-1256512285.cos.ap-shanghai.myqcloud.com/account_2%2F5f955ed5990a93a381d82050?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKIDxg9KGuqSJ2WjgOd99sZ7PQBfusZ7kVJq%26q-sign-time%3D1603624661%3B1603625661%26q-key-time%3D1603624661%3B1603625661%26q-header-list%3Dhost%26q-url-param-list%3D%26q-signature%3D96e51a37cdf7a1ea8b0fa63bc74be856cc0294fe',
-                        data,
-                        success: console.log,
-                        fail: console.error,
-                    })
+            success: async res => {
+                if (res.tempFilePaths.length === 0) {
+                    return
                 }
+                this.setData({
+                    licImgURL: res.tempFilePaths[0]
+                })
+                const photoRes = await ProfileService.createProfilePhoto()
+                if (!photoRes.uploadUrl) {
+                    return
+                }
+                await Coolcar.uploadfile({
+                    localPath: res.tempFilePaths[0],
+                    url: photoRes.uploadUrl,
+                })
+                const identity = await ProfileService.completeProfilePhoto()
+                this.renderIdentity(identity)
             }
         })
     },
@@ -114,6 +129,11 @@ Page({
 
     onResubmit() {
         ProfileService.clearProfile().then(p => this.renderProfile(p))
+        ProfileService.clearProfilePhoto().then(() => {
+            this.setData({
+                licImgURL: '',
+            })
+        })
     },
 
     onLicVerified() {
