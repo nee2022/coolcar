@@ -2,14 +2,18 @@ package main
 
 import (
 	"context"
+	blobpb "coolcar/blob/api/gen/v1"
 	rentalpb "coolcar/rental/api/gen/v1"
+	"coolcar/rental/profile"
+	profiledao "coolcar/rental/profile/dao"
 	"coolcar/rental/trip"
 	"coolcar/rental/trip/client/car"
 	"coolcar/rental/trip/client/poi"
-	"coolcar/rental/trip/client/profile"
-	"coolcar/rental/trip/dao"
+	profClient "coolcar/rental/trip/client/profile"
+	tripdao "coolcar/rental/trip/dao"
 	"coolcar/shared/server"
 	"log"
+	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -28,6 +32,19 @@ func main() {
 	if err != nil {
 		logger.Fatal("cannot connect mongodb", zap.Error(err))
 	}
+	db := mongoClient.Database("coolcar")
+
+	blobConn, err := grpc.Dial("localhost:8083", grpc.WithInsecure())
+	if err != nil {
+		logger.Fatal("cannot connect blob service", zap.Error(err))
+	}
+	profService := &profile.Service{
+		BlobClient:        blobpb.NewBlobServiceClient(blobConn),
+		PhotoGetExpire:    5 * time.Second,
+		PhotoUploadExpire: 10 * time.Second,
+		Mongo:             profiledao.NewMongo(db),
+		Logger:            logger,
+	}
 
 	logger.Sugar().Fatal(server.RunGRPCServer(&server.GRPCConfig{
 		Name:              "rental",
@@ -36,12 +53,15 @@ func main() {
 		Logger:            logger,
 		RegisterFunc: func(s *grpc.Server) {
 			rentalpb.RegisterTripServiceServer(s, &trip.Service{
-				CarManager:     &car.Manager{},
-				ProfileManager: &profile.Manager{},
-				POIManager:     &poi.Manager{},
-				Mongo:          dao.NewMongo(mongoClient.Database("coolcar")),
-				Logger:         logger,
+				CarManager: &car.Manager{},
+				ProfileManager: &profClient.Manager{
+					Fetcher: profService,
+				},
+				POIManager: &poi.Manager{},
+				Mongo:      tripdao.NewMongo(db),
+				Logger:     logger,
 			})
+			rentalpb.RegisterProfileServiceServer(s, profService)
 		},
 	}))
 }

@@ -1,4 +1,5 @@
 import { IAppOption } from "../../appoption"
+import { ProfileService } from "../../service/profile"
 import { rental } from "../../service/proto_gen/rental/rental_pb"
 import { TripService } from "../../service/trip"
 import { formatDuration, formatFee } from "../../utils/format"
@@ -43,6 +44,12 @@ const tripStatusMap = new Map([
     [rental.v1.TripStatus.FINISHED, '已完成'],
 ])
 
+const licStatusMap = new Map([
+    [rental.v1.IdentityStatus.UNSUBMITTED, '未认证'],
+    [rental.v1.IdentityStatus.PENDING, '未认证'],
+    [rental.v1.IdentityStatus.VERIFIED, '已认证'],
+])
+
 Page({
     scrollStates: {
         mainItems: [] as MainItemQueryResult[],
@@ -69,6 +76,7 @@ Page({
                 promotionID: 4,
             },
         ],
+        licStatus: licStatusMap.get(rental.v1.IdentityStatus.UNSUBMITTED),
         avatarURL: '',
         tripsHeight: 0,
         navCount: 0,
@@ -89,6 +97,14 @@ Page({
         getApp<IAppOption>().globalData.userInfo.then(userInfo => {
             this.setData({
                 avatarURL: userInfo.avatarUrl,
+            })
+        })
+    },
+
+    onShow() {
+        ProfileService.getProfile().then(p => {
+            this.setData({
+                licStatus: licStatusMap.get(p.identityStatus||0),
             })
         })
     },
@@ -241,7 +257,7 @@ Page({
         }
         const tripId = e.currentTarget.dataset.tripId
         if (tripId) {
-            wx.navigateTo({
+            wx.redirectTo({
                 url: routing.drving({
                     trip_id: tripId,
                 }),

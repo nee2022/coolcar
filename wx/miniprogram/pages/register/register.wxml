@@ -12,11 +12,11 @@
         <view class="lic-form margin-top-xl">
             <view class="cu-form-group">
                 <view class="title">驾驶证号</view>
-                <input placeholder="驾驶证号" value="{{licNo}}" disabled="{{state!=='UNSUBMITTED'}}"></input>
+                <input placeholder="驾驶证号" model:value="{{licNo}}" disabled="{{state!=='UNSUBMITTED'}}"></input>
             </view>
             <view class="cu-form-group">
                 <view class="title">姓名</view>
-                <input placeholder="姓名" value="{{name}}" disabled="{{state!=='UNSUBMITTED'}}"></input>
+                <input placeholder="姓名" model:value="{{name}}" disabled="{{state!=='UNSUBMITTED'}}"></input>
             </view>
             <view class="cu-form-group">
                 <view class="title">性别</view>

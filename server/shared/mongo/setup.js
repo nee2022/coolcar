@@ -13,3 +13,9 @@ db.trip.createIndex({
         "trip.status": 1,
     }
 })
+
+db.profile.createIndex({
+    "accountid": 1,
+}, {
+    unique: true,
+})
