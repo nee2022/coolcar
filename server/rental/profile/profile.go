@@ -18,8 +18,8 @@ import (
 // Service defines a profile service.
 type Service struct {
 	BlobClient        blobpb.BlobServiceClient
-	PhotoUploadExpire time.Duration
 	PhotoGetExpire    time.Duration
+	PhotoUploadExpire time.Duration
 	Mongo             *dao.Mongo
 	Logger            *zap.Logger
 }
@@ -32,11 +32,14 @@ func (s *Service) GetProfile(c context.Context, req *rentalpb.GetProfileRequest)
 	}
 	pr, err := s.Mongo.GetProfile(c, aid)
 	if err != nil {
-		code := s.logAndConvertGetProfileErr(err)
+		code := s.logAndConvertProfileErr(err)
 		if code == codes.NotFound {
 			return &rentalpb.Profile{}, nil
 		}
 		return nil, status.Error(code, "")
+	}
+	if pr.Profile == nil {
+		return &rentalpb.Profile{}, nil
 	}
 	return pr.Profile, nil
 }
@@ -96,7 +99,7 @@ func (s *Service) GetProfilePhoto(c context.Context, req *rentalpb.GetProfilePho
 
 	pr, err := s.Mongo.GetProfile(c, aid)
 	if err != nil {
-		return nil, status.Error(s.logAndConvertGetProfileErr(err), "")
+		return nil, status.Error(s.logAndConvertProfileErr(err), "")
 	}
 
 	if pr.PhotoBlobID == "" {
@@ -108,7 +111,7 @@ func (s *Service) GetProfilePhoto(c context.Context, req *rentalpb.GetProfilePho
 		TimeoutSec: int32(s.PhotoGetExpire.Seconds()),
 	})
 	if err != nil {
-		s.Logger.Error("cannot get blob url", zap.Error(err))
+		s.Logger.Error("cannot get blob", zap.Error(err))
 		return nil, status.Error(codes.Internal, "")
 	}
 
@@ -153,7 +156,7 @@ func (s *Service) CompleteProfilePhoto(c context.Context, req *rentalpb.Complete
 
 	pr, err := s.Mongo.GetProfile(c, aid)
 	if err != nil {
-		return nil, status.Error(s.logAndConvertGetProfileErr(err), "")
+		return nil, status.Error(s.logAndConvertProfileErr(err), "")
 	}
 
 	if pr.PhotoBlobID == "" {
@@ -165,6 +168,7 @@ func (s *Service) CompleteProfilePhoto(c context.Context, req *rentalpb.Complete
 	})
 	if err != nil {
 		s.Logger.Error("cannot get blob", zap.Error(err))
+		return nil, status.Error(codes.Aborted, "")
 	}
 
 	s.Logger.Info("got profile photo", zap.Int("size", len(br.Data)))
@@ -190,7 +194,7 @@ func (s *Service) ClearProfilePhoto(c context.Context, req *rentalpb.ClearProfil
 	return &rentalpb.ClearProfilePhotoResponse{}, nil
 }
 
-func (s *Service) logAndConvertGetProfileErr(err error) codes.Code {
+func (s *Service) logAndConvertProfileErr(err error) codes.Code {
 	if err == mongo.ErrNoDocuments {
 		return codes.NotFound
 	}

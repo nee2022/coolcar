@@ -54,10 +54,14 @@ func (m *Mongo) GetProfile(c context.Context, aid id.AccountID) (*ProfileRecord,
 
 // UpdateProfile updates profile for an account.
 func (m *Mongo) UpdateProfile(c context.Context, aid id.AccountID, prevState rentalpb.IdentityStatus, p *rentalpb.Profile) error {
-	_, err := m.col.UpdateOne(c, bson.M{
-		accountIDField:      aid.String(),
+	filter := bson.M{
 		identityStatusField: prevState,
-	}, mgutil.Set(bson.M{
+	}
+	if prevState == rentalpb.IdentityStatus_UNSUBMITTED {
+		filter = mgutil.ZeroOrDoesNotExist(identityStatusField, prevState)
+	}
+	filter[accountIDField] = aid.String()
+	_, err := m.col.UpdateOne(c, filter, mgutil.Set(bson.M{
 		accountIDField: aid.String(),
 		profileField:   p,
 	}), options.Update().SetUpsert(true))
