@@ -251,7 +251,7 @@ Page({
         })
     },
 
-    onMianItemTap(e: WechatMiniprogram.TapEvent) {
+    onMianItemTap(e: any) {
         if (!e.currentTarget.dataset.tripInProgress) {
             return
         }
