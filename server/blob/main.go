@@ -29,9 +29,9 @@ func main() {
 	db := mongoClient.Database("coolcar")
 
 	st, err := cos.NewService(
-		"https://coolcar-1256512285.cos.ap-shanghai.myqcloud.com",
-		"AKIDxg9KGuqSJ2WjgOd99sZ7PQBfusZ7kVJq",
-		"SgfO1UgbRUJq89MWRQbYEe0N8lDrNhph")
+		"<URL>",
+		"<SEC_ID>",
+		"<SEC_KEY>")
 	if err != nil {
 		logger.Fatal("cannot create cos service", zap.Error(err))
 	}
