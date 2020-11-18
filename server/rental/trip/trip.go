@@ -19,6 +19,7 @@ type Service struct {
 	ProfileManager ProfileManager
 	CarManager     CarManager
 	POIManager     POIManager
+	DistanceCalc   DistanceCalc
 	Mongo          *dao.Mongo
 	Logger         *zap.Logger
 }
@@ -38,6 +39,11 @@ type CarManager interface {
 // POIManager resolves POI(Point Of Interest).
 type POIManager interface {
 	Resolve(context.Context, *rentalpb.Location) (string, error)
+}
+
+// DistanceCalc calculates distance between given points.
+type DistanceCalc interface {
+	DistanceKm(context.Context, *rentalpb.Location, *rentalpb.Location) (float64, error)
 }
 
 // CreateTrip creates a trip.
@@ -64,6 +70,7 @@ func (s *Service) CreateTrip(c context.Context, req *rentalpb.CreateTripRequest)
 		return nil, status.Error(codes.FailedPrecondition, err.Error())
 	}
 
+	// 创建行程：写入数据库，开始计费
 	ls := s.calcCurrentStatus(c, &rentalpb.LocationStatus{
 		Location:     req.Start,
 		TimestampSec: nowFunc(),
@@ -174,22 +181,26 @@ var nowFunc = func() int64 {
 	return time.Now().Unix()
 }
 
-const (
-	centsPerSec = 0.7
-	kmPerSec    = 0.02
-)
+const centsPerSec = 0.7
 
 func (s *Service) calcCurrentStatus(c context.Context, last *rentalpb.LocationStatus, cur *rentalpb.Location) *rentalpb.LocationStatus {
 	now := nowFunc()
 	elapsedSec := float64(now - last.TimestampSec)
+
+	dist, err := s.DistanceCalc.DistanceKm(c, last.Location, cur)
+	if err != nil {
+		s.Logger.Warn("cannot calculate distance", zap.Error(err))
+	}
+
 	poi, err := s.POIManager.Resolve(c, cur)
 	if err != nil {
-		s.Logger.Info("cannot resolve poi", zap.Stringer("location", cur), zap.Error(err))
+		s.Logger.Info("cannot resolve poi", zap.Stringer("loc", cur))
 	}
+
 	return &rentalpb.LocationStatus{
 		Location:     cur,
 		FeeCent:      last.FeeCent + int32(centsPerSec*elapsedSec*2*rand.Float64()),
-		KmDriven:     last.KmDriven + kmPerSec*elapsedSec*2*rand.Float64(),
+		KmDriven:     last.KmDriven + dist,
 		TimestampSec: now,
 		PoiName:      poi,
 	}
