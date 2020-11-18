@@ -24,6 +24,9 @@ func TestCreateTrip(t *testing.T) {
 	cm := &carManager{}
 	s := newService(c, t, pm, cm)
 
+	nowFunc = func() int64 {
+		return 1605695246
+	}
 	req := &rentalpb.CreateTripRequest{
 		CarId: "car1",
 		Start: &rentalpb.Location{
@@ -32,10 +35,7 @@ func TestCreateTrip(t *testing.T) {
 		},
 	}
 	pm.iID = "identity1"
-	golden := `{"account_id":%q,"car_id":"car1","start":{"location":{"latitude":32.123,"longitude":114.2525},"poi_name":"天安门","timestamp_sec":1602560211},"current":{"location":{"latitude":32.123,"longitude":114.2525},"poi_name":"天安门","timestamp_sec":1602560211},"status":1,"identity_id":"identity1"}`
-	nowFunc = func() int64 {
-		return 1602560211
-	}
+	golden := `{"account_id":%q,"car_id":"car1","start":{"location":{"latitude":32.123,"longitude":114.2525},"poi_name":"天安门","timestamp_sec":1605695246},"current":{"location":{"latitude":32.123,"longitude":114.2525},"poi_name":"天安门","timestamp_sec":1605695246},"status":1,"identity_id":"identity1"}`
 	cases := []struct {
 		name         string
 		accountID    string
@@ -81,8 +81,7 @@ func TestCreateTrip(t *testing.T) {
 			pm.err = cc.profileErr
 			cm.unlockErr = cc.carUnlockErr
 			cm.verifyErr = cc.carVerifyErr
-			c := auth.ContextWithAccountID(
-				context.Background(), id.AccountID(cc.accountID))
+			c := auth.ContextWithAccountID(context.Background(), id.AccountID(cc.accountID))
 			res, err := s.CreateTrip(c, req)
 			if cc.wantErr {
 				if err == nil {
@@ -118,11 +117,10 @@ func TestTripLifecycle(t *testing.T) {
 	tid := id.TripID("5f8132eb22714bf629489056")
 	mgutil.NewObjIDWithValue(tid)
 	cases := []struct {
-		name    string
-		now     int64
-		op      func() (*rentalpb.Trip, error)
-		want    string
-		wantErr bool
+		name string
+		now  int64
+		op   func() (*rentalpb.Trip, error)
+		want string
 	}{
 		{
 			name: "create_trip",
@@ -154,7 +152,7 @@ func TestTripLifecycle(t *testing.T) {
 					},
 				})
 			},
-			want: `{"account_id":"account_for_lifecycle","car_id":"car1","start":{"location":{"latitude":32.123,"longitude":114.2525},"poi_name":"天安门","timestamp_sec":10000},"current":{"location":{"latitude":28.234234,"longitude":123.243255},"fee_cent":3685,"km_driven":233.60983241807665,"poi_name":"中关村","timestamp_sec":20000},"status":1}`,
+			want: `{"account_id":"account_for_lifecycle","car_id":"car1","start":{"location":{"latitude":32.123,"longitude":114.2525},"poi_name":"天安门","timestamp_sec":10000},"current":{"location":{"latitude":28.234234,"longitude":123.243255},"fee_cent":10677,"km_driven":100,"poi_name":"中关村","timestamp_sec":20000},"status":1}`,
 		},
 		{
 			name: "finish_trip",
@@ -165,7 +163,7 @@ func TestTripLifecycle(t *testing.T) {
 					EndTrip: true,
 				})
 			},
-			want: `{"account_id":"account_for_lifecycle","car_id":"car1","start":{"location":{"latitude":32.123,"longitude":114.2525},"poi_name":"天安门","timestamp_sec":10000},"current":{"location":{"latitude":28.234234,"longitude":123.243255},"fee_cent":7914,"km_driven":583.9886135763365,"poi_name":"中关村","timestamp_sec":30000},"end":{"location":{"latitude":28.234234,"longitude":123.243255},"fee_cent":7914,"km_driven":583.9886135763365,"poi_name":"中关村","timestamp_sec":30000},"status":2}`,
+			want: `{"account_id":"account_for_lifecycle","car_id":"car1","start":{"location":{"latitude":32.123,"longitude":114.2525},"poi_name":"天安门","timestamp_sec":10000},"current":{"location":{"latitude":28.234234,"longitude":123.243255},"fee_cent":24674,"km_driven":100,"poi_name":"中关村","timestamp_sec":30000},"end":{"location":{"latitude":28.234234,"longitude":123.243255},"fee_cent":24674,"km_driven":100,"poi_name":"中关村","timestamp_sec":30000},"status":2}`,
 		},
 		{
 			name: "query_trip",
@@ -175,17 +173,7 @@ func TestTripLifecycle(t *testing.T) {
 					Id: tid.String(),
 				})
 			},
-			want: `{"account_id":"account_for_lifecycle","car_id":"car1","start":{"location":{"latitude":32.123,"longitude":114.2525},"poi_name":"天安门","timestamp_sec":10000},"current":{"location":{"latitude":28.234234,"longitude":123.243255},"fee_cent":7914,"km_driven":583.9886135763365,"poi_name":"中关村","timestamp_sec":30000},"end":{"location":{"latitude":28.234234,"longitude":123.243255},"fee_cent":7914,"km_driven":583.9886135763365,"poi_name":"中关村","timestamp_sec":30000},"status":2}`,
-		},
-		{
-			name: "update_after_finished",
-			now:  50000,
-			op: func() (*rentalpb.Trip, error) {
-				return s.UpdateTrip(c, &rentalpb.UpdateTripRequest{
-					Id: tid.String(),
-				})
-			},
-			wantErr: true,
+			want: `{"account_id":"account_for_lifecycle","car_id":"car1","start":{"location":{"latitude":32.123,"longitude":114.2525},"poi_name":"天安门","timestamp_sec":10000},"current":{"location":{"latitude":28.234234,"longitude":123.243255},"fee_cent":24674,"km_driven":100,"poi_name":"中关村","timestamp_sec":30000},"end":{"location":{"latitude":28.234234,"longitude":123.243255},"fee_cent":24674,"km_driven":100,"poi_name":"中关村","timestamp_sec":30000},"status":2}`,
 		},
 	}
 	rand.Seed(1345)
@@ -194,13 +182,6 @@ func TestTripLifecycle(t *testing.T) {
 			return cc.now
 		}
 		trip, err := cc.op()
-		if cc.wantErr {
-			if err == nil {
-				t.Errorf("%s: want error; got none", cc.name)
-			} else {
-				continue
-			}
-		}
 		if err != nil {
 			t.Errorf("%s: operation failed: %v", cc.name, err)
 			continue
@@ -233,6 +214,7 @@ func newService(c context.Context, t *testing.T, pm ProfileManager, cm CarManage
 		ProfileManager: pm,
 		CarManager:     cm,
 		POIManager:     &poi.Manager{},
+		DistanceCalc:   &distCalc{},
 		Mongo:          dao.NewMongo(db),
 		Logger:         logger,
 	}
@@ -258,6 +240,15 @@ func (c *carManager) Verify(context.Context, id.CarID, *rentalpb.Location) error
 
 func (c *carManager) Unlock(context.Context, id.CarID) error {
 	return c.unlockErr
+}
+
+type distCalc struct{}
+
+func (*distCalc) DistanceKm(c context.Context, from *rentalpb.Location, to *rentalpb.Location) (float64, error) {
+	if from.Latitude == to.Latitude && from.Longitude == to.Longitude {
+		return 0, nil
+	}
+	return 100, nil
 }
 
 func TestMain(m *testing.M) {

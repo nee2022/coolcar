@@ -2,12 +2,14 @@ package main
 
 import (
 	"context"
+	"coolcar/rental/ai"
 	rentalpb "coolcar/rental/api/gen/v1"
 	"coolcar/rental/trip"
 	"coolcar/rental/trip/client/car"
 	"coolcar/rental/trip/client/poi"
 	"coolcar/rental/trip/client/profile"
 	"coolcar/rental/trip/dao"
+	coolenvpb "coolcar/shared/coolenv"
 	"coolcar/shared/server"
 	"log"
 
@@ -29,6 +31,11 @@ func main() {
 		logger.Fatal("cannot connect mongodb", zap.Error(err))
 	}
 
+	ac, err := grpc.Dial("localhost:18001", grpc.WithInsecure())
+	if err != nil {
+		logger.Fatal("cannot connect aiservice", zap.Error(err))
+	}
+
 	logger.Sugar().Fatal(server.RunGRPCServer(&server.GRPCConfig{
 		Name:              "rental",
 		Addr:              ":8082",
@@ -39,8 +46,11 @@ func main() {
 				CarManager:     &car.Manager{},
 				ProfileManager: &profile.Manager{},
 				POIManager:     &poi.Manager{},
-				Mongo:          dao.NewMongo(mongoClient.Database("coolcar")),
-				Logger:         logger,
+				DistanceCalc: &ai.Client{
+					AIClient: coolenvpb.NewAIServiceClient(ac),
+				},
+				Mongo:  dao.NewMongo(mongoClient.Database("coolcar")),
+				Logger: logger,
 			})
 		},
 	}))
