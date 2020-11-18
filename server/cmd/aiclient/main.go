@@ -30,4 +30,12 @@ func main() {
 		panic(err)
 	}
 	fmt.Printf("%+v\n", res)
+
+	idRes, err := ac.LicIdentity(c, &coolenvpb.IdentityRequest{
+		Photo: []byte{1, 2, 3, 4, 5},
+	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%+v\n", idRes)
 }

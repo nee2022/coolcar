@@ -40,17 +40,23 @@ func main() {
 	if err != nil {
 		logger.Fatal("cannot connect blob service", zap.Error(err))
 	}
-	profService := &profile.Service{
-		BlobClient:        blobpb.NewBlobServiceClient(blobConn),
-		PhotoGetExpire:    5 * time.Second,
-		PhotoUploadExpire: 10 * time.Second,
-		Mongo:             profiledao.NewMongo(db),
-		Logger:            logger,
-	}
 
 	ac, err := grpc.Dial("localhost:18001", grpc.WithInsecure())
 	if err != nil {
 		logger.Fatal("cannot connect aiservice", zap.Error(err))
+	}
+	aiClient := &ai.Client{
+		AIClient:  coolenvpb.NewAIServiceClient(ac),
+		UseRealAI: false,
+	}
+
+	profService := &profile.Service{
+		BlobClient:        blobpb.NewBlobServiceClient(blobConn),
+		PhotoGetExpire:    5 * time.Second,
+		PhotoUploadExpire: 10 * time.Second,
+		IdentityResolver:  aiClient,
+		Mongo:             profiledao.NewMongo(db),
+		Logger:            logger,
 	}
 
 	logger.Sugar().Fatal(server.RunGRPCServer(&server.GRPCConfig{
@@ -64,12 +70,10 @@ func main() {
 				ProfileManager: &profClient.Manager{
 					Fetcher: profService,
 				},
-				POIManager: &poi.Manager{},
-				DistanceCalc: &ai.Client{
-					AIClient: coolenvpb.NewAIServiceClient(ac),
-				},
-				Mongo:  tripdao.NewMongo(db),
-				Logger: logger,
+				POIManager:   &poi.Manager{},
+				DistanceCalc: aiClient,
+				Mongo:        tripdao.NewMongo(db),
+				Logger:       logger,
 			})
 			rentalpb.RegisterProfileServiceServer(s, profService)
 		},
