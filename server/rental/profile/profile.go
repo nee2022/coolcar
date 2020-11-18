@@ -15,11 +15,17 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+// IdentityResolver resolves identity from given photo.
+type IdentityResolver interface {
+	Resolve(c context.Context, photo []byte) (*rentalpb.Identity, error)
+}
+
 // Service defines a profile service.
 type Service struct {
 	BlobClient        blobpb.BlobServiceClient
 	PhotoGetExpire    time.Duration
 	PhotoUploadExpire time.Duration
+	IdentityResolver  IdentityResolver
 	Mongo             *dao.Mongo
 	Logger            *zap.Logger
 }
@@ -172,12 +178,7 @@ func (s *Service) CompleteProfilePhoto(c context.Context, req *rentalpb.Complete
 	}
 
 	s.Logger.Info("got profile photo", zap.Int("size", len(br.Data)))
-	return &rentalpb.Identity{
-		LicNumber:       "322152452",
-		Name:            "李四",
-		Gender:          rentalpb.Gender_FEMALE,
-		BirthDateMillis: 631152000000,
-	}, nil
+	return s.IdentityResolver.Resolve(c, br.Data)
 }
 
 // ClearProfilePhoto clears profile photo.
