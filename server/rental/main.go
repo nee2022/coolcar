@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	blobpb "coolcar/blob/api/gen/v1"
+	"coolcar/rental/ai"
 	rentalpb "coolcar/rental/api/gen/v1"
 	"coolcar/rental/profile"
 	profiledao "coolcar/rental/profile/dao"
@@ -11,6 +12,7 @@ import (
 	"coolcar/rental/trip/client/poi"
 	profClient "coolcar/rental/trip/client/profile"
 	tripdao "coolcar/rental/trip/dao"
+	coolenvpb "coolcar/shared/coolenv"
 	"coolcar/shared/server"
 	"log"
 	"time"
@@ -46,6 +48,11 @@ func main() {
 		Logger:            logger,
 	}
 
+	ac, err := grpc.Dial("localhost:18001", grpc.WithInsecure())
+	if err != nil {
+		logger.Fatal("cannot connect aiservice", zap.Error(err))
+	}
+
 	logger.Sugar().Fatal(server.RunGRPCServer(&server.GRPCConfig{
 		Name:              "rental",
 		Addr:              ":8082",
@@ -58,8 +65,11 @@ func main() {
 					Fetcher: profService,
 				},
 				POIManager: &poi.Manager{},
-				Mongo:      tripdao.NewMongo(db),
-				Logger:     logger,
+				DistanceCalc: &ai.Client{
+					AIClient: coolenvpb.NewAIServiceClient(ac),
+				},
+				Mongo:  tripdao.NewMongo(db),
+				Logger: logger,
 			})
 			rentalpb.RegisterProfileServiceServer(s, profService)
 		},
