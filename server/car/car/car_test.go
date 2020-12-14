@@ -26,8 +26,9 @@ func TestCarUpdate(t *testing.T) {
 	}
 
 	s := &Service{
-		Logger: logger,
-		Mongo:  dao.NewMongo(mc.Database("coolcar")),
+		Logger:    logger,
+		Mongo:     dao.NewMongo(mc.Database("coolcar")),
+		Publisher: &testPublisher{},
 	}
 
 	carID := id.CarID("5f8132eb22814bf629489056")
@@ -149,4 +150,10 @@ func TestCarUpdate(t *testing.T) {
 
 func TestMain(m *testing.M) {
 	os.Exit(mongotesting.RunWithMongoInDocker(m))
+}
+
+type testPublisher struct{}
+
+func (p *testPublisher) Publish(context.Context, *carpb.CarEntity) error {
+	return nil
 }

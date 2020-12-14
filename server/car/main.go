@@ -2,12 +2,14 @@ package main
 
 import (
 	"context"
+	"coolcar/car/amqpclt"
 	carpb "coolcar/car/api/gen/v1"
 	"coolcar/car/car"
 	"coolcar/car/dao"
 	"coolcar/shared/server"
 	"log"
 
+	"github.com/streadway/amqp"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.uber.org/zap"
@@ -27,14 +29,25 @@ func main() {
 	}
 	db := mongoClient.Database("coolcar")
 
+	amqpConn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
+	if err != nil {
+		logger.Fatal("cannot dial amqp", zap.Error(err))
+	}
+
+	pub, err := amqpclt.NewPublisher(amqpConn, "coolcar")
+	if err != nil {
+		logger.Fatal("cannot create publisher", zap.Error(err))
+	}
+
 	logger.Sugar().Fatal(server.RunGRPCServer(&server.GRPCConfig{
 		Name:   "car",
 		Addr:   ":8084",
 		Logger: logger,
 		RegisterFunc: func(s *grpc.Server) {
 			carpb.RegisterCarServiceServer(s, &car.Service{
-				Logger: logger,
-				Mongo:  dao.NewMongo(db),
+				Logger:    logger,
+				Mongo:     dao.NewMongo(db),
+				Publisher: pub,
 			})
 		},
 	}))
