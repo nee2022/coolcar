@@ -40,6 +40,7 @@ message Trip {
 message CreateTripRequest {
     Location start = 1;
     string car_id = 2;
+    string avatar_url = 3;
 }
 
 message GetTripRequest {

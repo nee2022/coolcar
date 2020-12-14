@@ -48,6 +48,7 @@ func TestCarUpdate(t *testing.T) {
 			op: func() error {
 				return nil
 			},
+			want: `{"status":1,"position":{"latitude":30,"longitude":120}}`,
 		},
 		{
 			name: "unlock_car",
@@ -62,6 +63,7 @@ func TestCarUpdate(t *testing.T) {
 				})
 				return err
 			},
+			want: `{"status":2,"driver":{"id":"test_driver","avatar_url":"test_avatar"},"position":{"latitude":30,"longitude":120},"trip_id":"test_trip"}`,
 		},
 		{
 			name: "unlock_complete",
@@ -76,6 +78,7 @@ func TestCarUpdate(t *testing.T) {
 				})
 				return err
 			},
+			want: `{"status":3,"driver":{"id":"test_driver","avatar_url":"test_avatar"},"position":{"latitude":31,"longitude":121},"trip_id":"test_trip"}`,
 		},
 		{
 			name: "unlock_car_by_another_driver",
@@ -90,6 +93,7 @@ func TestCarUpdate(t *testing.T) {
 				})
 				return err
 			},
+			wantErr: true,
 		},
 		{
 			name: "lock_car",
@@ -99,6 +103,7 @@ func TestCarUpdate(t *testing.T) {
 				})
 				return err
 			},
+			want: `{"status":4,"driver":{"id":"test_driver","avatar_url":"test_avatar"},"position":{"latitude":31,"longitude":121},"trip_id":"test_trip"}`,
 		},
 		{
 			name: "lock_complete",
@@ -109,6 +114,7 @@ func TestCarUpdate(t *testing.T) {
 				})
 				return err
 			},
+			want: `{"status":1,"driver":{},"position":{"latitude":31,"longitude":121}}`,
 		},
 	}
 	for _, cc := range cases {

@@ -256,6 +256,9 @@ export namespace rental {
 
             /** CreateTripRequest carId */
             carId?: (string|null);
+
+            /** CreateTripRequest avatarUrl */
+            avatarUrl?: (string|null);
         }
 
         /** Represents a CreateTripRequest. */
@@ -272,6 +275,9 @@ export namespace rental {
 
             /** CreateTripRequest carId. */
             public carId: string;
+
+            /** CreateTripRequest avatarUrl. */
+            public avatarUrl: string;
 
             /**
              * Creates a CreateTripRequest message from a plain object. Also converts values to their respective internal types.
