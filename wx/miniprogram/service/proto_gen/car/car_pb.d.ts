@@ -583,6 +583,41 @@ export namespace car {
             public toJSON(): { [k: string]: any };
         }
 
+        /** Properties of an UpdateCarResponse. */
+        interface IUpdateCarResponse {
+        }
+
+        /** Represents an UpdateCarResponse. */
+        class UpdateCarResponse implements IUpdateCarResponse {
+
+            /**
+             * Constructs a new UpdateCarResponse.
+             * @param [properties] Properties to set
+             */
+            constructor(properties?: car.v1.IUpdateCarResponse);
+
+            /**
+             * Creates an UpdateCarResponse message from a plain object. Also converts values to their respective internal types.
+             * @param object Plain object
+             * @returns UpdateCarResponse
+             */
+            public static fromObject(object: { [k: string]: any }): car.v1.UpdateCarResponse;
+
+            /**
+             * Creates a plain object from an UpdateCarResponse message. Also converts values to other types if specified.
+             * @param message UpdateCarResponse
+             * @param [options] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(message: car.v1.UpdateCarResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this UpdateCarResponse to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+        }
+
         /** Represents a CarService */
         class CarService extends $protobuf.rpc.Service {
 
@@ -667,7 +702,7 @@ export namespace car {
             /**
              * Calls UpdateCar.
              * @param request UpdateCarRequest message or plain object
-             * @param callback Node-style callback called with the error, if any, and Car
+             * @param callback Node-style callback called with the error, if any, and UpdateCarResponse
              */
             public updateCar(request: car.v1.IUpdateCarRequest, callback: car.v1.CarService.UpdateCarCallback): void;
 
@@ -676,7 +711,7 @@ export namespace car {
              * @param request UpdateCarRequest message or plain object
              * @returns Promise
              */
-            public updateCar(request: car.v1.IUpdateCarRequest): Promise<car.v1.Car>;
+            public updateCar(request: car.v1.IUpdateCarRequest): Promise<car.v1.UpdateCarResponse>;
         }
 
         namespace CarService {
@@ -719,9 +754,9 @@ export namespace car {
             /**
              * Callback as used by {@link car.v1.CarService#updateCar}.
              * @param error Error, if any
-             * @param [response] Car
+             * @param [response] UpdateCarResponse
              */
-            type UpdateCarCallback = (error: (Error|null), response?: car.v1.Car) => void;
+            type UpdateCarCallback = (error: (Error|null), response?: car.v1.UpdateCarResponse) => void;
         }
     }
 }

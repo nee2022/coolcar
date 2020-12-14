@@ -1260,6 +1260,70 @@ export const car = $root.car = (() => {
             return UpdateCarRequest;
         })();
 
+        v1.UpdateCarResponse = (function() {
+
+            /**
+             * Properties of an UpdateCarResponse.
+             * @memberof car.v1
+             * @interface IUpdateCarResponse
+             */
+
+            /**
+             * Constructs a new UpdateCarResponse.
+             * @memberof car.v1
+             * @classdesc Represents an UpdateCarResponse.
+             * @implements IUpdateCarResponse
+             * @constructor
+             * @param {car.v1.IUpdateCarResponse=} [properties] Properties to set
+             */
+            function UpdateCarResponse(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * Creates an UpdateCarResponse message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof car.v1.UpdateCarResponse
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {car.v1.UpdateCarResponse} UpdateCarResponse
+             */
+            UpdateCarResponse.fromObject = function fromObject(object) {
+                if (object instanceof $root.car.v1.UpdateCarResponse)
+                    return object;
+                return new $root.car.v1.UpdateCarResponse();
+            };
+
+            /**
+             * Creates a plain object from an UpdateCarResponse message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof car.v1.UpdateCarResponse
+             * @static
+             * @param {car.v1.UpdateCarResponse} message UpdateCarResponse
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            UpdateCarResponse.toObject = function toObject() {
+                return {};
+            };
+
+            /**
+             * Converts this UpdateCarResponse to JSON.
+             * @function toJSON
+             * @memberof car.v1.UpdateCarResponse
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            UpdateCarResponse.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return UpdateCarResponse;
+        })();
+
         v1.CarService = (function() {
 
             /**
@@ -1449,7 +1513,7 @@ export const car = $root.car = (() => {
              * @typedef UpdateCarCallback
              * @type {function}
              * @param {Error|null} error Error, if any
-             * @param {car.v1.Car} [response] Car
+             * @param {car.v1.UpdateCarResponse} [response] UpdateCarResponse
              */
 
             /**
@@ -1458,12 +1522,12 @@ export const car = $root.car = (() => {
              * @memberof car.v1.CarService
              * @instance
              * @param {car.v1.IUpdateCarRequest} request UpdateCarRequest message or plain object
-             * @param {car.v1.CarService.UpdateCarCallback} callback Node-style callback called with the error, if any, and Car
+             * @param {car.v1.CarService.UpdateCarCallback} callback Node-style callback called with the error, if any, and UpdateCarResponse
              * @returns {undefined}
              * @variation 1
              */
             Object.defineProperty(CarService.prototype.updateCar = function updateCar(request, callback) {
-                return this.rpcCall(updateCar, $root.car.v1.UpdateCarRequest, $root.car.v1.Car, request, callback);
+                return this.rpcCall(updateCar, $root.car.v1.UpdateCarRequest, $root.car.v1.UpdateCarResponse, request, callback);
             }, "name", { value: "UpdateCar" });
 
             /**
@@ -1472,7 +1536,7 @@ export const car = $root.car = (() => {
              * @memberof car.v1.CarService
              * @instance
              * @param {car.v1.IUpdateCarRequest} request UpdateCarRequest message or plain object
-             * @returns {Promise<car.v1.Car>} Promise
+             * @returns {Promise<car.v1.UpdateCarResponse>} Promise
              * @variation 2
              */
 

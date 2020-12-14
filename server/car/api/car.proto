@@ -64,11 +64,13 @@ message UpdateCarRequest {
     Location position = 3;
 }
 
+message UpdateCarResponse {}
+
 service CarService {
     rpc CreateCar (CreateCarRequest) returns (CarEntity);
     rpc GetCar (GetCarRequest) returns (Car);
     rpc GetCars (GetCarsRequest) returns (GetCarsResponse);
     rpc LockCar (LockCarRequest) returns (LockCarResponse);
     rpc UnlockCar (UnlockCarRequest) returns (UnlockCarResponse);
-    rpc UpdateCar (UpdateCarRequest) returns (Car);
+    rpc UpdateCar (UpdateCarRequest) returns (UpdateCarResponse);
 }
