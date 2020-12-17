@@ -41,7 +41,20 @@ func main() {
 		logger.Fatal("cannot create publisher", zap.Error(err))
 	}
 
-	simController := &sim.Controller{}
+	// Run car simulations.
+	carConn, err := grpc.Dial("localhost:8084", grpc.WithInsecure())
+	if err != nil {
+		logger.Fatal("cannot connect car service", zap.Error(err))
+	}
+	sub, err := amqpclt.NewSubscriber(amqpConn, exchange, logger)
+	if err != nil {
+		logger.Fatal("cannot create subscriber", zap.Error(err))
+	}
+	simController := &sim.Controller{
+		CarService: carpb.NewCarServiceClient(carConn),
+		Logger:     logger,
+		Subscriber: sub,
+	}
 	go simController.RunSimulations(context.Background())
 
 	logger.Sugar().Fatal(server.RunGRPCServer(&server.GRPCConfig{

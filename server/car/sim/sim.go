@@ -10,7 +10,7 @@ import (
 
 // Subscriber defines a car update subscriber.
 type Subscriber interface {
-	Subscribe(context.Context) (ch chan *carpb.CarEntity, err error)
+	Subscribe(context.Context) (ch chan *carpb.CarEntity, cleanUp func(), err error)
 }
 
 // Controller defines a car simulation controller.
@@ -36,10 +36,12 @@ func (c *Controller) RunSimulations(ctx context.Context) {
 
 	c.Logger.Info("Running car simulations.", zap.Int("car_count", len(cars)))
 
-	msgCh, err := c.Subscriber.Subscribe(ctx)
+	msgCh, cleanUp, err := c.Subscriber.Subscribe(ctx)
+	defer cleanUp()
 
 	if err != nil {
 		c.Logger.Error("cannot subscribe", zap.Error(err))
+		return
 	}
 
 	carChans := make(map[string]chan *carpb.Car)
