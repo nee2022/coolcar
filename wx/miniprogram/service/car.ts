@@ -16,4 +16,12 @@ export namespace CarService {
         })
         return socket
     }
+
+    export function getCar(id: string): Promise<car.v1.ICar> {
+        return Coolcar.sendRequestWithAuthRetry({
+            method: 'GET',
+            path: `/v1/car/${encodeURIComponent(id)}`,
+            respMarshaller: car.v1.Car.fromObject,
+        })
+    }
 }

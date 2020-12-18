@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	authpb "coolcar/auth/api/gen/v1"
+	carpb "coolcar/car/api/gen/v1"
 	rentalpb "coolcar/rental/api/gen/v1"
 	"coolcar/shared/server"
 	"log"
@@ -47,6 +48,11 @@ func main() {
 			name:         "profile",
 			addr:         "localhost:8082",
 			registerFunc: rentalpb.RegisterProfileServiceHandlerFromEndpoint,
+		},
+		{
+			name:         "car",
+			addr:         "localhost:8084",
+			registerFunc: carpb.RegisterCarServiceHandlerFromEndpoint,
 		},
 	}
 
