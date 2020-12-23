@@ -7,7 +7,9 @@ import (
 	"coolcar/car/dao"
 	"coolcar/car/mq/amqpclt"
 	"coolcar/car/sim"
+	"coolcar/car/sim/pos"
 	"coolcar/car/ws"
+	coolenvpb "coolcar/shared/coolenv"
 	"coolcar/shared/server"
 	"log"
 	"net/http"
@@ -49,14 +51,27 @@ func main() {
 	if err != nil {
 		logger.Fatal("cannot connect car service", zap.Error(err))
 	}
+	aiConn, err := grpc.Dial("localhost:18001", grpc.WithInsecure())
+	if err != nil {
+		logger.Fatal("cannot connect ai service", zap.Error(err))
+	}
 	sub, err := amqpclt.NewSubscriber(amqpConn, exchange, logger)
 	if err != nil {
 		logger.Fatal("cannot create subscriber", zap.Error(err))
 	}
+	posSub, err := amqpclt.NewSubscriber(amqpConn, "pos_sim", logger)
+	if err != nil {
+		logger.Fatal("cannot create pos subscriber", zap.Error(err))
+	}
 	simController := &sim.Controller{
-		CarService: carpb.NewCarServiceClient(carConn),
-		Logger:     logger,
-		Subscriber: sub,
+		CarService:    carpb.NewCarServiceClient(carConn),
+		AIService:     coolenvpb.NewAIServiceClient(aiConn),
+		Logger:        logger,
+		CarSubscriber: sub,
+		PosSubscriber: &pos.Subscriber{
+			Sub:    posSub,
+			Logger: logger,
+		},
 	}
 	go simController.RunSimulations(context.Background())
 

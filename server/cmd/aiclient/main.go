@@ -5,6 +5,7 @@ import (
 	"coolcar/car/mq/amqpclt"
 	coolenvpb "coolcar/shared/coolenv"
 	"coolcar/shared/server"
+	"encoding/json"
 	"fmt"
 	"time"
 
@@ -86,7 +87,12 @@ func main() {
 		shouldStop := false
 		select {
 		case msg := <-ch:
-			fmt.Printf("%s\n", msg.Body)
+			var update coolenvpb.CarPosUpdate
+			err = json.Unmarshal(msg.Body, &update)
+			if err != nil {
+				panic(err)
+			}
+			fmt.Printf("%+v\n", &update)
 		case <-tm:
 			shouldStop = true
 		}
