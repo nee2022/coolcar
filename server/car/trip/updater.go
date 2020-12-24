@@ -5,8 +5,11 @@ import (
 	carpb "coolcar/car/api/gen/v1"
 	"coolcar/car/mq"
 	rentalpb "coolcar/rental/api/gen/v1"
+	"coolcar/shared/auth"
+	"coolcar/shared/id"
 
 	"go.uber.org/zap"
+	"google.golang.org/grpc"
 )
 
 // RunUpdater runs a trip updater.
@@ -27,10 +30,26 @@ func RunUpdater(sub mq.Subscriber, ts rentalpb.TripServiceClient, logger *zap.Lo
 					Latitude:  car.Car.Position.Latitude,
 					Longitude: car.Car.Position.Longitude,
 				},
-			})
+			}, grpc.PerRPCCredentials(&impersonation{
+				AccountID: id.AccountID(car.Car.Driver.Id),
+			}))
 			if err != nil {
 				logger.Error("cannot update trip", zap.String("trip_id", car.Car.TripId), zap.Error(err))
 			}
 		}
 	}
+}
+
+type impersonation struct {
+	AccountID id.AccountID
+}
+
+func (i *impersonation) GetRequestMetadata(ctx context.Context, uri ...string) (map[string]string, error) {
+	return map[string]string{
+		auth.ImpersonateAccountHeader: i.AccountID.String(),
+	}, nil
+}
+
+func (i *impersonation) RequireTransportSecurity() bool {
+	return false
 }

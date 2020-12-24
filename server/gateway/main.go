@@ -5,9 +5,11 @@ import (
 	authpb "coolcar/auth/api/gen/v1"
 	carpb "coolcar/car/api/gen/v1"
 	rentalpb "coolcar/rental/api/gen/v1"
+	"coolcar/shared/auth"
 	"coolcar/shared/server"
 	"log"
 	"net/http"
+	"net/textproto"
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"google.golang.org/grpc"
@@ -27,7 +29,12 @@ func main() {
 			EnumsAsInts: true,
 			OrigName:    true,
 		},
-	))
+	), runtime.WithIncomingHeaderMatcher(func(key string) (string, bool) {
+		if key == textproto.CanonicalMIMEHeaderKey(runtime.MetadataHeaderPrefix+auth.ImpersonateAccountHeader) {
+			return "", false
+		}
+		return runtime.DefaultHeaderMatcher(key)
+	}))
 
 	serverConfig := []struct {
 		name         string
