@@ -8,7 +8,9 @@ import (
 	"coolcar/car/mq/amqpclt"
 	"coolcar/car/sim"
 	"coolcar/car/sim/pos"
+	"coolcar/car/trip"
 	"coolcar/car/ws"
+	rentalpb "coolcar/rental/api/gen/v1"
 	coolenvpb "coolcar/shared/coolenv"
 	"coolcar/shared/server"
 	"log"
@@ -88,6 +90,13 @@ func main() {
 		logger.Sugar().Fatal(
 			http.ListenAndServe(addr, nil))
 	}()
+
+	// Start trip updater.
+	tripConn, err := grpc.Dial("localhost:8082", grpc.WithInsecure())
+	if err != nil {
+		logger.Fatal("cannot connect trip service", zap.Error(err))
+	}
+	go trip.RunUpdater(sub, rentalpb.NewTripServiceClient(tripConn), logger)
 
 	logger.Sugar().Fatal(server.RunGRPCServer(&server.GRPCConfig{
 		Name:   "car",
