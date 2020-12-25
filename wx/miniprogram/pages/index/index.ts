@@ -5,6 +5,19 @@ import { rental } from "../../service/proto_gen/rental/rental_pb"
 import { TripService } from "../../service/trip"
 import { routing } from "../../utils/routing"
 
+interface Marker {
+  iconPath: string
+  id: number
+  latitude: number
+  longitude: number
+  width: number
+  height: number
+}
+
+const defaultAvatar = '/resources/car.png'
+const initialLat = 29.761267625855936
+const initialLng = 121.87264654736123
+
 Page({
   isPageShowing: false,
   socket: undefined as WechatMiniprogram.SocketTask | undefined,
@@ -28,37 +41,14 @@ Page({
       enableTraffic: false,
     },
     location: {
-      latitude: 23.099994,
-      longitude: 113.32452,
+      latitude: initialLat,
+      longitude: initialLng,
     },
-    scale: 10,
-    markers: [
-      {
-        iconPath: "/resources/car.png",
-        id: 0,
-        latitude: 23.099994,
-        longitude: 113.324520,
-        width: 50,
-        height: 50
-      },
-      {
-        iconPath: "/resources/car.png",
-        id: 1,
-        latitude: 23.099994,
-        longitude: 114.324520,
-        width: 50,
-        height: 50
-      },
-    ],
+    scale: 16,
+    markers: [] as Marker[],
   },
 
   async onLoad() {
-    let msgReceived = 0
-    this.socket = CarService.subscribe(msg => {
-      msgReceived++
-      console.log(msg)
-    })
-
     const userInfo = await getApp<IAppOption>().globalData.userInfo
     this.setData({
       avatarURL: userInfo.avatarUrl,
@@ -66,8 +56,6 @@ Page({
   },
 
   onMyLocationTap() {
-    this.socket?.close({
-    })
     wx.getLocation({
       type: 'gcj02',
       success: res => {
@@ -101,7 +89,7 @@ Page({
     wx.scanCode({
       success: async () => {
         // TODO: get car id from scan result
-        const carID='5fd86a07626ce59ed0ccd545'
+        const carID='5fd86a07626ce59ed0ccd544'
         const lockURL = routing.lock({
           car_id: carID,
         })
@@ -125,10 +113,24 @@ Page({
 
   onShow() {
     this.isPageShowing = true;
+    if (!this.socket) {
+      this.setData({
+        markers: []
+      }, () => {
+        this.setupCarPosUpdater()
+      })
+    }
   },
   
   onHide() {
     this.isPageShowing = false;
+    if (this.socket) {
+      this.socket.close({
+        success: () => {
+          this.socket = undefined
+        }
+      })
+    }
   },
 
   onMyTripsTap() {
@@ -137,33 +139,68 @@ Page({
     })
   },
 
-  moveCars() {
+  setupCarPosUpdater() {
     const map = wx.createMapContext("map")
-    const dest = {
-      latitude: 23.099994,
-      longitude: 113.324520,
+    const markersByCarID = new Map<string, Marker>()
+    let translationInProgress = false
+    const endTranslation = () => {
+      translationInProgress = false
     }
-
-    const moveCar = () => {
-      dest.latitude += 0.1
-      dest.longitude += 0.1
-      map.translateMarker({
-        destination: {
-          latitude: dest.latitude,
-          longitude: dest.longitude,
-        },
-        markerId: 0,
-        autoRotate: false,
-        rotate: 0,
-        duration: 5000,
-        animationEnd: () => {
-          if (this.isPageShowing) {
-            moveCar()
-          }
+    this.socket = CarService.subscribe(car => {
+      if (!car.id || translationInProgress || !this.isPageShowing) {
+        console.log('dropped')
+        return
+      }
+      const marker = markersByCarID.get(car.id)
+      if (!marker) {
+        // Insert new marker.
+        const newMarker: Marker = {
+          id: this.data.markers.length,
+          iconPath: car.car?.driver?.avatarUrl || defaultAvatar,
+          latitude: car.car?.position?.latitude || initialLat,
+          longitude: car.car?.position?.longitude || initialLng,
+          height: 20,
+          width: 20,
         }
-      })
-    }
+        markersByCarID.set(car.id, newMarker)
+        this.data.markers.push(newMarker)
+        translationInProgress = true
+        this.setData({
+          markers: this.data.markers,
+        }, endTranslation)
+        return
+      }
 
-    moveCar()
+      const newAvatar = car.car?.driver?.avatarUrl || defaultAvatar
+      const newLat = car.car?.position?.latitude || initialLat
+      const newLng = car.car?.position?.longitude || initialLng
+      if (marker.iconPath !== newAvatar) {
+        // Change iconPath and possibly position.
+        marker.iconPath = newAvatar
+        marker.latitude = newLat
+        marker.longitude = newLng
+        translationInProgress = true
+        this.setData({
+          markers: this.data.markers,
+        }, endTranslation)
+        return
+      }
+
+      if (marker.latitude !== newLat && marker.longitude !== newLng) {
+        // Move marker.
+        translationInProgress = true
+        map.translateMarker({
+          markerId: marker.id,
+          destination: {
+            latitude: newLat,
+            longitude: newLng,
+          },
+          autoRotate: false,
+          rotate: 0,
+          duration: 80,
+          animationEnd: endTranslation,
+        })
+      }
+    })
   },
 })

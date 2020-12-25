@@ -154,7 +154,7 @@ func (c *Controller) unlockCar(ctx context.Context, car *carpb.CarEntity) (*carp
 			Latitude:  car.Car.Position.Latitude,
 			Longitude: car.Car.Position.Longitude,
 		},
-		Type: coolenvpb.PosType_RANDOM,
+		Type: coolenvpb.PosType_NINGBO,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("cannot simulate car position: %v", err)
