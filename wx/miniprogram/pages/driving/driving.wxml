@@ -18,5 +18,6 @@
     longitude="{{location.longitude}}"
     show-location
     scale="{{scale}}"
+    markers="{{markers}}"
 />
 </view>
