@@ -186,7 +186,7 @@ Page({
         return
       }
 
-      if (marker.latitude !== newLat && marker.longitude !== newLng) {
+      if (marker.latitude !== newLat || marker.longitude !== newLng) {
         // Move marker.
         translationInProgress = true
         map.translateMarker({
