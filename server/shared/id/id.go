@@ -27,3 +27,10 @@ type CarID string
 func (i CarID) String() string {
 	return string(i)
 }
+
+// BlobID defines blob id object.
+type BlobID string
+
+func (i BlobID) String() string {
+	return string(i)
+}

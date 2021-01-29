@@ -16,7 +16,7 @@
             <image wx:if="{{avatarURL}}" class="cu-avatar round lg bg-grey margin-xs"
                 src="{{avatarURL}}"/>
         </view>
-        <view class="text-blue" bindtap="onRegisterTap">驾驶资格未认证</view>
+        <view class="text-blue" bindtap="onRegisterTap">驾驶资格{{licStatus}}</view>
     </view>
 </view>
 <view class="nav-container">

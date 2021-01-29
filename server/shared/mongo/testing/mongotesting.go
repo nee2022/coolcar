@@ -110,5 +110,15 @@ func SetupIndexes(c context.Context, d *mongo.Database) error {
 			"trip.status": 1,
 		}),
 	})
+	if err != nil {
+		return err
+	}
+
+	_, err = d.Collection("profile").Indexes().CreateOne(c, mongo.IndexModel{
+		Keys: bson.D{
+			{Key: "accountid", Value: 1},
+		},
+		Options: options.Index().SetUnique(true),
+	})
 	return err
 }
