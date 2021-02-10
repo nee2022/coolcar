@@ -1,0 +1,76 @@
+syntax = "proto3";
+package car.v1;
+option go_package="coolcar/car/api/gen/v1;carpb";
+
+message CarEntity {
+    string id = 1;
+    Car car = 2;
+}
+
+enum CarStatus {
+    CS_NOT_SPECIFIED = 0;
+    LOCKED = 1;
+    UNLOCKING = 2;
+    UNLOCKED = 3;
+    LOCKING = 4;
+}
+
+message Driver {
+    string id = 1;
+    string avatar_url = 2;
+}
+
+message Location {
+    double latitude = 1;
+    double longitude = 2;
+}
+
+message Car {
+    CarStatus status = 1;
+    Driver driver = 2;
+    Location position = 3;
+    string trip_id = 4;
+}
+
+message CreateCarRequest {}
+
+message GetCarRequest {
+    string id = 1;
+}
+
+message GetCarsRequest {}
+
+message GetCarsResponse {
+    repeated CarEntity cars = 1;
+}
+
+message LockCarRequest {
+    string id = 1;
+}
+
+message LockCarResponse {}
+
+message UnlockCarRequest {
+    string id = 1;
+    Driver driver = 2;
+    string trip_id = 3;
+}
+
+message UnlockCarResponse {}
+
+message UpdateCarRequest {
+    string id = 1;
+    CarStatus status = 2;
+    Location position = 3;
+}
+
+message UpdateCarResponse {}
+
+service CarService {
+    rpc CreateCar (CreateCarRequest) returns (CarEntity);
+    rpc GetCar (GetCarRequest) returns (Car);
+    rpc GetCars (GetCarsRequest) returns (GetCarsResponse);
+    rpc LockCar (LockCarRequest) returns (LockCarResponse);
+    rpc UnlockCar (UnlockCarRequest) returns (UnlockCarResponse);
+    rpc UpdateCar (UpdateCarRequest) returns (UpdateCarResponse);
+}

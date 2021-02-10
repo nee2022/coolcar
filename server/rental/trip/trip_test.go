@@ -252,12 +252,16 @@ type carManager struct {
 	unlockErr error
 }
 
-func (c *carManager) Verify(context.Context, id.CarID, *rentalpb.Location) error {
-	return c.verifyErr
+func (m *carManager) Verify(context.Context, id.CarID, *rentalpb.Location) error {
+	return m.verifyErr
 }
 
-func (c *carManager) Unlock(context.Context, id.CarID) error {
-	return c.unlockErr
+func (m *carManager) Unlock(c context.Context, cid id.CarID, aid id.AccountID, tid id.TripID, avatarURL string) error {
+	return m.unlockErr
+}
+
+func (m *carManager) Lock(c context.Context, cid id.CarID) error {
+	return nil
 }
 
 type distCalc struct{}

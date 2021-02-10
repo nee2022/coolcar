@@ -17,8 +17,11 @@ import (
 )
 
 const (
-	authorizationHeader = "authorization"
-	bearerPrefix        = "Bearer "
+	// ImpersonateAccountHeader defines the header for account
+	// id impersonation.
+	ImpersonateAccountHeader = "impersonate-account-id"
+	authorizationHeader      = "authorization"
+	bearerPrefix             = "Bearer "
 )
 
 // Interceptor creates a grpc auth interceptor.
@@ -54,17 +57,35 @@ type interceptor struct {
 }
 
 func (i *interceptor) HandleReq(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
+	aid := impersonationFromContext(ctx)
+	if aid != "" {
+		return handler(ContextWithAccountID(ctx, id.AccountID(aid)), req)
+	}
+
 	tkn, err := tokenFromContext(ctx)
 	if err != nil {
 		return nil, status.Error(codes.Unauthenticated, "")
 	}
 
-	aid, err := i.verifier.Verify(tkn)
+	aid, err = i.verifier.Verify(tkn)
 	if err != nil {
 		return nil, status.Errorf(codes.Unauthenticated, "token not valid: %v", err)
 	}
 
 	return handler(ContextWithAccountID(ctx, id.AccountID(aid)), req)
+}
+
+func impersonationFromContext(c context.Context) string {
+	m, ok := metadata.FromIncomingContext(c)
+	if !ok {
+		return ""
+	}
+
+	imp := m[ImpersonateAccountHeader]
+	if len(imp) == 0 {
+		return ""
+	}
+	return imp[0]
 }
 
 func tokenFromContext(c context.Context) (string, error) {

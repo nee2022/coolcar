@@ -4,6 +4,8 @@ import { formatDuration, formatFee } from "../../utils/format"
 import { routing } from "../../utils/routing"
 
 const updateIntervalSec = 5
+const initialLat = 30
+const initialLng = 120
 
 function durationStr(sec: number) {
     const dur = formatDuration(sec)
@@ -16,12 +18,22 @@ Page({
 
     data: {
         location: {
-            latitude: 32.92,
-            longitude: 118.46,
+            latitude: initialLat,
+            longitude: initialLng,
         },
-        scale: 14,
+        scale: 12,
         elapsed: '00:00:00',
         fee: '0.00',
+        markers: [
+            {
+                iconPath: "/resources/car.png",
+                id: 0,
+                latitude: initialLat,
+                longitude: initialLng,
+                width: 20,
+                height: 20,
+            },
+        ],
     },
 
     onLoad(opt: Record<'trip_id', string>) {
@@ -53,29 +65,40 @@ Page({
     },
 
     async setupTimer(tripID: string) {
-        const trip = await TripService.updateTripPos(tripID)
+        const trip = await TripService.getTrip(tripID)
         if (trip.status !== rental.v1.TripStatus.IN_PROGRESS) {
             console.error('trip not in progress')
             return
         }
         let secSinceLastUpdate = 0
         let lastUpdateDurationSec = trip.current!.timestampSec! - trip.start!.timestampSec!
+        const toLocation = (trip: rental.v1.ITrip) => ({
+            latitude: trip.current?.location?.latitude || initialLat,
+            longitude: trip.current?.location?.longitude || initialLng,
+        })
+        const location = toLocation(trip)
+        this.data.markers[0].latitude = location.latitude
+        this.data.markers[0].longitude = location.longitude
         this.setData({
             elapsed: durationStr(lastUpdateDurationSec),
-            fee: formatFee(trip.current!.feeCent!)
+            fee: formatFee(trip.current!.feeCent!),
+            location,
+            markers: this.data.markers,
         })
 
         this.timer = setInterval(() => {
             secSinceLastUpdate++
             if (secSinceLastUpdate % updateIntervalSec === 0) {
-                TripService.updateTripPos(tripID, {
-                    latitude: this.data.location.latitude,
-                    longitude: this.data.location.longitude,
-                }).then(trip => {
+                TripService.getTrip(tripID).then(trip => {
                     lastUpdateDurationSec = trip.current!.timestampSec! - trip.start!.timestampSec!
                     secSinceLastUpdate = 0
+                    const location = toLocation(trip)
+                    this.data.markers[0].latitude = location.latitude
+                    this.data.markers[0].longitude = location.longitude
                     this.setData({
                         fee: formatFee(trip.current!.feeCent!),
+                        location,
+                        markers: this.data.markers,
                     })
                 }).catch(console.error)
             }

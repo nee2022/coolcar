@@ -1,0 +1,10 @@
+type: google.api.Service
+config_version: 3
+
+http:
+  rules:
+    - selector: car.v1.CarService.CreateCar
+      post: /v1/car
+      body: "*"
+    - selector: car.v1.CarService.GetCar
+      get: /v1/car/{id}
