@@ -78,6 +78,52 @@ func (Gender) EnumDescriptor() ([]byte, []int) {
 	return file_coolenv_proto_rawDescGZIP(), []int{0}
 }
 
+type PosType int32
+
+const (
+	PosType_RANDOM PosType = 0
+	PosType_NINGBO PosType = 1
+)
+
+// Enum value maps for PosType.
+var (
+	PosType_name = map[int32]string{
+		0: "RANDOM",
+		1: "NINGBO",
+	}
+	PosType_value = map[string]int32{
+		"RANDOM": 0,
+		"NINGBO": 1,
+	}
+)
+
+func (x PosType) Enum() *PosType {
+	p := new(PosType)
+	*p = x
+	return p
+}
+
+func (x PosType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (PosType) Descriptor() protoreflect.EnumDescriptor {
+	return file_coolenv_proto_enumTypes[1].Descriptor()
+}
+
+func (PosType) Type() protoreflect.EnumType {
+	return &file_coolenv_proto_enumTypes[1]
+}
+
+func (x PosType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use PosType.Descriptor instead.
+func (PosType) EnumDescriptor() ([]byte, []int) {
+	return file_coolenv_proto_rawDescGZIP(), []int{1}
+}
+
 type Location struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -361,6 +407,247 @@ func (x *MeasureDistanceResponse) GetDistanceKm() float64 {
 	return 0
 }
 
+type SimulateCarPosRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	CarId      string    `protobuf:"bytes,1,opt,name=car_id,json=carId,proto3" json:"car_id,omitempty"`
+	Type       PosType   `protobuf:"varint,2,opt,name=type,proto3,enum=auth.v1.PosType" json:"type,omitempty"`
+	InitialPos *Location `protobuf:"bytes,3,opt,name=initial_pos,json=initialPos,proto3" json:"initial_pos,omitempty"`
+}
+
+func (x *SimulateCarPosRequest) Reset() {
+	*x = SimulateCarPosRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_coolenv_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SimulateCarPosRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SimulateCarPosRequest) ProtoMessage() {}
+
+func (x *SimulateCarPosRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_coolenv_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SimulateCarPosRequest.ProtoReflect.Descriptor instead.
+func (*SimulateCarPosRequest) Descriptor() ([]byte, []int) {
+	return file_coolenv_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *SimulateCarPosRequest) GetCarId() string {
+	if x != nil {
+		return x.CarId
+	}
+	return ""
+}
+
+func (x *SimulateCarPosRequest) GetType() PosType {
+	if x != nil {
+		return x.Type
+	}
+	return PosType_RANDOM
+}
+
+func (x *SimulateCarPosRequest) GetInitialPos() *Location {
+	if x != nil {
+		return x.InitialPos
+	}
+	return nil
+}
+
+type SimulateCarPosResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *SimulateCarPosResponse) Reset() {
+	*x = SimulateCarPosResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_coolenv_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SimulateCarPosResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SimulateCarPosResponse) ProtoMessage() {}
+
+func (x *SimulateCarPosResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_coolenv_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SimulateCarPosResponse.ProtoReflect.Descriptor instead.
+func (*SimulateCarPosResponse) Descriptor() ([]byte, []int) {
+	return file_coolenv_proto_rawDescGZIP(), []int{6}
+}
+
+type EndSimulateCarPosRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	CarId string `protobuf:"bytes,1,opt,name=car_id,json=carId,proto3" json:"car_id,omitempty"`
+}
+
+func (x *EndSimulateCarPosRequest) Reset() {
+	*x = EndSimulateCarPosRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_coolenv_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EndSimulateCarPosRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EndSimulateCarPosRequest) ProtoMessage() {}
+
+func (x *EndSimulateCarPosRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_coolenv_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EndSimulateCarPosRequest.ProtoReflect.Descriptor instead.
+func (*EndSimulateCarPosRequest) Descriptor() ([]byte, []int) {
+	return file_coolenv_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *EndSimulateCarPosRequest) GetCarId() string {
+	if x != nil {
+		return x.CarId
+	}
+	return ""
+}
+
+type EndSimulateCarPosResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *EndSimulateCarPosResponse) Reset() {
+	*x = EndSimulateCarPosResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_coolenv_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EndSimulateCarPosResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EndSimulateCarPosResponse) ProtoMessage() {}
+
+func (x *EndSimulateCarPosResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_coolenv_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EndSimulateCarPosResponse.ProtoReflect.Descriptor instead.
+func (*EndSimulateCarPosResponse) Descriptor() ([]byte, []int) {
+	return file_coolenv_proto_rawDescGZIP(), []int{8}
+}
+
+type CarPosUpdate struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	CarId string    `protobuf:"bytes,1,opt,name=car_id,json=carId,proto3" json:"car_id,omitempty"`
+	Pos   *Location `protobuf:"bytes,2,opt,name=pos,proto3" json:"pos,omitempty"`
+}
+
+func (x *CarPosUpdate) Reset() {
+	*x = CarPosUpdate{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_coolenv_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CarPosUpdate) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CarPosUpdate) ProtoMessage() {}
+
+func (x *CarPosUpdate) ProtoReflect() protoreflect.Message {
+	mi := &file_coolenv_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CarPosUpdate.ProtoReflect.Descriptor instead.
+func (*CarPosUpdate) Descriptor() ([]byte, []int) {
+	return file_coolenv_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *CarPosUpdate) GetCarId() string {
+	if x != nil {
+		return x.CarId
+	}
+	return ""
+}
+
+func (x *CarPosUpdate) GetPos() *Location {
+	if x != nil {
+		return x.Pos
+	}
+	return nil
+}
+
 var File_coolenv_proto protoreflect.FileDescriptor
 
 var file_coolenv_proto_rawDesc = []byte{
@@ -393,25 +680,58 @@ var file_coolenv_proto_rawDesc = []byte{
 	0x73, 0x75, 0x72, 0x65, 0x44, 0x69, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70,
 	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x64, 0x69, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65,
 	0x5f, 0x6b, 0x6d, 0x18, 0x01, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0a, 0x64, 0x69, 0x73, 0x74, 0x61,
-	0x6e, 0x63, 0x65, 0x4b, 0x6d, 0x2a, 0x33, 0x0a, 0x06, 0x47, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x12,
-	0x13, 0x0a, 0x0f, 0x47, 0x5f, 0x4e, 0x4f, 0x54, 0x5f, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49,
-	0x45, 0x44, 0x10, 0x00, 0x12, 0x08, 0x0a, 0x04, 0x4d, 0x41, 0x4c, 0x45, 0x10, 0x01, 0x12, 0x0a,
-	0x0a, 0x06, 0x46, 0x45, 0x4d, 0x41, 0x4c, 0x45, 0x10, 0x02, 0x32, 0x9d, 0x01, 0x0a, 0x09, 0x41,
-	0x49, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x3a, 0x0a, 0x0b, 0x4c, 0x69, 0x63, 0x49,
-	0x64, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x12, 0x18, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e, 0x76,
-	0x31, 0x2e, 0x49, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x1a, 0x11, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x64, 0x65, 0x6e,
-	0x74, 0x69, 0x74, 0x79, 0x12, 0x54, 0x0a, 0x0f, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x44,
-	0x69, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x12, 0x1f, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e, 0x76,
-	0x31, 0x2e, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x44, 0x69, 0x73, 0x74, 0x61, 0x6e, 0x63,
-	0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x20, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e,
-	0x76, 0x31, 0x2e, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x44, 0x69, 0x73, 0x74, 0x61, 0x6e,
-	0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x3e, 0x5a, 0x3c, 0x67, 0x69,
-	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x63, 0x6d, 0x6f, 0x75, 0x73, 0x65,
-	0x32, 0x2f, 0x64, 0x64, 0x72, 0x65, 0x6e, 0x74, 0x61, 0x6c, 0x2f, 0x63, 0x6f, 0x6f, 0x6c, 0x65,
-	0x6e, 0x76, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x67, 0x65, 0x6e, 0x2f, 0x67, 0x6f, 0x2f, 0x76, 0x31,
-	0x3b, 0x63, 0x6f, 0x6f, 0x6c, 0x65, 0x6e, 0x76, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x6e, 0x63, 0x65, 0x4b, 0x6d, 0x22, 0x88, 0x01, 0x0a, 0x15, 0x53, 0x69, 0x6d, 0x75, 0x6c, 0x61,
+	0x74, 0x65, 0x43, 0x61, 0x72, 0x50, 0x6f, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x15, 0x0a, 0x06, 0x63, 0x61, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x05, 0x63, 0x61, 0x72, 0x49, 0x64, 0x12, 0x24, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x0e, 0x32, 0x10, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e, 0x76, 0x31, 0x2e, 0x50,
+	0x6f, 0x73, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x32, 0x0a, 0x0b,
+	0x69, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x5f, 0x70, 0x6f, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x11, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x6f, 0x63, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x0a, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x50, 0x6f, 0x73,
+	0x22, 0x18, 0x0a, 0x16, 0x53, 0x69, 0x6d, 0x75, 0x6c, 0x61, 0x74, 0x65, 0x43, 0x61, 0x72, 0x50,
+	0x6f, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x31, 0x0a, 0x18, 0x45, 0x6e,
+	0x64, 0x53, 0x69, 0x6d, 0x75, 0x6c, 0x61, 0x74, 0x65, 0x43, 0x61, 0x72, 0x50, 0x6f, 0x73, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x15, 0x0a, 0x06, 0x63, 0x61, 0x72, 0x5f, 0x69, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x63, 0x61, 0x72, 0x49, 0x64, 0x22, 0x1b, 0x0a,
+	0x19, 0x45, 0x6e, 0x64, 0x53, 0x69, 0x6d, 0x75, 0x6c, 0x61, 0x74, 0x65, 0x43, 0x61, 0x72, 0x50,
+	0x6f, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x4a, 0x0a, 0x0c, 0x43, 0x61,
+	0x72, 0x50, 0x6f, 0x73, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x12, 0x15, 0x0a, 0x06, 0x63, 0x61,
+	0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x63, 0x61, 0x72, 0x49,
+	0x64, 0x12, 0x23, 0x0a, 0x03, 0x70, 0x6f, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11,
+	0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x52, 0x03, 0x70, 0x6f, 0x73, 0x2a, 0x33, 0x0a, 0x06, 0x47, 0x65, 0x6e, 0x64, 0x65, 0x72,
+	0x12, 0x13, 0x0a, 0x0f, 0x47, 0x5f, 0x4e, 0x4f, 0x54, 0x5f, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46,
+	0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x08, 0x0a, 0x04, 0x4d, 0x41, 0x4c, 0x45, 0x10, 0x01, 0x12,
+	0x0a, 0x0a, 0x06, 0x46, 0x45, 0x4d, 0x41, 0x4c, 0x45, 0x10, 0x02, 0x2a, 0x21, 0x0a, 0x07, 0x50,
+	0x6f, 0x73, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0a, 0x0a, 0x06, 0x52, 0x41, 0x4e, 0x44, 0x4f, 0x4d,
+	0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x4e, 0x49, 0x4e, 0x47, 0x42, 0x4f, 0x10, 0x01, 0x32, 0xcc,
+	0x02, 0x0a, 0x09, 0x41, 0x49, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x3a, 0x0a, 0x0b,
+	0x4c, 0x69, 0x63, 0x49, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x12, 0x18, 0x2e, 0x61, 0x75,
+	0x74, 0x68, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x11, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e, 0x76, 0x31, 0x2e,
+	0x49, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x12, 0x54, 0x0a, 0x0f, 0x4d, 0x65, 0x61, 0x73,
+	0x75, 0x72, 0x65, 0x44, 0x69, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x12, 0x1f, 0x2e, 0x61, 0x75,
+	0x74, 0x68, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x44, 0x69, 0x73,
+	0x74, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x20, 0x2e, 0x61,
+	0x75, 0x74, 0x68, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x44, 0x69,
+	0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x51,
+	0x0a, 0x0e, 0x53, 0x69, 0x6d, 0x75, 0x6c, 0x61, 0x74, 0x65, 0x43, 0x61, 0x72, 0x50, 0x6f, 0x73,
+	0x12, 0x1e, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x69, 0x6d, 0x75, 0x6c,
+	0x61, 0x74, 0x65, 0x43, 0x61, 0x72, 0x50, 0x6f, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x1f, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x69, 0x6d, 0x75, 0x6c,
+	0x61, 0x74, 0x65, 0x43, 0x61, 0x72, 0x50, 0x6f, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x5a, 0x0a, 0x11, 0x45, 0x6e, 0x64, 0x53, 0x69, 0x6d, 0x75, 0x6c, 0x61, 0x74, 0x65,
+	0x43, 0x61, 0x72, 0x50, 0x6f, 0x73, 0x12, 0x21, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e, 0x76, 0x31,
+	0x2e, 0x45, 0x6e, 0x64, 0x53, 0x69, 0x6d, 0x75, 0x6c, 0x61, 0x74, 0x65, 0x43, 0x61, 0x72, 0x50,
+	0x6f, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x22, 0x2e, 0x61, 0x75, 0x74, 0x68,
+	0x2e, 0x76, 0x31, 0x2e, 0x45, 0x6e, 0x64, 0x53, 0x69, 0x6d, 0x75, 0x6c, 0x61, 0x74, 0x65, 0x43,
+	0x61, 0x72, 0x50, 0x6f, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x3e, 0x5a,
+	0x3c, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x63, 0x6d, 0x6f,
+	0x75, 0x73, 0x65, 0x32, 0x2f, 0x64, 0x64, 0x72, 0x65, 0x6e, 0x74, 0x61, 0x6c, 0x2f, 0x63, 0x6f,
+	0x6f, 0x6c, 0x65, 0x6e, 0x76, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x67, 0x65, 0x6e, 0x2f, 0x67, 0x6f,
+	0x2f, 0x76, 0x31, 0x3b, 0x63, 0x6f, 0x6f, 0x6c, 0x65, 0x6e, 0x76, 0x70, 0x62, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -426,29 +746,42 @@ func file_coolenv_proto_rawDescGZIP() []byte {
 	return file_coolenv_proto_rawDescData
 }
 
-var file_coolenv_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_coolenv_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_coolenv_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_coolenv_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_coolenv_proto_goTypes = []interface{}{
-	(Gender)(0),                     // 0: auth.v1.Gender
-	(*Location)(nil),                // 1: auth.v1.Location
-	(*Identity)(nil),                // 2: auth.v1.Identity
-	(*IdentityRequest)(nil),         // 3: auth.v1.IdentityRequest
-	(*MeasureDistanceRequest)(nil),  // 4: auth.v1.MeasureDistanceRequest
-	(*MeasureDistanceResponse)(nil), // 5: auth.v1.MeasureDistanceResponse
+	(Gender)(0),                       // 0: auth.v1.Gender
+	(PosType)(0),                      // 1: auth.v1.PosType
+	(*Location)(nil),                  // 2: auth.v1.Location
+	(*Identity)(nil),                  // 3: auth.v1.Identity
+	(*IdentityRequest)(nil),           // 4: auth.v1.IdentityRequest
+	(*MeasureDistanceRequest)(nil),    // 5: auth.v1.MeasureDistanceRequest
+	(*MeasureDistanceResponse)(nil),   // 6: auth.v1.MeasureDistanceResponse
+	(*SimulateCarPosRequest)(nil),     // 7: auth.v1.SimulateCarPosRequest
+	(*SimulateCarPosResponse)(nil),    // 8: auth.v1.SimulateCarPosResponse
+	(*EndSimulateCarPosRequest)(nil),  // 9: auth.v1.EndSimulateCarPosRequest
+	(*EndSimulateCarPosResponse)(nil), // 10: auth.v1.EndSimulateCarPosResponse
+	(*CarPosUpdate)(nil),              // 11: auth.v1.CarPosUpdate
 }
 var file_coolenv_proto_depIdxs = []int32{
-	0, // 0: auth.v1.Identity.gender:type_name -> auth.v1.Gender
-	1, // 1: auth.v1.MeasureDistanceRequest.from:type_name -> auth.v1.Location
-	1, // 2: auth.v1.MeasureDistanceRequest.to:type_name -> auth.v1.Location
-	3, // 3: auth.v1.AIService.LicIdentity:input_type -> auth.v1.IdentityRequest
-	4, // 4: auth.v1.AIService.MeasureDistance:input_type -> auth.v1.MeasureDistanceRequest
-	2, // 5: auth.v1.AIService.LicIdentity:output_type -> auth.v1.Identity
-	5, // 6: auth.v1.AIService.MeasureDistance:output_type -> auth.v1.MeasureDistanceResponse
-	5, // [5:7] is the sub-list for method output_type
-	3, // [3:5] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	0,  // 0: auth.v1.Identity.gender:type_name -> auth.v1.Gender
+	2,  // 1: auth.v1.MeasureDistanceRequest.from:type_name -> auth.v1.Location
+	2,  // 2: auth.v1.MeasureDistanceRequest.to:type_name -> auth.v1.Location
+	1,  // 3: auth.v1.SimulateCarPosRequest.type:type_name -> auth.v1.PosType
+	2,  // 4: auth.v1.SimulateCarPosRequest.initial_pos:type_name -> auth.v1.Location
+	2,  // 5: auth.v1.CarPosUpdate.pos:type_name -> auth.v1.Location
+	4,  // 6: auth.v1.AIService.LicIdentity:input_type -> auth.v1.IdentityRequest
+	5,  // 7: auth.v1.AIService.MeasureDistance:input_type -> auth.v1.MeasureDistanceRequest
+	7,  // 8: auth.v1.AIService.SimulateCarPos:input_type -> auth.v1.SimulateCarPosRequest
+	9,  // 9: auth.v1.AIService.EndSimulateCarPos:input_type -> auth.v1.EndSimulateCarPosRequest
+	3,  // 10: auth.v1.AIService.LicIdentity:output_type -> auth.v1.Identity
+	6,  // 11: auth.v1.AIService.MeasureDistance:output_type -> auth.v1.MeasureDistanceResponse
+	8,  // 12: auth.v1.AIService.SimulateCarPos:output_type -> auth.v1.SimulateCarPosResponse
+	10, // 13: auth.v1.AIService.EndSimulateCarPos:output_type -> auth.v1.EndSimulateCarPosResponse
+	10, // [10:14] is the sub-list for method output_type
+	6,  // [6:10] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_coolenv_proto_init() }
@@ -517,14 +850,74 @@ func file_coolenv_proto_init() {
 				return nil
 			}
 		}
+		file_coolenv_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SimulateCarPosRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_coolenv_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SimulateCarPosResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_coolenv_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*EndSimulateCarPosRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_coolenv_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*EndSimulateCarPosResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_coolenv_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CarPosUpdate); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_coolenv_proto_rawDesc,
-			NumEnums:      1,
-			NumMessages:   5,
+			NumEnums:      2,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -553,6 +946,8 @@ const _ = grpc.SupportPackageIsVersion6
 type AIServiceClient interface {
 	LicIdentity(ctx context.Context, in *IdentityRequest, opts ...grpc.CallOption) (*Identity, error)
 	MeasureDistance(ctx context.Context, in *MeasureDistanceRequest, opts ...grpc.CallOption) (*MeasureDistanceResponse, error)
+	SimulateCarPos(ctx context.Context, in *SimulateCarPosRequest, opts ...grpc.CallOption) (*SimulateCarPosResponse, error)
+	EndSimulateCarPos(ctx context.Context, in *EndSimulateCarPosRequest, opts ...grpc.CallOption) (*EndSimulateCarPosResponse, error)
 }
 
 type aIServiceClient struct {
@@ -581,10 +976,30 @@ func (c *aIServiceClient) MeasureDistance(ctx context.Context, in *MeasureDistan
 	return out, nil
 }
 
+func (c *aIServiceClient) SimulateCarPos(ctx context.Context, in *SimulateCarPosRequest, opts ...grpc.CallOption) (*SimulateCarPosResponse, error) {
+	out := new(SimulateCarPosResponse)
+	err := c.cc.Invoke(ctx, "/auth.v1.AIService/SimulateCarPos", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *aIServiceClient) EndSimulateCarPos(ctx context.Context, in *EndSimulateCarPosRequest, opts ...grpc.CallOption) (*EndSimulateCarPosResponse, error) {
+	out := new(EndSimulateCarPosResponse)
+	err := c.cc.Invoke(ctx, "/auth.v1.AIService/EndSimulateCarPos", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AIServiceServer is the server API for AIService service.
 type AIServiceServer interface {
 	LicIdentity(context.Context, *IdentityRequest) (*Identity, error)
 	MeasureDistance(context.Context, *MeasureDistanceRequest) (*MeasureDistanceResponse, error)
+	SimulateCarPos(context.Context, *SimulateCarPosRequest) (*SimulateCarPosResponse, error)
+	EndSimulateCarPos(context.Context, *EndSimulateCarPosRequest) (*EndSimulateCarPosResponse, error)
 }
 
 // UnimplementedAIServiceServer can be embedded to have forward compatible implementations.
@@ -596,6 +1011,12 @@ func (*UnimplementedAIServiceServer) LicIdentity(context.Context, *IdentityReque
 }
 func (*UnimplementedAIServiceServer) MeasureDistance(context.Context, *MeasureDistanceRequest) (*MeasureDistanceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MeasureDistance not implemented")
+}
+func (*UnimplementedAIServiceServer) SimulateCarPos(context.Context, *SimulateCarPosRequest) (*SimulateCarPosResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SimulateCarPos not implemented")
+}
+func (*UnimplementedAIServiceServer) EndSimulateCarPos(context.Context, *EndSimulateCarPosRequest) (*EndSimulateCarPosResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EndSimulateCarPos not implemented")
 }
 
 func RegisterAIServiceServer(s *grpc.Server, srv AIServiceServer) {
@@ -638,6 +1059,42 @@ func _AIService_MeasureDistance_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AIService_SimulateCarPos_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SimulateCarPosRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AIServiceServer).SimulateCarPos(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/auth.v1.AIService/SimulateCarPos",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AIServiceServer).SimulateCarPos(ctx, req.(*SimulateCarPosRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AIService_EndSimulateCarPos_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EndSimulateCarPosRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AIServiceServer).EndSimulateCarPos(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/auth.v1.AIService/EndSimulateCarPos",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AIServiceServer).EndSimulateCarPos(ctx, req.(*EndSimulateCarPosRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _AIService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "auth.v1.AIService",
 	HandlerType: (*AIServiceServer)(nil),
@@ -649,6 +1106,14 @@ var _AIService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "MeasureDistance",
 			Handler:    _AIService_MeasureDistance_Handler,
+		},
+		{
+			MethodName: "SimulateCarPos",
+			Handler:    _AIService_SimulateCarPos_Handler,
+		},
+		{
+			MethodName: "EndSimulateCarPos",
+			Handler:    _AIService_EndSimulateCarPos_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
