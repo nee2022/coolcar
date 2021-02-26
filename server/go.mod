@@ -14,6 +14,7 @@ require (
 	github.com/gorilla/websocket v1.4.2
 	github.com/grpc-ecosystem/grpc-gateway v1.15.0
 	github.com/medivhzhan/weapp/v2 v2.2.3
+	github.com/namsral/flag v1.7.4-pre // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/streadway/amqp v1.0.0
 	github.com/tencentyun/cos-go-sdk-v5 v0.7.10

@@ -12,10 +12,15 @@ import (
 	"net/textproto"
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/namsral/flag"
 	"google.golang.org/grpc"
 )
 
+var addr = flag.String("addr", ":8080", "address to listen")
+
 func main() {
+	flag.Parse()
+
 	lg, err := server.NewZapLogger()
 	if err != nil {
 		log.Fatalf("cannot create zap logger: %v", err)
@@ -72,7 +77,6 @@ func main() {
 			lg.Sugar().Fatalf("cannot register service %s: %v", s.name, err)
 		}
 	}
-	addr := ":8080"
-	lg.Sugar().Infof("grpc gateway started at %s", addr)
-	lg.Sugar().Fatal(http.ListenAndServe(addr, mux))
+	lg.Sugar().Infof("grpc gateway started at %s", *addr)
+	lg.Sugar().Fatal(http.ListenAndServe(*addr, mux))
 }
