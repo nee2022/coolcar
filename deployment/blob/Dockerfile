@@ -10,14 +10,14 @@ COPY . /go/src/coolcar/server
 
 # 编译
 WORKDIR /go/src/coolcar/server
-RUN go install ./gateway/...
+RUN go install ./blob/...
 
 FROM alpine:3.13
-COPY --from=builder /go/bin/gateway /bin/gateway
-ENV ADDR=:8080
+COPY --from=builder /go/bin/blob /bin/blob
+ENV ADDR=:8081
 
 # 申明暴露的端口
-EXPOSE 8080
+EXPOSE 8081
 
 # 设置服务入口
-ENTRYPOINT [ "/bin/gateway" ]
+ENTRYPOINT [ "/bin/blob" ]
