@@ -1,5 +1,5 @@
 # 启动编译环境
-FROM golang:1.15
+FROM golang:1.15-alpine AS builder
 
 # 配置编译环境
 RUN go env -w GO111MODULE=on
@@ -12,8 +12,11 @@ COPY . /go/src/coolcar/server
 WORKDIR /go/src/coolcar/server
 RUN go install ./gateway/...
 
+FROM alpine:3.13
+COPY --from=builder /go/bin/gateway /bin/gateway
+
 # 申明暴露的端口
 EXPOSE 8080
 
 # 设置服务入口
-ENTRYPOINT [ "/go/bin/gateway" ]
+ENTRYPOINT [ "/bin/gateway" ]
