@@ -2,7 +2,7 @@ import { IAppOption } from "./appoption"
 import { Coolcar } from "./service/request"
 import { getSetting, getUserInfo } from "./utils/wxapi"
 
-let resolveUserInfo: (value?: WechatMiniprogram.UserInfo | PromiseLike<WechatMiniprogram.UserInfo> | undefined) => void
+let resolveUserInfo: (value: WechatMiniprogram.UserInfo | PromiseLike<WechatMiniprogram.UserInfo>) => void
 let rejectUserInfo: (reason?: any) => void
 
 // app.ts
