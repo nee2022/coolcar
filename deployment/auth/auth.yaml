@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: auth
-        image: ccr.ccs.tencentyun.com/kucar/auth:1.0
+        image: ccr.ccs.tencentyun.com/kucar/auth:1.0.1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8081
@@ -24,6 +24,12 @@ spec:
           limits:
             cpu: 100m
             memory: 128Mi
+        env:
+          - name: MONGO_URI
+            valueFrom:
+              configMapKeyRef:
+                key: mongo
+                name: endpoints
       imagePullSecrets:
         - name: qcloudregistrykey
 ---
