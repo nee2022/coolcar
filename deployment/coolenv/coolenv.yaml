@@ -46,10 +46,10 @@ spec:
     - name: http
       protocol: TCP
       port: 18000
-    - name: rabbit
+    - name: tcp-rabbit
       protocol: TCP
       port: 5672
-    - name: rabbit-admin
+    - name: tcp-rabbit-admin
       protocol: TCP
       port: 15672
     - name: mongo
