@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: auth
-        image: ccr.ccs.tencentyun.com/kucar/auth:1.0
+        image: ccr.ccs.tencentyun.com/kucar/auth:1.1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8081
@@ -46,6 +46,10 @@ spec:
           - mountPath: /sec
             name: auth
             readOnly: true
+        livenessProbe:
+          exec:
+            command: ["/bin/grpc-health-probe", "-addr=:8081"]
+          initialDelaySeconds: 5
       imagePullSecrets:
         - name: qcloudregistrykey
       volumes:
