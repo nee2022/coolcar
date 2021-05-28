@@ -81,6 +81,10 @@ func main() {
 			lg.Sugar().Fatalf("cannot register service %s: %v", s.name, err)
 		}
 	}
+	http.HandleFunc("/healthz", func(rw http.ResponseWriter, r *http.Request) {
+		rw.Write([]byte("ok"))
+	})
+	http.Handle("/", mux)
 	lg.Sugar().Infof("grpc gateway started at %s", *addr)
-	lg.Sugar().Fatal(http.ListenAndServe(*addr, mux))
+	lg.Sugar().Fatal(http.ListenAndServe(*addr, nil))
 }
