@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth
+  name: blob
   labels:
-    app: auth
+    app: blob
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: blob
   template:
     metadata:
       labels:
-        app: auth
+        app: blob
     spec:
       containers:
-      - name: auth
-        image: ccr.ccs.tencentyun.com/kucar/auth:1.0
+      - name: blob
+        image: ccr.ccs.tencentyun.com/kucar/blob:1.0
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8081
@@ -30,39 +30,31 @@ spec:
               configMapKeyRef:
                 key: mongo
                 name: endpoints
-          - name: WECHAT_APP_ID
+          - name: COS_ADDR
             valueFrom:
               secretKeyRef:
-                key: appid
-                name: wechat
-          - name: WECHAT_APP_SECRET
+                key: url
+                name: cos
+          - name: COS_SEC_ID
             valueFrom:
               secretKeyRef:
-                key: appsecret
-                name: wechat   
-          - name: PRIVATE_KEY_FILE
-            value: /sec/private.key
-        volumeMounts:
-          - mountPath: /sec
-            name: auth
-            readOnly: true
+                key: secid
+                name: cos
+          - name: COS_SEC_KEY
+            valueFrom:
+              secretKeyRef:
+                key: seckey
+                name: cos
       imagePullSecrets:
         - name: qcloudregistrykey
-      volumes:
-        - name: auth
-          secret:
-            secretName: auth
-            items:
-              - key: privatekey
-                path: private.key
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth
+  name: blob
 spec:
   selector:
-    app: auth
+    app: blob
   ports:
     - protocol: TCP
       port: 8081

@@ -1,4 +1,4 @@
-use('coolcar')
+use coolcar
 
 db.account.createIndex({
     open_id: 1,

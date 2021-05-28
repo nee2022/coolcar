@@ -1,30 +1,40 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gateway
+  name: car
   labels:
-    app: gateway
+    app: car
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: gateway
+      app: car
   template:
     metadata:
       labels:
-        app: gateway
+        app: car
     spec:
       containers:
-      - name: gateway
-        image: ccr.ccs.tencentyun.com/kucar/gateway:1.0
+      - name: car
+        image: ccr.ccs.tencentyun.com/kucar/car:1.0
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 8080
+        - containerPort: 8081
         resources:
           limits:
             cpu: 100m
             memory: 128Mi
         env:
+          - name: MONGO_URI
+            valueFrom:
+              configMapKeyRef:
+                key: mongo
+                name: endpoints
+          - name: AMQP_URL
+            valueFrom:
+              configMapKeyRef:
+                key: amqp
+                name: endpoints
           - name: CAR_ADDR
             valueFrom:
               configMapKeyRef:
@@ -35,15 +45,10 @@ spec:
               configMapKeyRef:
                 key: trip
                 name: endpoints
-          - name: AUTH_ADDR
+          - name: AI_ADDR
             valueFrom:
               configMapKeyRef:
-                key: auth
-                name: endpoints
-          - name: PROFILE_ADDR
-            valueFrom:
-              configMapKeyRef:
-                key: profile
+                key: ai
                 name: endpoints
       imagePullSecrets:
         - name: qcloudregistrykey
@@ -51,12 +56,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: gateway
+  name: car
 spec:
   selector:
-    app: gateway
+    app: car
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
+    - name: grpc
+      protocol: TCP
+      port: 8081
+    - name: http
+      protocol: TCP
+      port: 8080
   type: LoadBalancer
