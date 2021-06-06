@@ -68,7 +68,7 @@ func main() {
 				},
 				Mongo:          dao.NewMongo(mongoClient.Database("coolcar")),
 				Logger:         logger,
-				TokenExpire:    2 * time.Hour,
+				TokenExpire:    time.Hour,
 				TokenGenerator: token.NewJWTTokenGen("coolcar/auth", privKey),
 			})
 		},

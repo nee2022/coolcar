@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth
+  name: auth-staging
   labels:
     app: auth
-    release: prod
+    release: staging
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: auth
-      release: prod
+      release: staging
   template:
     metadata:
       labels:
         app: auth
-        release: prod
-        version: v1.1
+        release: staging
+        version: v2.0
     spec:
       containers:
       - name: auth
-        image: ccr.ccs.tencentyun.com/kucar/auth:1.1
+        image: ccr.ccs.tencentyun.com/kucar/auth:2.0
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8081
@@ -63,16 +63,3 @@ spec:
             items:
               - key: privatekey
                 path: private.key
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: auth
-spec:
-  selector:
-    app: auth
-  ports:
-    - name: grpc
-      protocol: TCP
-      port: 8081
-  type: ClusterIP
