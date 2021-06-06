@@ -13,6 +13,7 @@ spec:
     metadata:
       labels:
         app: rental
+        version: v1.0
     spec:
       containers:
       - name: rental
@@ -69,6 +70,7 @@ spec:
   selector:
     app: rental
   ports:
-    - protocol: TCP
+    - name: grpc
+      protocol: TCP
       port: 8081
   type: ClusterIP

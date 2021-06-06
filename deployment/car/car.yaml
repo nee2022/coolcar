@@ -13,6 +13,7 @@ spec:
     metadata:
       labels:
         app: car
+        version: v1.0
     spec:
       containers:
       - name: car

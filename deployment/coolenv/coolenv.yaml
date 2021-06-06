@@ -13,6 +13,7 @@ spec:
     metadata:
       labels:
         app: coolenv
+        version: v1.2
     spec:
       containers:
       - name: coolenv
@@ -30,7 +31,10 @@ spec:
             memory: 512Mi
         env:
           - name: ICODE
-            value: <ICODE>
+            valueFrom:
+              secretKeyRef:
+                key: code
+                name: icode
 ---
 apiVersion: v1
 kind: Service

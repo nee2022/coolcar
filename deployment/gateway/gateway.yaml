@@ -13,6 +13,7 @@ spec:
     metadata:
       labels:
         app: gateway
+        version: v1.1
     spec:
       containers:
       - name: gateway
@@ -62,7 +63,8 @@ spec:
   selector:
     app: gateway
   ports:
-    - protocol: TCP
+    - name: http
+      protocol: TCP
       port: 80
       targetPort: 8080
   type: LoadBalancer
