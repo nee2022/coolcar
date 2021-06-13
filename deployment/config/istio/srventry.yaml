@@ -1,0 +1,27 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: wechat
+spec:
+  hosts:
+  - api.weixin.qq.com
+  ports:
+  - number: 443
+    name: https
+    protocol: HTTPS
+  resolution: DNS
+  location: MESH_EXTERNAL
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: cos
+spec:
+  hosts:
+  - coolcar-1256512285.cos.ap-shanghai.myqcloud.com
+  ports:
+  - number: 443
+    name: https
+    protocol: HTTPS
+  resolution: DNS
+  location: MESH_EXTERNAL

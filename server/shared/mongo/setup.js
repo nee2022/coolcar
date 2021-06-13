@@ -1,3 +1,5 @@
+use coolcar
+
 db.account.createIndex({
     open_id: 1,
 },{
@@ -19,3 +21,56 @@ db.profile.createIndex({
 }, {
     unique: true,
 })
+
+db.car.insertMany([
+  {
+    "_id": ObjectId("60af01e5a21ead3dccbcd1d8"),
+    "car": {
+      "status": 1,
+      "position": {
+        "latitude": 30,
+        "longitude": 120
+      },
+    }
+  },
+  {
+    "_id": ObjectId("60af01e5a21ead3dccbcd1d9"),
+    "car": {
+      "status": 1,
+      "position": {
+        "latitude": 30,
+        "longitude": 120
+      },
+    }
+  },
+  {
+    "_id": ObjectId("60af01e5a21ead3dccbcd1da"),
+    "car": {
+      "status": 1,
+      "position": {
+        "latitude": 30,
+        "longitude": 120
+      },
+    }
+  },
+  {
+    "_id": ObjectId("60af01e5a21ead3dccbcd1db"),
+    "car": {
+      "status": 1,
+      "position": {
+        "latitude": 30,
+        "longitude": 120
+      },
+    }
+  },
+  {
+    "_id": ObjectId("60af01e5a21ead3dccbcd1dc"),
+    "car": {
+      "status": 1,
+      "position": {
+        "latitude": 30,
+        "longitude": 120
+      },
+    }
+  },
+])

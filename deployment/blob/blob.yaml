@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blob
+  labels:
+    app: blob
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blob
+  template:
+    metadata:
+      labels:
+        app: blob
+        version: v1.0
+    spec:
+      containers:
+      - name: blob
+        image: ccr.ccs.tencentyun.com/kucar/blob:1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8081
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+        env:
+          - name: MONGO_URI
+            valueFrom:
+              configMapKeyRef:
+                key: mongo
+                name: endpoints
+          - name: COS_ADDR
+            valueFrom:
+              secretKeyRef:
+                key: url
+                name: cos
+          - name: COS_SEC_ID
+            valueFrom:
+              secretKeyRef:
+                key: secid
+                name: cos
+          - name: COS_SEC_KEY
+            valueFrom:
+              secretKeyRef:
+                key: seckey
+                name: cos
+      imagePullSecrets:
+        - name: qcloudregistrykey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blob
+spec:
+  selector:
+    app: blob
+  ports:
+    - name: grpc
+      protocol: TCP
+      port: 8081
+  type: ClusterIP

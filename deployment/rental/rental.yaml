@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rental
+  labels:
+    app: rental
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rental
+  template:
+    metadata:
+      labels:
+        app: rental
+        version: v1.0
+    spec:
+      containers:
+      - name: rental
+        image: ccr.ccs.tencentyun.com/kucar/rental:1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8081
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+        env:
+          - name: MONGO_URI
+            valueFrom:
+              configMapKeyRef:
+                key: mongo
+                name: endpoints
+          - name: CAR_ADDR
+            valueFrom:
+              configMapKeyRef:
+                key: car
+                name: endpoints
+          - name: BLOB_ADDR
+            valueFrom:
+              configMapKeyRef:
+                key: blob
+                name: endpoints
+          - name: AI_ADDR
+            valueFrom:
+              configMapKeyRef:
+                key: ai
+                name: endpoints
+          - name: AUTH_PUBLIC_KEY_FILE
+            value: /sec/public.key
+        volumeMounts:
+          - mountPath: /sec
+            name: auth
+            readOnly: true
+      imagePullSecrets:
+        - name: qcloudregistrykey
+      volumes:
+        - name: auth
+          secret:
+            secretName: auth
+            items:
+              - key: publickey
+                path: public.key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rental
+spec:
+  selector:
+    app: rental
+  ports:
+    - name: grpc
+      protocol: TCP
+      port: 8081
+  type: ClusterIP

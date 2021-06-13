@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coolenv
+  labels:
+    app: coolenv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coolenv
+  template:
+    metadata:
+      labels:
+        app: coolenv
+        version: v1.2
+    spec:
+      containers:
+      - name: coolenv
+        image: ccr.ccs.tencentyun.com/coolcar/coolenv:1.2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5672
+        - containerPort: 15672
+        - containerPort: 18000
+        - containerPort: 18001
+        - containerPort: 27017
+        resources:
+          limits:
+            cpu: 300m
+            memory: 512Mi
+        env:
+          - name: ICODE
+            valueFrom:
+              secretKeyRef:
+                key: code
+                name: icode
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coolenv
+spec:
+  selector:
+    app: coolenv
+  ports:
+    - name: grpc
+      protocol: TCP
+      port: 18001
+    - name: http
+      protocol: TCP
+      port: 18000
+    - name: tcp-rabbit
+      protocol: TCP
+      port: 5672
+    - name: tcp-rabbit-admin
+      protocol: TCP
+      port: 15672
+    - name: mongo
+      protocol: TCP
+      port: 27017
+  type: ClusterIP

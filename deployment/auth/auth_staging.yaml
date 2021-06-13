@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-staging
+  labels:
+    app: auth
+    release: staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+      release: staging
+  template:
+    metadata:
+      labels:
+        app: auth
+        release: staging
+        version: v2.0
+    spec:
+      containers:
+      - name: auth
+        image: ccr.ccs.tencentyun.com/kucar/auth:2.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8081
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+        env:
+          - name: MONGO_URI
+            valueFrom:
+              configMapKeyRef:
+                key: mongo
+                name: endpoints
+          - name: WECHAT_APP_ID
+            valueFrom:
+              secretKeyRef:
+                key: appid
+                name: wechat
+          - name: WECHAT_APP_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: appsecret
+                name: wechat   
+          - name: PRIVATE_KEY_FILE
+            value: /sec/private.key
+        volumeMounts:
+          - mountPath: /sec
+            name: auth
+            readOnly: true
+        livenessProbe:
+          exec:
+            command: ["/bin/grpc-health-probe", "-addr=:8081"]
+          initialDelaySeconds: 5
+      imagePullSecrets:
+        - name: qcloudregistrykey
+      volumes:
+        - name: auth
+          secret:
+            secretName: auth
+            items:
+              - key: privatekey
+                path: private.key

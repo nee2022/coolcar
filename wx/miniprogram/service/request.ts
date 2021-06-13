@@ -2,8 +2,8 @@ import camelcaseKeys = require("camelcase-keys")
 import { auth } from "./proto_gen/auth/auth_pb"
 
 export namespace Coolcar {
-    export const serverAddr = 'http://localhost:8080'
-    export const wsAddr = 'ws://localhost:9090'
+    export const serverAddr = 'http://81.69.182.228'
+    export const wsAddr = 'ws://81.69.182.228'
     const AUTH_ERR = 'AUTH_ERR'
 
     const authData = {
